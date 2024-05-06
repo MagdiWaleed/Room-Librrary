@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static "css/books.css" %}">
+<link rel="stylesheet" href="{% static "main/css/main_style.css" %}">
+{% endblock links %}
+
+
+
+{% block content %}
+
+<main>
+    <div style="height: 50px;"></div>
+    <div id="search_card">
+      <input  type="text" id="search" name="search"  , placeholder="Search books, genres, artists...">
+      <div style="height: 10px;"></div>
+
+      <button class="normal_button" onclick="search()" >search</button>
+    </div>
+    <div style="height: 20px;"></div>
+    <div>
+      <div class="row"><h1 style="height: 40px;">Latest Books</h1> 
+        <button class="normal_button edit_button" onclick="getTrendingBooksList()">Edit Latest</button>
+    </div>
+
+    
+    <div class="bookshelves">  
+    </div>
+<hr style="margin: 50px 0;"/>
+  <div>
+      <div class="row"><h1 style="height: 40px;">Trending Books</h1> 
+        <button class="normal_button edit_button" onclick="navigateToPage('/admin/books_screen/books_screen.html?pressedButton=trending')">Edit Trending</button>
+    </div>
+
+    <div class="bookshelves">   
+    
+ </div>  
+ <div style="height: 20px;"> </div>
+  </main>
+{% endblock content %}

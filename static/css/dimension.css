@@ -1,0 +1,15 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    margin: 0px 2%;
+    align-items: center;
+    /* min-width: 600px;
+    max-width: 1000px; */
+    width: 1000px;
+    margin: 0 auto;
+}
+main{
+    margin: 0 5%; 
+}
