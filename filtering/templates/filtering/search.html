@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block links %}
+<script src="{% static "filtering/js/search_controller.js" %}" defer></script>
+{% endblock links %}
+
+{% block content %}
+<main>     
+    <div style="height: 20px;"></div>
+    <h1>Searching...</h1>
+    <div style="height: 20px;"></div>
+      <form action="/admin/searching/searching.html">
+        <div id="search_card">
+          <input type="text" id="search" name="search" placeholder="Search books, genres, artists...">
+          <div style="height: 10px;"></div>
+          <button class="normal_button" >search</button>
+        </div>
+        <div style="height: 20px;"></div>
+      </form>
+      <div class="bookshelves">   
+    </div>
+  <br>
+    <div>
+  </main>
+
+{% endblock content %}

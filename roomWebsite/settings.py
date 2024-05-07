@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'filtering.apps.FilteringConfig',
     'books.apps.BooksConfig',
     'django.contrib.admin',
     'django.contrib.auth',

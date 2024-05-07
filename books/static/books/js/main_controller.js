@@ -65,9 +65,8 @@
   
   
   function search(){
-    let textfieldText=document.getElementById("search").value;
-    sessionStorage.setItem("search",textfieldText);
-    window.location.href="/admin/searching/searching.html";
+    searchText= document.getElementById("search").value;
+    window.location.href=`http://127.0.0.1:8000/filtering/searching?searching_about=${searchText}`;
   }
   
 
