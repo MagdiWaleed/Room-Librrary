@@ -26,11 +26,11 @@ bookShelves= document.getElementById("bookshelves")
 <h2 class="BORROWED">BORROWED</h2>
 </div>
 */
-function getTrendingBooksList  (){
+function getTheBooks (searchingText){
     bookCardsList=[]
     $.ajax({
       type: 'GET',
-      url: "get-books",
+      url: `searching-about/dasfsa/`,
       success:async function(response){
           temp=''
           const data =await response.data;
@@ -54,13 +54,18 @@ function getTrendingBooksList  (){
     
 }
 
-function getLatestBooksList  (){ 
-
-}
 
 
-
-
+function getTheTextForSearching(){
+    try{
+       storedDataString =sessionStorage.getItem("search");
+       console.log(storedDataString);
+    }catch(error){
+        console.log(error);
+    }
+    document.getElementById("search").value=storedDataString;
+    
+  }
 
 
 function search(){
@@ -69,3 +74,4 @@ sessionStorage.setItem("search",textfieldText);
 // window.location.href=`http://127.0.0.1:8000/filtering/search/${textfieldText}`;
 }
 
+getTheTextForSearching()

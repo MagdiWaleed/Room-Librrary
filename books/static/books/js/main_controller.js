@@ -66,7 +66,8 @@
   
   function search(){
     searchText= document.getElementById("search").value;
-    window.location.href=`http://127.0.0.1:8000/filtering/searching?searching_about=${searchText}`;
+    sessionStorage.setItem("search",searchText);
+    window.location.href=`http://127.0.0.1:8000/filtering/searching/${searchText}`;
   }
   
 
