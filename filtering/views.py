@@ -39,9 +39,16 @@ def getBorrowedBooks(request):
                 "title": str(book.title),
                 "author_name": str(book.author_name),
                 "username": str(user.username),
+                "id":str(book.id),
+                "user_id":str(user.id),
             }
             data.append(item)      
-            print(user.username)
+    
+    for t in range(len(data)):
+        if t%2==0:
+            data[t]["isEven"]="True"
+        else:
+            data[t]["isEven"]="False"
     context= {"data":data}
     return render(request,'filtering/borrowed_books.html',context)
 
@@ -87,5 +94,30 @@ def getUserBooks(request,id):
         }
         data.append(item)
     print(data)
-    context = {"data": data}
+    context = {
+        "data": data,
+        "memberName": str(user.username),
+        }
+    return render(request,"filtering/single_user_author.html",context)
+
+def getAuthorBooks(request,author_name):
+    books= Book.objects.filter(author_name=author_name)
+    data = []
+    for book in books:
+        item = {
+            'id': str(book.id),
+            'title': str(book.title),
+            'description': str(book.description),
+            'img': str(book.img),
+            'author_name': str(book.author_name),
+            'about_author': str(book.about_author),
+           
+        }
+        data.append(item) 
+    
+    print(data)
+    context = {
+            "data": data,
+            "memberName": str(author_name),
+               }
     return render(request,"filtering/single_user_author.html",context)

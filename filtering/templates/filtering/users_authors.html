@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block links %}
-<link rel="stylesheet" href="{% static "books/css/statistics_style.css" %}">
+<script src="{% static "filtering/js/users_authors.js" %}" defer></script>
 {% endblock links %}
 
 {% block content %}
@@ -29,7 +29,7 @@
               <th><div>#books</div></th>
           </tr>
           {% for row in data %}
-          <tr class="odd" onclick="goToSingleMember(row)"><td><div>{{row.membername}}</div></td>
+          <tr class="odd" onclick="goToSingleMember({{row}})"><td><div>{{row.membername}}</div></td>
             <td><div>{{row.numBooks}}</div></td></tr>
 
           

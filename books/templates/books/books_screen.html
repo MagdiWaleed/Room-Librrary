@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static "books/css/books_screen.css" %}">
+{% endblock links %}
+
+{% block content %}
+<main>
+        
+    <div style="height: 30px;"></div>
+    
+    <h1 id="pageHeader">Editing [Latest/Trending/Books] books</h1>
+  
+  <script>
+    // Get the parameter from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const pressedButton = urlParams.get('pressedButton');
+  
+    // Update the h1 text based on the parameter value
+    if (pressedButton === 'trending') {
+      document.getElementById('pageHeader').innerText = 'Editing trending books';
+    } else if (pressedButton === 'latest') {
+      document.getElementById('pageHeader').innerText = 'Editing latest books';
+    } else {
+      document.getElementById('pageHeader').innerText = 'Editing Books';
+    }
+  </script>
+          
+      <div class="bookshelves">   
+          
+          <div class="borrowed_books" style="cursor: pointer;" onclick="addNewBook()">
+              <div style="position: relative;">
+             </div >
+                <h2 class="BORROWED add_one_card">ADD ONE</h2>
+              </div>
+        {% for book in data  %}
+        <div class="book_details" onclick="goToSingleBook({{book.id}})">
+            <img src="/media/{{book.img}}" alt="IMAGE-NOT-FOUND" class="book_image" >
+            <h4>{{book.title}}</h4>
+            <p>By: {{book.author_name}}</p>
+        </div>
+        
+        {% endfor %}
+
+     </div>   
+  <br>
+    
+  </main>
+{% endblock content %}

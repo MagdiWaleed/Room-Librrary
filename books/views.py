@@ -62,3 +62,20 @@ def getSingleBook(request,pk):
 
 def getAbout(request):
     return render(request,'pages/about.html')
+
+
+def getAllBooks(request):
+    books= Book.objects.all()
+    data=[]
+    for book in books:
+        item={
+            "title": str(book.title),
+            "description":str(book.description),
+            "img":str(book.img),
+            'author_name':str(book.author_name),
+            'about_author':str(book.about_author),
+            'id':str(book.id),
+        }
+        data.append(item)
+    context={"data":data}
+    return render(request,'books/books_screen.html',context)

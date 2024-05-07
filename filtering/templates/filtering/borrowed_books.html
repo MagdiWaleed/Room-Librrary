@@ -3,6 +3,7 @@
 
 {% block links %}
 <script src="{% static "filtering/js/borrowed_books_controller.js" %}" defer></script>
+
 {% endblock links %}
 
 
@@ -30,15 +31,19 @@
               <th><div>Borrowed date</div></th>
           </tr>
            {% for book in data %}
-           <tr class="odd"><td>
-            <div onclick="goingToSingleBook()">
+           {% if book.isEven == "True" %}
+           <tr class="even"><td>
+           {% else %}
+            <tr class="odd"><td>
+            {% endif %}
+            <div onclick="goToSingleBook({{book.id}})">
                 {{book.title}}
             </div></td>
              <td> <div>
                 category
              </div></td>
-             <td><div onclick="goingToSingleAuthor()"> {{book.author_name}} </div></td>
-             <td><div onclick="goingToSingleUser()">  {{book.username}}</div></td>
+             <td><div onclick="goToSingleAuthor('{{book.author_name}}')"> {{book.author_name}} </div></td>
+             <td><div onclick="goToSingleUser('{{book.user_id}}')">  {{book.username}}</div></td>
              <td><div> "2005/9/8" </div></td></tr>
            {% endfor %}
       </table>
