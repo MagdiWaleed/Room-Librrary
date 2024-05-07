@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from .models import Book
 from django.http import JsonResponse 
+from profileModel.models import ProfileModel 
+
+
 # Create your views here.
 def getBooksList(request):
     return render(request, 'books/main.html')
@@ -8,15 +11,14 @@ def getBooksList(request):
 def getStatistics(request):
     books= Book.objects.all()
     authors=[]
-    # users=[]
+    users=ProfileModel.objects.all()
     for book in books:
         authors.append(book.author_name)
     authors=set(authors)
-    print(authors, " ", len(authors))
     context={
         "num_books":str(books.count()),
         "num_authors":str(len(authors)),
-        # "num_users":str(len(users)),
+        "num_users":str(users.count()),
     }
     return render(request,'books/statistics.html',context)
 

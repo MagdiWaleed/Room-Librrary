@@ -1,5 +1,5 @@
 from django.db import models
-
+from profileModel.models import ProfileModel
 # Create your models here.
 
 class Book(models.Model):
@@ -10,5 +10,6 @@ class Book(models.Model):
     img= models.ImageField(upload_to='books/%y/%m/%d',default='default-book-cover.jpg')
     author_name= models.CharField(max_length=50)
     about_author= models.TextField()
+    user= models.ForeignKey(ProfileModel,models.SET_NULL,null=True)
     def __str__(self):
         return str(self.title)

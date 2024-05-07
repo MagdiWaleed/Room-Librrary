@@ -98,7 +98,7 @@ margin-right: 50px;
     <div id="black_line"></div>
     <div id="navigation_bar" class="borders">
       <button id="selected_page_button" style="border-radius: 0 0 0 50px;" onclick="navigateToPage('{% url 'books-list' %}')" >H O M E</button>
-      <button style="border-radius: 0 0 0 0;" class="not_selected_page_button" onclick="navigateToPage('/admin/brrowed_books/brrowed_books.html')">
+      <button style="border-radius: 0 0 0 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'borrowed-books' %}')">
         <pre>B O R R O W E D  
 B O O K S</pre>
       </button>

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from books.models import Book 
+from books.models import Book
+from profileModel.models import ProfileModel
 
 # Create your views here.
 def search(request, searchingText):
@@ -27,3 +28,12 @@ def search(request, searchingText):
     context = {"data": data}
     return render(request, 'filtering/search.html', context)
 
+def getBorrowedBooks(request):
+    users= ProfileModel.objects.all()
+    users_counter=[]
+    for user in users:
+        books= Book.objects.filter(user=user)
+        print(books)
+        users_counter.append(str(books.count()))
+    context= {"data":users_counter}
+    return render(request,'filtering/borrowed_books.html',context)
