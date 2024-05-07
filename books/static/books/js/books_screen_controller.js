@@ -1,8 +1,7 @@
 
 function addNewBook(){
-    sessionStorage.setItem("single_book",JSON.stringify(new SingleBookModel()));
-    window.location.href="/admin/add_new_book/add_new_book.html";
- }
+        window.location.href= 'http://127.0.0.1:8000/books/add-edit-book/'
+   }
 
 
 

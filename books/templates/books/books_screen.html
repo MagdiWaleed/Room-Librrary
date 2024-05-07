@@ -3,6 +3,7 @@
 
 {% block links %}
 <link rel="stylesheet" href="{% static "books/css/books_screen.css" %}">
+<script src="{% static "books/js/books_screen_controller.js" %}" defer></script>
 {% endblock links %}
 
 {% block content %}
@@ -40,7 +41,6 @@
             <h4>{{book.title}}</h4>
             <p>By: {{book.author_name}}</p>
         </div>
-        
         {% endfor %}
 
      </div>   

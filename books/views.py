@@ -79,3 +79,6 @@ def getAllBooks(request):
         data.append(item)
     context={"data":data}
     return render(request,'books/books_screen.html',context)
+
+def addEditBook(request):
+    return render(request,'books/add_new_book.html')
