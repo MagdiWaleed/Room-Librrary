@@ -10,16 +10,26 @@
     <div style="height: 20px;"></div>
     <h1>Searching...</h1>
     <div style="height: 20px;"></div>
-      <form action="/admin/searching/searching.html">
+      
         <div id="search_card">
           <input type="text" id="search" name="search" placeholder="Search books, genres, artists...">
           <div style="height: 10px;"></div>
-          <button class="normal_button" >search</button>
+          <button class="normal_button" onclick="search()">search</button>
         </div>
         <div style="height: 20px;"></div>
-      </form>
+      
      
       <div class="bookshelves">   
+        {% for book in data %}
+        
+        <div class="book_details" onclick="goToSingleBook({{book.id}})">
+            <img src="/media/{{book.img}}" alt="IMAGE-NOT-FOUND" class="book_image" >
+            <h4>{{book.title}}</h4>
+            <p>By: {{book.author_name}}</p>
+        </div>
+        
+        {% endfor %}
+        
     </div>
   <br>
     <div>
