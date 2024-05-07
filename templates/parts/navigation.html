@@ -87,24 +87,81 @@ margin-right: 50px;
 
 </style>
 
-<div id="backGround_image" >
-    <div id="backGround" class="borders">
-      <img id="project_logo"  src="{% static "/img/Logo.png" %}" alt="" onclick="navigateToPage('/admin/about/about.html')">
-      <h1>
-        R O M E
-      </h1>
-      <img id="account_logo" src="{% static "/img/R.png" %}" alt="" onclick="navigateToPage('/admin/my_information/my_information.html')">
-    </div>
-    <div id="black_line"></div>
-    <div id="navigation_bar" class="borders">
-      <button id="selected_page_button" style="border-radius: 0 0 0 50px;" onclick="navigateToPage('{% url 'books-list' %}')" >H O M E</button>
-      <button style="border-radius: 0 0 0 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'borrowed-books' %}')">
-        <pre>B O R R O W E D  
+<script>
+ admin_navigation= 
+ `<div id="backGround_image" >
+  <div id="backGround" class="borders">
+    <img id="project_logo"  src="{% static "/img/Logo.png" %}" alt="" onclick="navigateToPage('/admin/about/about.html')">
+    <h1>
+      R O M E
+    </h1>
+    <img id="account_logo" src="{% static "/img/R.png" %}" alt="" onclick="navigateToPage('{% url 'log-in' %}')">
+  </div>
+  <div id="black_line"></div>
+  <div id="navigation_bar" class="borders">
+    <button id="selected_page_button" style="border-radius: 0 0 0 50px;" onclick="navigateToPage('{% url 'books-list' %}')" >H O M E</button>
+    <button style="border-radius: 0 0 0 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'borrowed-books' %}')">
+      <pre>B O R R O W E D  
 B O O K S</pre>
-      </button>
-      <button style="border-radius: 0 0 0 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'statistics' %}')">
-   S T A T I S T I C S
-       </button>
-       <button style="border-radius: 0 0 50px 0;" class="not_selected_page_button"  onclick="navigateToPage('{% url 'about' %}')">A B O U T</button>  
-      </div>  
+    </button>
+    <button style="border-radius: 0 0 0 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'statistics' %}')">
+ S T A T I S T I C S
+     </button>
+     <button style="border-radius: 0 0 50px 0;" class="not_selected_page_button"  onclick="navigateToPage('{% url 'about' %}')">A B O U T</button>  
+    </div> `;
+    
+    user_navigation=
+    ` <header>
+      <div id="backGround_image" >
+          <div id="backGround" class="borders">
+            <img id="project_logo" src="{% static "/img/Logo.png" %}" alt="" onclick="navigateToPage('/user/about/about.html')">
+            <h1 id="rome">
+              R O M E
+            </h1>
+            <img id="account_logo" src="{% static "/img/R.png" %}" alt="" onclick="showpopup()">
+          </div>
+          <div id="black_line"></div>
+          <div id="navigation_bar" class="borders">
+            <button style="border-radius: 0 0 0 50px;" id="selected_page_button" onclick="navigateToPage('{% url 'books-list' %}')">H O M E</button>
+            <button style="border-radius: 0 0 0 0;" id="my_book" class="not_selected_page_button" onclick="navigateToPage('{% url 'about' %}')">M Y  B O O K S</button>
+            <button style="border-radius: 0 0 50px 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'about' %}')">A B O U T</button>  
+          </div>  
+      </div>
+    </header>`;
+
+    not_loged=
+    `<header>
+      <div id="backGround_image" >
+          <div id="backGround" class="borders">
+            <img id="project_logo" src="{% static "/img/Logo.png" %}" alt="" onclick="navigateToPage('{% url 'about' %}')">
+            <h1 id="rome">
+              R O M E
+            </h1>
+            <img id="account_logo" src="{% static "/img/R.png" %}" alt="" onclick="showpopup()">
+          </div>
+          <div id="black_line"></div>
+          <div id="navigation_bar" class="borders">
+            <button style="border-radius: 0 0 0 50px;" id="selected_page_button" onclick="navigateToPage('{% url 'books-list' %}')">H O M E</button>
+            <button style="border-radius: 0 0 50px 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'about' %}')">A B O U T</button>  
+          </div>  
+      </div>
+    </header>`;
+    user =sessionStorage.getItem('user');
+    if (user){
+      if(user.isAdmin){
+        document.write(admin_navigation);
+        } 
+        
+        else{
+        document.write(user_navigation);
+        } 
+    }
+    else{
+     
+      document.write(not_loged);
+  
+    } 
+  
+</script>
+ 
 </div>

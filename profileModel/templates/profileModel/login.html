@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static "books/css/main_style.css" %}">
+<script src="{% static "books/js/main_controller.js" %}" defer></script>
+{% endblock links %}
+
+{% block content %}
+<main>
+
+    <div>
+      <header><h2 style="font-weight: bold;">Login</h2></header>
+    </div>
+      <div style="
+      top:20%;
+      left: 40%;
+      width: 30%;
+      ">
+      <form id="signupForm" action="/admin/main/mainScreen.html">
+          <input type ="text" class="info" placeholder="username" required>
+          <input type ="password" class="info" placeholder="password" required>
+        <div style="display: block;">
+          <input type ="checkbox" id="check" >
+          <label for="check" style="display: inline-block; " >Admin</p>
+        </div> 
+        <button type="submit">Log in</button>
+      </form> <br>
+     
+      <a href="/login/signup/signupScreen.html" style="display: inline-block;">
+        <button class="next"> create account</button> 
+      </a>
+    </div>
+  
+  </main>
+  
+
+{% endblock content %}

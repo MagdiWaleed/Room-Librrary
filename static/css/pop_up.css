@@ -48,7 +48,8 @@
       padding: 20px;
 }
 .login{
-    background-image: url('/references/images/pngwing.png');
+    background-image: url('../img/pngwing.png');
+    /* todo zol ye3mal image */
     background-position: center;
     background-repeat: no-repeat;
     position: fixed;
