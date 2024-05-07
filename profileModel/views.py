@@ -14,5 +14,6 @@ def myProfile(request,id):
         "username": str(user.username),
         "email":str(user.email),
         "password": str(user.password),
-        
-    }
+    },
+    return render(request, 'profileModel/my_information.html', context )
+

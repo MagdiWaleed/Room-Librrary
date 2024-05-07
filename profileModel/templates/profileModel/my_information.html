@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static "books/css/my_information_style.css" %}">
+<script src="{% static "books/js/my_information_controller.js" %}" defer></script>
+{% endblock links %}
+
+{% block content %}
+<div style="height: 30px;"></div>
+      <main>  
+        <div class="NumOfBorrowed">
+          <p># Of Borrowed Books :</p>
+          <p>{{numborrowedbooks}}</p>
+        </div>
+        <div style="height: 20px;"></div>
+        <form class="user-info-form">
+          <div class="form-section" style="margin-bottom: 15px;">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+          </div>
+          <div class="form-section" style="margin-bottom: 15px;">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+          </div>
+          <div class="form-section" style="margin-bottom: 15px;">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" style="margin-right: 20px;">
+          </div>
+          <div class="form-section" style="margin-bottom: 15px;">
+            <label for="password">Confirm 
+              Password:</label>
+            <input type="password" id="confpassword" name="password" style="margin-right: 20px;">
+          </div>
+         
+        </form> 
+        
+        <div style="height: 15px;"></div>
+        <button class="normal_button" id="end_user_mode_button" onclick="endUseerMode()">End User Mode</button>
+          <script >
+          </script>
+          
+         <div style="margin-top: 15px;" class="buttons">
+            <button type="submit" class="normal_button" onclick="save_change()">Save Changes</button>
+            <span style="width: 20px;"></span>
+            <button class="borders_button"  onclick="delete_acc()">Delete Account</button></a>
+          </div>
+          <div style="height: 50px;"></div>
+       
+        </main>
+        
+        <script>
+            function add_text(){
+                username = document.getElementById("name");
+                mailhold = document.getElementById('email');
+                passhold = document.getElementById('password');
+                confpasshold = document.getElementById('confpassword');
+                
+                username.placeholder = {{username}};
+                mailhold.placeholder = {{email}};
+                passhold.placeholder = {{password}};
+                confpasshold.placeholder = {{password}};
+            }
+        </script>
+   
+{% endblock content %}

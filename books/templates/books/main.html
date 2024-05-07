@@ -4,7 +4,6 @@
 {% block links %}
 <link rel="stylesheet" href="{% static "books/css/main_style.css" %}">
 <link rel="stylesheet" href="{% static "books/css/user/main.css" %}">
-<link rel="stylesheet" href="{% static "css/pop_up.css" %}">
 <script src="{% static "books/js/main_controller.js" %}" defer></script>
 {% endblock links %}
 
@@ -26,7 +25,7 @@
           <input type ="checkbox" id="check" >
           <label for="check" style="display: inline-block; " >Admin</p>
         </div> 
-        <button type="submit" onclick="closepopup()" class="btn">Log in</button>
+        <button type="submit" onclick="login()" class="btn">Log in</button>
         <button type="button" class="closebtn" onclick="closepop()">X</button>
       </div> <br>
      
