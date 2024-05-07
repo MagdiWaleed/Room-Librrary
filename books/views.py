@@ -15,10 +15,16 @@ def getStatistics(request):
     for book in books:
         authors.append(book.author_name)
     authors=set(authors)
+    counter=0
+    for user in users:
+        borrowed = Book.objects.filter(user=user)
+        for book in borrowed:
+            counter+=1
     context={
-        "num_books":str(books.count()),
+        "num_books":str(len(books)),
         "num_authors":str(len(authors)),
-        "num_users":str(users.count()),
+        "num_users":str(len(users)),
+        "num_borrowed":str(counter),
     }
     return render(request,'books/statistics.html',context)
 

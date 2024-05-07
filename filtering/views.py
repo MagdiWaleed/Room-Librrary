@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from books.models import Book
 from profileModel.models import ProfileModel
 
+
 # Create your views here.
 def search(request, searchingText):
     books_by_title = Book.objects.filter(title__icontains=searchingText)
@@ -30,10 +31,61 @@ def search(request, searchingText):
 
 def getBorrowedBooks(request):
     users= ProfileModel.objects.all()
-    users_counter=[]
+    data=[]
     for user in users:
         books= Book.objects.filter(user=user)
-        print(books)
-        users_counter.append(str(books.count()))
-    context= {"data":users_counter}
+        for book in books:
+            item={
+                "title": str(book.title),
+                "author_name": str(book.author_name),
+                "username": str(user.username),
+            }
+            data.append(item)      
+            print(user.username)
+    context= {"data":data}
     return render(request,'filtering/borrowed_books.html',context)
+
+def getMembersBooks(request,members):
+    data=[]
+    if members== "users":
+        users=ProfileModel.objects.all()
+        for user in users:
+            books=Book.objects.filter(user=user)
+            item={
+                "memberid":str(user.id),
+                "membername":str(user.username),
+                "numBooks":str(len(books))
+            }
+            data.append(item)
+    elif members=="authors":
+        books_by_author = Book.objects.all()
+        authors= [t.author_name for t in books_by_author]
+        authors= list(set(authors))
+        for author in authors:
+            books=Book.objects.filter(author_name=author)
+            item={
+                "memberid":"#",
+                "membername":str(author),
+                "numBooks":str(len(books))
+            }
+            data.append(item)
+    context={"data":data}
+    return render(request,"filtering/users_authors.html",context)
+
+def getUserBooks(request,id):
+    user= ProfileModel.objects.get(pk=id)
+    books= Book.objects.filter(user=user)
+    data = []
+    for book in books:
+        item = {
+            'id': str(book.id),
+            'title': str(book.title),
+            'description': str(book.description),
+            'img': str(book.img),
+            'author_name': str(book.author_name),
+            'about_author': str(book.about_author),
+        }
+        data.append(item)
+    print(data)
+    context = {"data": data}
+    return render(request,"filtering/single_user_author.html",context)

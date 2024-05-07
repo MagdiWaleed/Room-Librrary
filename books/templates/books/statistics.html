@@ -17,21 +17,21 @@
 
     <div class="search_card">
       <p># Of Users: {{num_users}}</p>
-       <button class="normal_button" onclick="numberOfUsersDetails()" >Show Details</button>
+       <button class="normal_button" onclick="navigateToPage('http://127.0.0.1:8000/filtering/users/')" >Show Details</button>
      </div>
      
      
      
      <div class="search_card">
-      <p># Of AuthorsS: {{num_authors}}</p>
-       <button class="normal_button" onclick="numberOfAuthorsDetails()" >Show Details</button>
+      <p># Of Authors: {{num_authors}}</p>
+       <button class="normal_button" onclick="navigateToPage('http://127.0.0.1:8000/filtering/authors/')" >Show Details</button>
      </div>
      
      
      
      <div class="search_card">
-      <p># Of Borrowed Book: 500</p>
-       <button class="normal_button" onclick="navigateToPage('/admin/brrowed_books/brrowed_books.html')" >Show Details</button>
+      <p># Of Borrowed Book: {{num_borrowed}}</p>
+       <button class="normal_button" onclick="navigateToPage('http://127.0.0.1:8000/filtering/borrowed-books')" >Show Details</button> {% comment "" %}TODO change the url{% endcomment %}
      </div>
      
      <div style="height: 30px;"></div>
