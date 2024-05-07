@@ -1,18 +1,9 @@
 
-  
-  //   function goToSingleBook(singleBookDataindex){
-  //        console.log(singleBookDataindex);
-  //        singleBookData=JSON.stringify(bookList[singleBookDataindex]); 4
-    
-  //        sessionStorage.setItem("single_book",singleBookData);
-  //        if(singleBookDataindex%5==0){
-  //          window.location.href="/admin/single_book/single_book.html?query=borrowed_book";
-  //        }else{
-  //          window.location.href="/admin/single_book/single_book.html";
-  //        }
-         
-         
-  // }
+  url= window.location.href
+    function goToSingleBook(id){
+      console.log(id)
+         window.location.href= `http://127.0.0.1:8000/books/${id}`
+  }
   
   bookShelves= document.getElementById("bookshelves")
   
@@ -36,25 +27,24 @@
     <h2 class="BORROWED">BORROWED</h2>
   </div>
   */
-  function getTrendingBooksList  (){
+   function getTrendingBooksList  (){
         bookCardsList=[]
-        console.log("the starting of ajax");
         $.ajax({
           type: 'GET',
-          url: "/get-books/",
-          success: function(response){
-              console.log(response);
-              const data =response.data.data;
-              print(data)
+          url: "get-books",
+          success:async function(response){
+              temp=''
+              const data =await response.data;
               data.forEach(e => {
-                bookShelves.innerHTML+=`
-                  <div class="book_details" onclick="">
-                      <img src="${e.img}" alt="IMAGE-NOT-FOUND" class="book_image" >
+              console.log(e.img)
+                temp+=`
+                  <div class="book_details" onclick="goToSingleBook(${e.id})">
+                      <img src="/media/${e.img}" alt="IMAGE-NOT-FOUND" class="book_image" >
                       <h4>${e.title}</h4>
-                      <p>By: ${e.author}</p>
+                      <p>By: ${e.author_name}</p>
                   </div>`
               });
-              console.log("this is the data", data);
+              bookShelves.innerHTML = temp 
           },
           error:function(error){
               console.log("error", error);
@@ -69,7 +59,7 @@
     
   }
   
-  
+
  
   
   
@@ -81,4 +71,4 @@
   }
   
 
-  
+  getTrendingBooksList()

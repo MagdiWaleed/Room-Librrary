@@ -1,10 +1,16 @@
 from django.urls import path
 from .views import (
     getBooksList,
-    getBooksData 
+    getBooksData,
+    getSingleBook,
+    getStatistics,
+    getAbout,
                     )
 
 urlpatterns = [
     path('books/',getBooksList, name="books-list"),
-    path('main/get-books/',getBooksData,name='books-data'),
+    path('books/get-books/',getBooksData,name='books-data'),
+    path('books/<pk>/',getSingleBook,name='single-book'),
+    path("statistics/",getStatistics,name="statistics"),
+    path("about/",getAbout, name='about'),
 ]

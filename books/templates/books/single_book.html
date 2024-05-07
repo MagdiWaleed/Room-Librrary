@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block links %}
+<script src="{% static "books/js/single_book_controller.js" %}"></script>
+{% endblock links %}
+
+
+{% block content %}
+<main>
+            
+    <h2 id="book_name" style="margin-top: 40px;"> {{data.title}} </h2>
+    <div style="height: 5px;"></div>
+    <h3 style="margin-left: 25px;">By: <span style="color: #7E7E7E; font-weight: normal; font-size: 14px;" id="author_name"> {{data.author_name}} </span></h3>
+
+<div style="height: 10px;"></div>
+<div class="book_dis">
+<img src="/media/{{data.img}}" alt="" id="book_image" class="book_img">
+  <div style="margin-top: 30px;">
+    <h2 >Discription:</h2>
+    <div style="height: 20px;" ></div>
+    <p class="description_p" id="description">
+        {{data.description}}
+    </p>
+    <h3 style="margin-top: 10px;">Category:</h3>
+    <p id="book_category"></p>
+    <h3 style="margin-top: 10px;">Borrowed By: </h3>
+    <p id="borrowed_by"></p>
+    </div>
+  </div>
+</div>
+<div style="height: 20px;"></div>
+
+<div class="author_details">
+    <div>
+      <h2>About author:</h2>
+      <div style="height: 20px;"></div>
+      <p id="about_author">
+        {{data.about_author}}
+     
+
+
+
+
+
+
+      </p>
+    </div>
+    
+</div>
+<div style="display: flex; justify-content: right; ">
+<button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="editThisBook()">Edit This Book</button>
+</div>
+
+<div style="height: 20px;"></div>
+</main>
+{% endblock content %}
