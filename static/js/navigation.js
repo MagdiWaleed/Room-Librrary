@@ -9,41 +9,56 @@ function goToSingleBook(id){
 function showpopup(){
    user = JSON.parse(sessionStorage.getItem('user'))
    if(user){
-    
+    window.location.href="http://127.0.0.1:8000/profile/my_information/"
    }else{
     let pop_up = document.getElementById("popup");
     pop_up.classList.add("open-popup");
    }
 }
-function login(){
-       
-    username = document.getElementById('user');
-    password = document.getElementById('pass');
-    isAdmin = document.getElementById('check');
-    $.ajax({
-        type: 'GET',
-        url: "get-books",
-        success:async function(response){
-            temp=''
-            const data =await response.data;
-            data.forEach(e => {
-            console.log(e.img)
-              temp+=`
-                <div class="book_details" onclick="goToSingleBook(${e.id})">
-                    <img src="/media/${e.img}" alt="IMAGE-NOT-FOUND" class="book_image" >
-                    <h4>${e.title}</h4>
-                    <p>By: ${e.author_name}</p>
-                </div>`
-            });
-            bookShelves.innerHTML = temp 
-        },
-        error:function(error){
-            console.log("error", error);
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
         }
-    })
-    
     }
+    return cookieValue;
+}
 
+function login() {
+    var username = $('#user').val();
+    var password = $('#pass').val();
+    var isAdmin = $('#check').is(':checked');
+    var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
+    $.ajax({
+        type: 'POST',
+        url: "/profile/login/",
+        data: {
+            username: username,
+            password: password,
+            isAdmin: isAdmin,
+            csrfmiddlewaretoken: csrfToken
+        },
+        success: function(response) {
+            console.log("success ", response.data);
+            if(response.data== "no member"){
+                alert("username or password is wrong")
+            }else{
+                console.log(response.data)
+                sessionStorage.setItem("user",JSON.stringify(response.data))
+            }
+        },
+        error: function(error) {
+            console.log("error ", error);
+        }
+    });
+}
 
 function closepop(){
     console.log('wrong');

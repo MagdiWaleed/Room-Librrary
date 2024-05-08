@@ -31,7 +31,7 @@
         bookCardsList=[]
         $.ajax({
           type: 'GET',
-          url: "get-books",
+          url: "books/get-books",
           success:async function(response){
               temp=''
               const data =await response.data;
@@ -55,10 +55,7 @@
         
   }
   
-  function getLatestBooksList  (){ 
-    
-  }
-  
+
 
  
   

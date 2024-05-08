@@ -1,21 +1,9 @@
 
 function fetchData(){
-    username = document.getElementById("name");
-    mailhold = document.getElementById('email');
-    passhold = document.getElementById('password');
-    confpasshold = document.getElementById('confpassword');
-    try{
-        user= sessionStorage.getItem("user")
-        user=JSON.parse(user)
-        username.placeholder = user.username
-        mailhold.placeholder = user.email
-        passhold.placeholder = user.password
-        confpasshold.placeholder = user.password
-    }catch(e){
-        console.log(e)
-    }
-
+    numMyBooks()
+    getMyBooks()
 }
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -53,12 +41,33 @@ function numMyBooks(){
     });
 }
 
-function logout(){
-    console.log("")
-    sessionStorage.removeItem('user')
-    window.location.href="http://127.0.0.1:8000/"
+function getMyBooks(){
+    user = JSON.parse(sessionStorage.getItem("user"))
+    $.ajax({
+        type: 'POST',
+        url: "/profile/my-books-data",
+        data: {
+            id: user.id,
+            csrfmiddlewaretoken: getCookie('csrftoken'),
+        },
+        success: function(response) {
+            data = response.data
+            console.log(response.data)
+            data.forEach(e => {
+                console.log(e.img)
+                  document.getElementById("bookshelves").innerHTML+=`
+                    <div class="book_details" onclick="goToSingleBook(${e.id})">
+                        <img src="/media/${e.img}" alt="IMAGE-NOT-FOUND" class="book_image" >
+                        <h4>${e.title}</h4>
+                        <p>By: ${e.author_name}</p>
+                    </div>`
+                });
+        },
+        error: function(error) {
+            console.log("error ", error);
+        }
+    });
 }
 
 
-numMyBooks()
 fetchData()
