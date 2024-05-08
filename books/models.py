@@ -13,3 +13,4 @@ class Book(models.Model):
     user= models.ForeignKey(ProfileModel,models.SET_NULL,null=True)
     def __str__(self):
         return str(self.title)
+
