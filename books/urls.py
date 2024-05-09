@@ -7,11 +7,15 @@ from .views import (
     getAbout,
     getAllBooks,
     addEditBook,
+    getTrendingBooks,
+    getLatestBooks,
     )
 
 urlpatterns = [
     path('',getBooksList, name="books-list"),
     path("books/",getAllBooks, name="get-all-books"),
+    path("books/trending/",getTrendingBooks, name="get-all-books"),
+    path("books/latest/",getLatestBooks, name="get-all-books"),
     path('books/get-books/',getBooksData,name='books-data'),
     path('books/add-edit-book/',addEditBook,name="add-edit-book"),
     path('books/<pk>/',getSingleBook,name='single-book'),

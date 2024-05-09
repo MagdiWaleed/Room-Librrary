@@ -57,12 +57,12 @@
     <div>
       <h1 style="height: 30px;">Latest Books</h1>
     </div>
-    <div class="bookshelves" id="bookshelves">   
+    <div class="bookshelves" id="latest">   
       </div>
       <br/>
     <h1 style="height: 40px;">Trending Books</h1>
     
-      <div class="bookshelves">   
+      <div class="bookshelves" id="trending">   
        
                      
    </div>  
@@ -83,20 +83,20 @@ admin_main_body =
     <div style="height: 20px;"></div>
     <div> 
       <div class="row"><h1 style="height: 40px;">Latest Books</h1> 
-      <div style="width:200px"></div>  <button class="normal_button edit_button" onclick="">Edit Latest</button>
+      <button class="normal_button edit_button" style="width:200px" onclick="navigateToPage('http://127.0.0.1:8000/books/latest')">Edit Latest</button>
     </div>
 
     
-    <div class="bookshelves" id="bookshelves">  
+    <div class="bookshelves" id="latest">  
       
     </div>
 <hr style="margin: 50px 0;">
   <div>
       <div class="row"><h1 style="height: 40px;">Trending Books</h1> 
-      <div style="width:200px"></div>  <button class="normal_button edit_button" >Edit Trending</button>
+      <button class="normal_button edit_button" style="width:200px" onclick="navigateToPage('http://127.0.0.1:8000/books/trending')">Edit Trending</button>
     </div>
 
-    <div class="bookshelves">   
+    <div class="bookshelves" id="trending">   
     
  </div>  
  <div style="height: 20px;"> </div>

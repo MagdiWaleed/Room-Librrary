@@ -35,9 +35,11 @@
 }
 div.row{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-right: 30px;
 }
+
+
 .big_text{
     padding-left: 50px;
     font-size: 50px;

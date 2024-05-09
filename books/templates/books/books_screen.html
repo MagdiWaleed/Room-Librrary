@@ -11,23 +11,8 @@
         
     <div style="height: 30px;"></div>
     
-    <h1 id="pageHeader">Editing [Latest/Trending/Books] books</h1>
+    <h1 id="pageHeader">Editing {{filter}}</h1>
   
-  <script>
-    // Get the parameter from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const pressedButton = urlParams.get('pressedButton');
-  
-    // Update the h1 text based on the parameter value
-    if (pressedButton === 'trending') {
-      document.getElementById('pageHeader').innerText = 'Editing trending books';
-    } else if (pressedButton === 'latest') {
-      document.getElementById('pageHeader').innerText = 'Editing latest books';
-    } else {
-      document.getElementById('pageHeader').innerText = 'Editing Books';
-    }
-  </script>
-          
       <div class="bookshelves">   
           
           <div class="borrowed_books" style="cursor: pointer;" onclick="addNewBook()">

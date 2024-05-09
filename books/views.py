@@ -33,18 +33,26 @@ def getStatistics(request):
 
 def getBooksData(request):
     books= Book.objects.all()
-    data=[]
+    trending_data=[]
+    latest_data=[]
     for book in books:
         item={
-            "title": str(book.title),
-            "description":str(book.description),
-            "img":str(book.img),
-            'author_name':str(book.author_name),
-            'about_author':str(book.about_author),
-            'id':str(book.id),
-        }
-        data.append(item)
-    context={"data":data}
+                "title": str(book.title),
+                "description":str(book.description),
+                "img":str(book.img),
+                'author_name':str(book.author_name),
+                'about_author':str(book.about_author),
+                'id':str(book.id),
+            }
+        if book.book_type== "trending":    
+           trending_data.append(item)
+        else:
+            latest_data.append(item)
+
+    context={
+        "trending":trending_data,
+        "latest":latest_data,             
+             }
     return JsonResponse(context)
 
 def getSingleBook(request,pk):
@@ -77,8 +85,41 @@ def getAllBooks(request):
             'id':str(book.id),
         }
         data.append(item)
-    context={"data":data}
+    context={"data":data,"filter":"all books"}
     return render(request,'books/books_screen.html',context)
+
+def getTrendingBooks(request):
+    books= Book.objects.filter(book_type="trending")
+    data=[]
+    for book in books:
+        item={
+            "title": str(book.title),
+            "description":str(book.description),
+            "img":str(book.img),
+            'author_name':str(book.author_name),
+            'about_author':str(book.about_author),
+            'id':str(book.id),
+        }
+        data.append(item)
+    context={"data":data,"filter":"Trending books"}
+    return render(request,'books/books_screen.html',context)
+
+def getLatestBooks(request):
+    books= Book.objects.filter(book_type="latest")
+    data=[]
+    for book in books:
+        item={
+            "title": str(book.title),
+            "description":str(book.description),
+            "img":str(book.img),
+            'author_name':str(book.author_name),
+            'about_author':str(book.about_author),
+            'id':str(book.id),
+        }
+        data.append(item)
+    context={"data":data,"filter":"latest books"}
+    return render(request,'books/books_screen.html',context)
+
 
 def addEditBook(request):
     return render(request,'books/add_new_book.html')
