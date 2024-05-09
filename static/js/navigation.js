@@ -71,3 +71,7 @@ function closepop(){
     let pop_up = document.getElementById("popup");
     pop_up.classList.remove("open-popup");
 }
+
+function goToSignup(){
+    window.location.href="http://127.0.0.1:8000/profile/signup"
+}
