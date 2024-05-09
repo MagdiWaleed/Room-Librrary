@@ -72,6 +72,7 @@ def getSingleBook(request,pk):
         'img': str(obj.img),
         'author_name':str(obj.author_name),
         'about_author':str(obj.about_author),
+        'user':str(obj.user),
     }
     return render(request,'books/single_book.html',{'data':data})
 
@@ -150,4 +151,25 @@ def addNewBook(request):
     except Exception as e:
         context={"data":"something went wrong"}
     
+    return JsonResponse(context)
+
+def getSingleBookUserId(request,pk):
+    
+    context={}
+
+    try:
+        book =Book.objects.get(pk=pk)
+        item={
+            "user_id":book.user.id,
+            "book_id":book.id,
+        }
+        context={
+            "data":item
+        }
+    except Exception as e:
+        context={"data":{
+            "user_id":"#",
+            "book_id": pk,
+        }}
+    print(context)
     return JsonResponse(context)

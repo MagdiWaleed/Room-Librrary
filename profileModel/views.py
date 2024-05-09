@@ -77,3 +77,25 @@ def getMyBooks(request):
         }
     return JsonResponse(context)
 
+def borrowed_book(request):
+    context={}
+    if request.method == "POST":
+        user_id = request.POST["user_id"]
+        book_id = request.POST["book_id"]
+        book = Book.objects.get(pk=book_id)
+        user = ProfileModel.objects.get(pk=user_id)
+        book.user = user
+        book.save()
+        context={"data":"success"}
+    return JsonResponse(context)
+
+def unborrowed_book(request):
+    context={}
+    if request.method == "POST":
+        book_id = request.POST["book_id"]
+        print("this is the id for the book",book_id)
+        book = Book.objects.get(pk=book_id)
+        book.user = None
+        book.save()
+        context={"data":"success"}
+    return JsonResponse(context)
