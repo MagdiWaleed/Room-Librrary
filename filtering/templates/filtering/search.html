@@ -6,7 +6,25 @@
 {% endblock links %}
 
 {% block content %}
-<main>     
+<main>  
+  <form id="popup" class="login">
+    <div id="signupForm" >
+      <div class="inputtext">
+        <input id = "user" class="txtinfo" placeholder="User name" required>
+        <input id = "pass" class="txtinfo" placeholder="Password" required>
+      </div>
+      <div style="display: block; " class="checkbox">
+        <input type ="checkbox" id="check" >
+        <label for="check" style="display: inline-block; " >Admin</p>
+      </div> 
+      <button type="submit" onclick="login()" class="btn">Log in</button>
+      <button type="button" class="closebtn" onclick="closepop()">X</button>
+    </div> <br>
+   
+    <a href="/login/signup/signupScreen.html" style="display: inline-block;">
+      <button class="next"> create account</button> 
+    </a>
+  </form>   
     <div style="height: 20px;"></div>
     <h1>Searching...</h1>
     <div style="height: 20px;"></div>
@@ -21,13 +39,23 @@
      
       <div class="bookshelves">   
         {% for book in data %}
-        
+        {% if book.isborrowed == "no" %}
         <div class="book_details" onclick="goToSingleBook({{book.id}})">
             <img src="/media/{{book.img}}" alt="IMAGE-NOT-FOUND" class="book_image" >
             <h4>{{book.title}}</h4>
             <p>By: {{book.author_name}}</p>
         </div>
-        
+        {% else %}
+        <div class="borrowed_books" onclick="showBorrowedBookDetails({{book.id}})">
+          <div style="position: relative;">
+          <img src="/media/{{book.img}}" alt="IMAGE-NOT-FOUND" class="book_image">
+         <h4>{{book.title}}</h4>
+         <p>By: {{book.author_name}}</p>
+        </div >
+          <h2 class="BORROWED">BORROWED</h2>
+        </div>
+        {% endif %}
+
         {% endfor %}
         
     </div>

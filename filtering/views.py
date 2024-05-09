@@ -16,16 +16,22 @@ def search(request, searchingText):
     print("books: ",books)
     data = []
     for book in books:
+        isborrowed =""
+        if book.user== None:
+            isborrowed='no'
+        else:
+            isborrowed='yes'
         item = {
             'id': str(book.id),
             'title': str(book.title),
             'description': str(book.description),
             'img': str(book.img),
+            'isborrowed':str(isborrowed),
             'author_name': str(book.author_name),
             'about_author': str(book.about_author),
         }
         data.append(item)
-    print(data)
+    print(len(data))
     context = {"data": data}
     return render(request, 'filtering/search.html', context)
 
