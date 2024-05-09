@@ -1,0 +1,168 @@
+{% load static %}
+<style>
+  
+#backGround{
+  height: 110px;
+  background-color:#D3C3A9 ;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0,0,0, 0.5);
+}
+#backGround img{
+  padding: 1px;
+  border-radius: 100px;
+  border: 3px #D3C3A9 solid;
+  transition: all 300ms;
+}
+#backGround img:hover{
+  border: 3px white solid;
+  cursor: pointer;
+}
+
+#backGround #project_logo{
+  height: 100px;
+  transform: rotate(-20deg);
+  margin-left: 20px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+#backGround #account_logo{
+  height: 90px;
+  margin-right: 20px;
+
+}
+#backGround >h1{
+display:inline-block;
+font-size: 65px;
+margin-right: 50px;
+}
+
+#navigation_bar{
+  background-color: #D3C3A9;
+  height: 50px;
+  margin: 0 5%;
+  border-radius: 0   0 100px 100px ;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 0px 2px 5px rgba(0,0,0, 0.5);
+}
+
+
+
+#navigation_bar .not_selected_page_button{
+  width: 100%;
+  border: 0;
+  font-weight: normal;
+  font-size: 16px;
+  background-color: #D3C3A9;
+  transition: background-color 300ms , color 300ms, border-bottom 300ms;
+  
+}
+
+#navigation_bar button:hover{
+  background-color: rgba(0, 0, 0, .1); 
+  color: white; 
+  cursor: pointer;
+  border-bottom:3px  white solid;
+
+}
+.borders{
+  border: 0.4px black solid;
+}
+#selected_page_button{
+  width: 100%;
+  border: 0;
+  font-weight: normal;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, .1);
+  color: white;
+  border-bottom: 2px white solid;
+  transition: all 100ms;
+}
+
+
+
+
+</style>
+
+<script>
+ admin_navigation= 
+ `<div id="backGround_image" >
+  <div id="backGround" class="borders">
+    <img id="project_logo"  src="{% static "/img/Logo.png" %}" alt="" onclick="navigateToPage('/admin/about/about.html')">
+    <h1>
+      R O M E
+    </h1>
+    <img id="account_logo" src="{% static "/img/R.png" %}" alt="" onclick="showpopup()">
+  </div>
+  <div id="black_line"></div>
+  <div id="navigation_bar" class="borders">
+    <button id="selected_page_button" style="border-radius: 0 0 0 50px;" onclick="navigateToPage('{% url 'books-list' %}')" >H O M E</button>
+    <button style="border-radius: 0 0 0 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'borrowed-books' %}')">
+      <pre>B O R R O W E D  
+B O O K S</pre>
+    </button>
+    <button style="border-radius: 0 0 0 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'statistics' %}')">
+ S T A T I S T I C S
+     </button>
+     <button style="border-radius: 0 0 50px 0;" class="not_selected_page_button"  onclick="navigateToPage('{% url 'about' %}')">A B O U T</button>  
+    </div> `;
+    
+    user_navigation=
+    ` <header>
+      <div id="backGround_image" >
+          <div id="backGround" class="borders">
+            <img id="project_logo" src="{% static "/img/Logo.png" %}" alt="" onclick="navigateToPage('/user/about/about.html')">
+            <h1 id="rome">
+              R O M E
+            </h1>
+            <img id="account_logo" src="{% static "/img/R.png" %}" alt="" onclick="showpopup()">
+          </div>
+          <div id="black_line"></div>
+          <div id="navigation_bar" class="borders">
+            <button style="border-radius: 0 0 0 50px;" id="selected_page_button" onclick="navigateToPage('{% url 'books-list' %}')">H O M E</button>
+            <button style="border-radius: 0 0 0 0;" id="my_book" class="not_selected_page_button" onclick="navigateToPage('{% url 'my-books-list' %}')">M Y  B O O K S</button>
+            <button style="border-radius: 0 0 50px 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'about' %}')">A B O U T</button>  
+          </div>  
+      </div>
+    </header>`;
+
+    not_loged=
+    `<header>
+      <div id="backGround_image" >
+          <div id="backGround" class="borders">
+            <img id="project_logo" src="{% static "/img/Logo.png" %}" alt="" onclick="navigateToPage('{% url 'about' %}')">
+            <h1 id="rome">
+              R O M E
+            </h1>
+            <img id="account_logo" src="{% static "/img/R.png" %}" alt="" onclick="showpopup()">
+          </div>
+          <div id="black_line"></div>
+          <div id="navigation_bar" class="borders">
+            <button style="border-radius: 0 0 0 50px;" id="selected_page_button" onclick="navigateToPage('{% url 'books-list' %}')">H O M E</button>
+            <button style="border-radius: 0 0 50px 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'about' %}')">A B O U T</button>  
+          </div>  
+      </div>
+    </header>`;
+
+    user =JSON.parse(sessionStorage.getItem('user'))
+    console.log(user)
+    if (user){
+      if(user.isAdmin=="True"){
+        document.write(admin_navigation);
+        } 
+        else{
+        document.write(user_navigation);
+        } 
+    }
+    else{
+     
+      document.write(not_loged);
+  
+    } 
+  
+</script>
+ 
+</div>

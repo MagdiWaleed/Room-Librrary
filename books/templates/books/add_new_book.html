@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static "books/css/add_new_book_style.css" %}">
+<script src="{% static "books/js/add_new_book_controller.js" %}" defer></script>
+{% endblock links %}
+
+
+{% block content %}
+<main><div style="height: 25px;"></div>
+    <h1>Enter The New Book Details:</h1>
+    <div style="height: 25px;"></div>
+  <div id="add_new_book_form">
+
+  <div class="row">
+  <div class="column">
+    <div class="text_textfield" >  <label for="" > Book name:</label>  <input type="text" id="input_book_name" placeholder="name" required><br></div>
+  <div style="height: 5px;"></div>
+  <div class="text_textfield">  <label for="" >Book author:</label> <input type="text" id="input_author_name" placeholder="author" required><br></div>
+  <div style="height: 5px;"></div>
+  <div class="text_textfield">  <label for="" >book catergory:</label> <input type="text" id="input_book_category" placeholder="Category" required><br></div>
+  <div style="height: 5px;"></div>
+  <div class="text_textfield">   <label for="" style="margin-bottom:auto;" >Description:</label><textarea name="Description" id="input_description" required cols="30" rows="10" ></textarea><br></div>
+  <div style="height: 10px;"></div> 
+  <div class="text_textfield">   <label for="" style="margin-bottom:auto;" >About Author:</label><textarea name="Description" id="input_about_author" required cols="30" rows="10" ></textarea><br></div>
+  <div style="height: 10px;"></div>
+  <div class="row" style="margin:50px"> 
+    <label style="margin: 0 50px">
+      <input type="radio" name="book_type" value="trending">
+      Trending Book
+    </label>
+    
+    <label>
+      <input type="radio" name="book_type" value="latest">
+      Latest Book
+  </label>
+  </div>
+ 
+  <button class="normal_button" id="done_button" onclick="addNewBook()">Create</button>
+  </div>
+  <div style="width: 5px;"></div>
+  <div class="column" style="max-width: 110px; margin-right: 5%;">
+     <div>Book image:           
+      <br/>
+    </div>   <input type="file"  id="image" accept="image/*"/>
+      <div style="margin-top: auto;"></div>
+      <button class="normal_button delete_button" id="delete_button" style="display: none;">Delete</button>
+      <div style="height: 10px;"></div>
+      <button class="normal_button">Cancel</button>
+    </div>
+  </div>
+
+  </div>
+
+   <div class="book_title"> 
+  <h2 class="book_name" id="book_name"> </h2>
+  <div style="height: 5px;"></div>
+  <h3 style="margin-left: 25px;">By: <span style="color: #7E7E7E; font-weight: normal; font-size: 14px;"> <h3 id="author_name" style="display: inline;">Author Name</h3></span></h3>
+</div>
+<div style="height: 10px;"></div>
+<div class="book_dis">
+<img src="/media/default-book-cover.jpg" alt="" id="book_image" class="book_img">
+  <div style="margin-top: 30px;">
+    <h2 >Discription:</h2>
+    <div style="height: 20px;"></div>
+    <p class="description_p" id="description">
+
+    </p>
+    
+    <h3 style="margin-top: 10px;">Category:</h3>
+    <p id="book_category"></p>
+    </div>
+  </div>
+</div>
+<div style="height: 20px;"></div>
+
+<div class="author_details">
+
+    <div>
+      <h2>About author:</h2>
+      <div style="height: 20px;"></div>
+      <p id="about_author">
+      </p>
+    </div>
+    
+</div>
+
+<div style="height: 20px;"></div>
+</main>
+{% endblock content %}

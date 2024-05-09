@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static "books/css/main_style.css" %}">
+<link rel="stylesheet" href="{% static "books/css/user/main.css" %}">
+<script src="{% static "books/js/main_controller.js" %}" defer></script>
+{% endblock links %}
+
+
+
+{% block content %}
+
+<script>
+  user_main_body=
+  `<main>
+    <div style="height: 50px;"></div>
+    <form id="popup" class="login">
+      <div id="signupForm" >
+        <div class="inputtext">
+          <input id = "user" class="txtinfo" placeholder="User name" required>
+          <input id = "pass" class="txtinfo" placeholder="Password" required>
+        </div>
+        <div style="display: block; " class="checkbox">
+          <input type ="checkbox" id="check" >
+          <label for="check" style="display: inline-block; " >Admin</p>
+        </div> 
+        <button type="submit" onclick="login()" class="btn">Log in</button>
+        <button type="button" class="closebtn" onclick="closepop()">X</button>
+      </div> <br>
+     
+      <a href="/login/signup/signupScreen.html" style="display: inline-block;">
+        <button class="next"> create account</button> 
+      </a>
+    </form>
+    <div class="hero-class">
+      <div>
+      <h1>Welcome back to Rome Library!</h1>
+    </div>
+
+    <div class="search_background">
+      <h3>Welcome to rome library , your journey to wisdom starts here  Enter a title, author, or genre and find the greatest picks of all time!.</h3>
+      <div style="height: 20px;"></div>
+     <div class="row">
+      <h1 class="big_text">
+        do you have something in your mind?
+      </h1>
+      <div class="search_bar">
+        <input type="text" id="search" placeholder="type it here. ">
+        <div style="height: 20px;"></div>
+        <button class="normal_button" onclick="search()">Search</button> 
+    </div>      
+     </div>
+    </div>
+  </div> 
+    <div style="height: 30px;"></div>
+    <div>
+      <h1 style="height: 30px;">Latest Books</h1>
+    </div>
+    <div class="bookshelves" id="latest">   
+      </div>
+      <br/>
+    <h1 style="height: 40px;">Trending Books</h1>
+    
+      <div class="bookshelves" id="trending">   
+       
+                     
+   </div>  
+   <div style="height: 30px;"></div> 
+
+  </main>
+  `;
+admin_main_body = 
+  `
+<main>
+    <div style="height: 50px;"></div>
+    <div id="search_card">
+      <input  type="text" id="search" name="search"  , placeholder="Search books, genres, artists...">
+      <div style="height: 10px;"></div>
+
+      <button class="normal_button" onclick="search()" >search</button>
+    </div>
+    <div style="height: 20px;"></div>
+    <div> 
+      <div class="row"><h1 style="height: 40px;">Latest Books</h1> 
+      <button class="normal_button edit_button" style="width:200px" onclick="navigateToPage('http://127.0.0.1:8000/books/latest')">Edit Latest</button>
+    </div>
+
+    
+    <div class="bookshelves" id="latest">  
+      
+    </div>
+<hr style="margin: 50px 0;">
+  <div>
+      <div class="row"><h1 style="height: 40px;">Trending Books</h1> 
+      <button class="normal_button edit_button" style="width:200px" onclick="navigateToPage('http://127.0.0.1:8000/books/trending')">Edit Trending</button>
+    </div>
+
+    <div class="bookshelves" id="trending">   
+    
+ </div>  
+ <div style="height: 20px;"> </div>
+  </main>
+  `;
+  user =JSON.parse(sessionStorage.getItem('user'));
+  if (user){
+     
+    if(user.isAdmin=="True"){
+      document.write(admin_main_body);
+      } 
+      
+      else{
+      document.write(user_main_body);
+      } 
+  }
+  else{
+   
+    document.write(user_main_body);
+
+  } 
+
+</script>
+
+
+
+
+
+
+{% endblock content %}

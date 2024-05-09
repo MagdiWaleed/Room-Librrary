@@ -41,6 +41,7 @@ def getBooksData(request):
             isborrowed='no'
         else:
             isborrowed='yes'
+        print("is borrowed for a book: ",isborrowed)
         item={
                 "title": str(book.title),
                 "description":str(book.description),
