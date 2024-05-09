@@ -36,6 +36,12 @@ def getBooksData(request):
     trending_data=[]
     latest_data=[]
     for book in books:
+        isborrowed =""
+        if book.user== None:
+            isborrowed='no'
+        else:
+            isborrowed='yes'
+        print("is borrowed for a book: ",isborrowed)
         item={
                 "title": str(book.title),
                 "description":str(book.description),
@@ -43,6 +49,7 @@ def getBooksData(request):
                 'author_name':str(book.author_name),
                 'about_author':str(book.about_author),
                 'id':str(book.id),
+                'isborrowed':str(isborrowed)
             }
         if book.book_type== "trending":    
            trending_data.append(item)
@@ -124,3 +131,23 @@ def getLatestBooks(request):
 def addEditBook(request):
     return render(request,'books/add_new_book.html')
 
+def addNewBook(request):
+    context={}
+    try:
+        if request.method=="POST":
+            book_name = request.POST["book_name"]
+            author_name = request.POST["author_name"]
+            description = request.POST["description"]
+            about_author = request.POST["about_author"]
+            book_category = request.POST["book_category"]
+            book_type = request.POST["book_type"]
+            book= Book(title=book_name,
+                    description=description,author_name=author_name,
+                    about_author=about_author,book_type=book_type,
+                        category=book_category)
+            book.save()
+            context={"data":"hase been created"}
+    except Exception as e:
+        context={"data":"something went wrong"}
+    
+    return JsonResponse(context)

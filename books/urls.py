@@ -9,6 +9,7 @@ from .views import (
     addEditBook,
     getTrendingBooks,
     getLatestBooks,
+    addNewBook,
     )
 
 urlpatterns = [
@@ -21,4 +22,6 @@ urlpatterns = [
     path('books/<pk>/',getSingleBook,name='single-book'),
     path("statistics/",getStatistics,name="statistics"),
     path("about/",getAbout, name='about'),
+    path("books/add-edit-book/add-new-book",addNewBook,name="add-new-book"),
+
 ]

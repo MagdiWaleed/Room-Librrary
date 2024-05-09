@@ -18,5 +18,4 @@ urlpatterns = [
     path('books-number',numBooks,name="books-number"),
     path("my-books/",myBookList, name='my-books-list'),
     path("my-books-data",getMyBooks, name='my-books-data'),
-
 ]

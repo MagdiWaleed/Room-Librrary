@@ -3,8 +3,13 @@ function navigateToPage(url){
 }
   
 function goToSingleBook(id){
+    user= sessionStorage.getItem("user")
+    if(user){
         window.location.href= `http://127.0.0.1:8000/books/${id}`
-  }
+    }  else{
+        showpopup()
+    }
+   }
   
 function showpopup(){
    user = JSON.parse(sessionStorage.getItem('user'))

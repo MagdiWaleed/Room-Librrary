@@ -1,8 +1,4 @@
 
-function goToSingleBook(id){
-  console.log(id)
-     window.location.href= `http://127.0.0.1:8000/books/${id}`
-}
 
 bookShelves= document.getElementById("bookshelves")
 

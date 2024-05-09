@@ -111,3 +111,49 @@ fileInput.addEventListener('change', function(event) {
   }
 });
 
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+
+function addNewBook() {
+  book_name = document.getElementById('book_name').innerHTML
+  author_name = document.getElementById('author_name').innerHTML
+  description = document.getElementById('description').innerHTML
+  about_author = document.getElementById('about_author').innerHTML
+  book_category = document.getElementById('book_category').innerHTML
+  var book_type = document.querySelector('input[name="book_type"]:checked').value;
+  var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
+  $.ajax({
+      type: 'POST',
+      url: "add-new-book",
+      data: {
+        book_name : book_name,
+        author_name : author_name,
+        description : description,
+        about_author : about_author,
+        book_category : book_category,
+        book_type : book_type,
+          csrfmiddlewaretoken: csrfToken,
+      },
+      success: function(response) {
+         if(response.data=="hase been created"){
+          alert(book_name+" has been created")
+         }
+      },
+      error: function(error) {
+          console.log("error ", error);
+      }
+  });
+}
