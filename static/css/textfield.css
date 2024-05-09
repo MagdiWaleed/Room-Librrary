@@ -1,0 +1,12 @@
+
+
+input[type="text"],input[type="email"],input[type="password"],textarea{
+    /* width: 300px; */
+    max-width:300px;
+    padding: 8px 70px;
+    background-color:  #ece3c5;
+    border: 1px solid black; 
+    border-radius: 5px; 
+    box-shadow: 0px 2px 5px rgba(0,0,0, 0.1);
+  }
+ 
