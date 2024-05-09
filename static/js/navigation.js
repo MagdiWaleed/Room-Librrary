@@ -38,9 +38,9 @@ function getCookie(name) {
 }
 
 function login() {
-    var username = $('#user').val();
-    var password = $('#pass').val();
-    var isAdmin = $('#check').is(':checked');
+    var username = document.getElementById('user').value;
+    var password = document.getElementById('pass').value;
+    var isAdmin = document.getElementById('check').checked;
     var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
     $.ajax({
         type: 'POST',
@@ -58,6 +58,7 @@ function login() {
             }else{
                 console.log(response.data)
                 sessionStorage.setItem("user",JSON.stringify(response.data))
+                window.location.href="http://127.0.0.1:8000/";
             }
         },
         error: function(error) {
