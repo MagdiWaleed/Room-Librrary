@@ -5,6 +5,8 @@ from .views import (
     getMembersBooks,
     getUserBooks,
     getAuthorBooks,
+    searchingAboutUsers,
+    searchingAboutAuthors,
     )
 
 urlpatterns = [
@@ -13,4 +15,6 @@ urlpatterns = [
     path('<members>/',getMembersBooks, name="get-members"),
     path("users/<id>/",getUserBooks,name="single-user"),
     path('authors/<author_name>/',getAuthorBooks,name="single-author"),
+    path("users/searching/<searchingText>/",searchingAboutUsers,name="searching-about-users"),
+    path("authors/searching/<searchingText>/",searchingAboutAuthors,name="searching-about-author"),
 ]

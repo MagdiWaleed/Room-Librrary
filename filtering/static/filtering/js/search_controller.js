@@ -68,7 +68,12 @@ function getTheTextForSearching(){
 function search(){
 textString=document.getElementById("search").value;
 sessionStorage.setItem("search",textString);
-window.location.href=`http://127.0.0.1:8000/filtering/searching/${textString}`;
+
+if (textString.length==0){
+}
+else{
+  window.location.href=`http://127.0.0.1:8000/filtering/searching/${textString}`;
+}
 }
 
 getTheTextForSearching()
