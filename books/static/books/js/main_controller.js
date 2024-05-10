@@ -106,7 +106,14 @@
   function search(){
     searchText= document.getElementById("search").value;
     sessionStorage.setItem("search",searchText);
-    window.location.href=`http://127.0.0.1:8000/filtering/searching/${searchText}`;
+    
+    if (searchText.length==0){
+
+    }
+    else{
+      
+      window.location.href=`http://127.0.0.1:8000/filtering/searching/${searchText}`;
+    }
   }
   
 

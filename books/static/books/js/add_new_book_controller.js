@@ -94,7 +94,7 @@ inputField5.addEventListener('input',function(){
     outputElement5.innerText=inputField5.value;
 });
 
-var fileInput = document.getElementById('image_input');
+var fileInput = document.getElementById('image');
 var image = document.getElementById('book_image');
 
 fileInput.addEventListener('change', function(event) {
@@ -127,33 +127,36 @@ function getCookie(name) {
   return cookieValue;
 }
 
-function addNewBook() {
-  book_name = document.getElementById('book_name').innerHTML
-  author_name = document.getElementById('author_name').innerHTML
-  description = document.getElementById('description').innerHTML
-  about_author = document.getElementById('about_author').innerHTML
-  book_category = document.getElementById('book_category').innerHTML
-  var book_type = document.querySelector('input[name="book_type"]:checked').value;
-  var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
-  $.ajax({
-      type: 'POST',
-      url: "add-new-book",
-      data: {
-        book_name : book_name,
-        author_name : author_name,
-        description : description,
-        about_author : about_author,
-        book_category : book_category,
-        book_type : book_type,
-          csrfmiddlewaretoken: csrfToken,
-      },
-      success: function(response) {
-         if(response.data=="hase been created"){
-          alert(book_name+" has been created")
-         }
-      },
-      error: function(error) {
-          console.log("error ", error);
-      }
+document.addEventListener("DOMContentLoaded", function () {
+  var form = document.querySelector("form");
+
+  form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var formData = new FormData();
+      formData.append('book_name', document.getElementById('input_book_name').value);
+      formData.append('book_description', document.getElementById('input_description').value);
+      formData.append('author_name', document.getElementById('input_author_name').value);
+      formData.append('about_author', document.getElementById('input_about_author').value);
+      formData.append('category', document.getElementById('input_book_category').value);
+      formData.append('image', document.getElementById('image').files[0]);
+      formData.append('book_type', document.getElementById('trending_radio').checked ? 'trending' : 'latest');
+
+     
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+              if (xhr.status === 200) {
+                  alert(xhr.responseText);
+                  location.reload();
+              } else {
+                  alert('Error: ' + xhr.statusText);
+                  location.reload();
+              }
+          }
+      };
+
+      xhr.open("POST", form.action);
+      xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+      xhr.send(formData);
   });
-}
+});

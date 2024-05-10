@@ -82,7 +82,22 @@ def getMembersBooks(request,members):
                 "numBooks":str(len(books))
             }
             data.append(item)
-    context={"data":data}
+    for t in range(len(data)):
+        if t%2==0:
+            data[t]["isEven"]="True"
+        else:
+            data[t]["isEven"]="False"
+    if members=="users":
+        context= {
+            "data":data,
+            "userType":"users"
+            }
+    else:
+        context= {
+            "data":data,
+            "userType":"authors"
+            }
+    print(context)
     return render(request,"filtering/users_authors.html",context)
 
 def getUserBooks(request,id):
@@ -127,3 +142,48 @@ def getAuthorBooks(request,author_name):
             "memberName": str(author_name),
                }
     return render(request,"filtering/single_user_author.html",context)
+
+def searchingAboutUsers(request,searchingText):
+    data=[]
+    users= ProfileModel.objects.filter(username__icontains=searchingText)
+    for user in users:
+        books=Book.objects.filter(user=user)
+        item={
+            "memberid":str(user.id),
+            "membername":str(user.username),
+            "numBooks":str(len(books))
+        }
+        data.append(item)
+    for t in range(len(data)):
+        if t%2==0:
+            data[t]["isEven"]="True"
+        else:
+            data[t]["isEven"]="False"
+    context= {"data":data}
+    return render(request,"filtering/users_authors.html",context) 
+
+def searchingAboutAuthors(request,searchingText):
+    print("this is the lenght of ur list")
+
+    data=[]
+    books= Book.objects.filter(author_name__icontains=searchingText)
+    authors=[]
+    for book in books:
+        authors.append(book.author_name)
+    authors = list(set(authors))
+    for author in authors:
+        books=Book.objects.filter(author_name =author)
+        item={
+            "memberid":"#",
+            "membername":str(author),
+            "numBooks":str(len(books))
+        }
+        data.append(item)
+    print("data")
+    for t in range(len(data)):
+        if t%2==0:
+            data[t]["isEven"]="True"
+        else:
+            data[t]["isEven"]="False"
+    context= {"data":data}
+    return render(request,"filtering/users_authors.html",context) 

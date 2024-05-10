@@ -8,10 +8,6 @@ def myProfile(request):
   
     return render(request, 'profileModel/my_information.html',  )
 
-
-def register(request):
-    return render(request, 'registration/register.html')
-
 def login(request):
     context={}
     if request.method=="POST":
@@ -38,8 +34,12 @@ def login(request):
     print(context)       
     return JsonResponse(context)
 
-def logout(request):
-    return redirect('login')  # Redirect to login page after logout
+def deleteAccount(request):
+    if request.method=="POST":
+        user_id= request.POST["user_id"]
+        print(user_id)
+        ProfileModel.objects.filter(pk=user_id).delete()
+    return JsonResponse({"data": "Your account has been removed"})
 
 def numBooks(request):
     context={}
@@ -77,3 +77,62 @@ def getMyBooks(request):
         }
     return JsonResponse(context)
 
+def borrowed_book(request):
+    context={}
+    if request.method == "POST":
+        user_id = request.POST["user_id"]
+        book_id = request.POST["book_id"]
+        book = Book.objects.get(pk=book_id)
+        user = ProfileModel.objects.get(pk=user_id)
+        book.user = user
+        book.save()
+        context={"data":"success"}
+    return JsonResponse(context)
+
+def unborrowed_book(request):
+    context={}
+    if request.method == "POST":
+        book_id = request.POST["book_id"]
+        print("this is the id for the book",book_id)
+        book = Book.objects.get(pk=book_id)
+        book.user = None
+        book.save()
+        context={"data":"success"}
+    return JsonResponse(context)
+
+def signup(request):
+    return render(request,"profileModel/signup.html")
+
+
+
+def registerNewUser(request):
+    context={}
+    if request.method=="POST":
+        username=request.POST["username"]
+        password=request.POST["password"]
+        email=request.POST["email"]
+        isAdmin=request.POST["isAdmin"]
+        print(isAdmin)
+        if isAdmin=="false":
+            isAdmin=False
+        else:
+            isAdmin= True
+            print(isAdmin)
+        newUser= ProfileModel(
+            username=username,
+            password=password,
+            email=email,
+            is_admin=isAdmin,    
+            )
+        
+        newUser.save()
+        context={
+            "data":{
+                "id":str(newUser.id),
+                "username":str(username),
+                "password":str(password),
+                "email":str(email),
+                "isAdmin":str(isAdmin),
+            }
+        }   
+    return JsonResponse(context)

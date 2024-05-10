@@ -11,6 +11,7 @@ from .views import (
     getTrendingBooks,
     getLatestBooks,
     addNewBook,
+    getSingleBookUserId,
     )
 
 urlpatterns = [
@@ -25,5 +26,5 @@ urlpatterns = [
     path("statistics/",getStatistics,name="statistics"),
     path("about/",getAbout, name='about'),
     path("books/add-edit-book/add-new-book",addNewBook,name="add-new-book"),
-
+    path("books/<pk>/single-book-user-id",getSingleBookUserId,name="single-book-user-id")
 ]
