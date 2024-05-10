@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static "profileModel/css/my_information_style.css" %}">
+<script src="{% static "profileModel/js/my_information_controller.js" %}" defer></script>
+{% endblock links %}
+
+{% block content %}
+<div style="height: 30px;"></div>
+      <script>
+        admin_my_information=`
+        <main>
+          <div style="height: 30px;"></div>
+    
+          <form class="user-info-form">
+            <div class="form-section" style="margin-bottom: 15px;">
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="name">
+            </div>
+            <div class="form-section" style="margin-bottom: 15px;">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email">
+            </div>
+            <div class="form-section" style="margin-bottom: 15px;">
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" style="margin-right: 20px;">
+            </div>
+            <div class="form-section" style="margin-bottom: 15px;">
+              <label for="password">Confirm 
+                Password:</label>
+              <input type="password" id="confpassword" name="password" style="margin-right: 20px;">
+            </div>
+          </form> 
+          
+            <div style="height: 15px;"></div>
+            <button class="normal_button" id="user_mode_button" onclick="">Enter User Mode</button>
+           <div style="height: 15px;"></div>
+            <div class="buttons">
+            <button class="normal_button" onclick="save_change()">Save Change</button>
+            <div style="width: 15px;"></div>
+            <button class="borders_button" onclick="logout()">Log Out</button>
+           </div>
+           <div style="height: 15px;"></div>
+           <button class="normal_button"  onclick="delete_acc()">Delete Account</button>
+           <div style="height: 30px;"></div>
+       </main>
+        `;
+        user_my_information=`
+        <main>  
+          <div class="NumOfBorrowed">
+            <p># Of Borrowed Books :</p>
+            <p id="numMyBooks"></p>
+          </div>
+          <div style="height: 20px;"></div>
+          <form class="user-info-form">
+            <div class="form-section" style="margin-bottom: 15px;">
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="name">
+            </div>
+            <div class="form-section" style="margin-bottom: 15px;">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email">
+            </div>
+            <div class="form-section" style="margin-bottom: 15px;">
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" style="margin-right: 20px;">
+            </div>
+            <div class="form-section" style="margin-bottom: 15px;">
+              <label for="password">Confirm 
+                Password:</label>
+              <input type="password" id="confpassword" name="password" style="margin-right: 20px;">
+            </div>
+          </form> 
+          
+          <div style="height: 15px;"></div>
+          <button class="normal_button" id="logout" onclick="logout()">Log Out</button>
+           
+          <div style="margin-top: 15px;" class="buttons">
+              <button type="submit" class="normal_button" onclick="save_change()">Save Changes</button>
+              <span style="width: 20px;"></span>
+              <button class="borders_button"  onclick="delete_acc()">Delete Account</button></a>
+            </div>
+            <div style="height: 50px;"></div>
+         
+          </main>
+        `;
+        
+        user_mode_my_information=`
+        <main>  
+          <div class="NumOfBorrowed">
+            <p># Of Borrowed Books :</p>
+            <p>50</p>
+          </div>
+          <div style="height: 20px;"></div>
+          <form class="user-info-form">
+            <div class="form-section" style="margin-bottom: 15px;">
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="name">
+            </div>
+            <div class="form-section" style="margin-bottom: 15px;">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email">
+            </div>
+            <div class="form-section" style="margin-bottom: 15px;">
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" style="margin-right: 20px;">
+            </div>
+            <div class="form-section" style="margin-bottom: 15px;">
+              <label for="password">Confirm 
+                Password:</label>
+              <input type="password" id="confpassword" name="password" style="margin-right: 20px;">
+            </div>
+           
+          </form> 
+          
+          <div style="height: 15px;"></div>
+          <button class="normal_button" id="end_user_mode_button" onclick="endUseerMode()">End User Mode</button>
+            
+           <div style="margin-top: 15px;" class="buttons">
+              <button type="submit" class="normal_button" onclick="save_change()">Save Changes</button>
+              <span style="width: 20px;"></span>
+              <button class="borders_button"  onclick="delete_acc()">Delete Account</button></a>
+            </div>
+            <div style="height: 50px;"></div>
+         
+          </main>
+        `;
+
+        user = JSON.parse(sessionStorage.getItem('user'));
+        user_mode = sessionStorage.getItem('user_mode');
+       
+           console.log(user.isAdmin)
+          if(user.isAdmin=="True"){
+            
+            document.write(admin_my_information);
+            }
+            else{
+              if(user_mode){
+                document.write(user_mode_my_information)
+              }
+              else{
+                 document.write(user_my_information);
+               } 
+            }   
+        
+
+      </script>
+        
+   
+{% endblock content %}

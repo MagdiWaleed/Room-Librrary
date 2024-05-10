@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static "books/css/books_screen.css" %}">
+<script src="{% static "books/js/books_screen_controller.js" %}" defer></script>
+{% endblock links %}
+
+{% block content %}
+<main>
+        
+    <div style="height: 30px;"></div>
+    
+    <h1 id="pageHeader">Editing {{filter}}</h1>
+  
+      <div class="bookshelves">   
+          
+          <div class="borrowed_books" style="cursor: pointer;" onclick="addNewBook()">
+              <div style="position: relative;">
+             </div >
+                <h2 class="BORROWED add_one_card">ADD ONE</h2>
+              </div>
+        {% for book in data  %}
+        <div class="book_details" onclick="goToSingleBook({{book.id}})">
+            <img src="/media/{{book.img}}" alt="IMAGE-NOT-FOUND" class="book_image" >
+            <h4>{{book.title}}</h4>
+            <p>By: {{book.author_name}}</p>
+        </div>
+        {% endfor %}
+
+     </div>   
+  <br>
+    
+  </main>
+{% endblock content %}
