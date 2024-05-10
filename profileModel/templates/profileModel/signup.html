@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block links %}
+<script src={% static "profileModel/js/signup_controller.js" %} defer></script>
+<link rel="stylesheet" href="{% static "profileModel/css/signup_style.css" %}">
+{% endblock links %}
+
+
+{% block content %}
+<main >
+    <div >
+      <img src= "{% static "/img/Logo.png" %}" class="conteinr">
+        <div class="formcont">
+          <div class="inputtext">
+            <input type ="text" class="info" id = "user"placeholder="username" required>
+            <input type ="password" class="info" id = "pass" placeholder="password" required>
+            <input type ="password" class="info" id ="confpass" placeholder="confirm password" required>
+            <input type ="text" class="info" id = "mail" placeholder="email" required>
+          </div>
+          <div style="display: block; " class="checkbox">
+            <input type ="checkbox" id = "check" >
+            <label for="check">Admin</label>
+          </div>
+          <br>
+          <a href="#" style="display: block;" id ="link">
+            <button class="next" id = "signbtn" onclick="signpress()"> Sign up</button>
+          </a> 
+        </div>
+  
+        
+      </img> 
+    </div>
+</main>
+
+{% endblock content %}

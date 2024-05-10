@@ -1,0 +1,112 @@
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+  
+
+  function fetch_data(){
+    bookCardsList=[]
+    $.ajax({
+      type: 'GET',
+      url: "single-book-user-id",
+      success:function(response){
+        data= response.data
+        sessionStorage.setItem("book_id",data.book_id)
+        user=JSON.parse(sessionStorage.getItem("user"))
+        if(user.isAdmin=="True"){
+            document.getElementById("borrowed_unborrowed").innerHTML=`
+            <div style="display: flex; justify-content: right; ">
+            <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="">Edit This Book</button>
+            </div>` 
+        }else{
+            if(data.user_id==user.id){
+                
+                document.getElementById("borrowed_unborrowed").innerHTML=`
+                <div style="display: flex; justify-content: right; ">
+                <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="unborrowed_book()">Unborrowed This Book</button>
+                </div>` 
+            }else{
+                document.getElementById("borrowed_unborrowed").innerHTML=`
+                <div style="display: flex; justify-content: right; ">
+                <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="borrowed_book()">Borrowed This Book</button>
+                </div>`;
+                }
+        }
+    },
+      error:function(error){
+          console.log("error", error);
+      }
+  })
+
+}
+
+
+function borrowed_book(){
+    user= JSON.parse(sessionStorage.getItem("user"))
+    book_id= sessionStorage.getItem("book_id")
+
+    var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
+    $.ajax({
+        type: 'POST',
+        url: "/profile/borrowed-book",
+        data: {
+          user_id : user.id,
+          book_id : book_id,
+          csrfmiddlewaretoken: csrfToken,
+        },
+        success: function(response) {
+          alert("you have borrowed this book","have fun")
+          document.getElementById("borrowed_unborrowed").innerHTML=`
+          <div style="display: flex; justify-content: right; ">
+          <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="unborrowed_book()">Unborrowed This Book</button>
+          </div>` ;
+        },
+        error: function(error) {
+            console.log("error ", error);
+        }
+    });
+}
+function unborrowed_book(){
+    book_id= sessionStorage.getItem("book_id")
+    var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
+    $.ajax({
+        type: 'POST',
+        url: "/profile/unborrowed-book",
+        data: {
+          book_id : book_id,
+          csrfmiddlewaretoken: csrfToken,
+        },
+        success: function(response) {
+          console.log(response.data)
+          document.getElementById("borrowed_unborrowed").innerHTML=`
+          <div style="display: flex; justify-content: right; ">
+          <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="borrowed_book()">Borrowed This Book</button>
+          </div>`;
+        },
+        error: function(error) {
+            console.log("error ", error);
+        }
+    });
+}
+
+// function action(book){
+//     if(book.user.id==user.id){
+//         borrowed_book(book.id)
+//     }else{
+
+//     }
+// }
+
+
+fetch_data()

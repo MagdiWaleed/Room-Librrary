@@ -25,14 +25,12 @@
           <input type ="checkbox" id="check" >
           <label for="check" style="display: inline-block; " >Admin</p>
         </div> 
-        <button type="submit" onclick="login()" class="btn">Log in</button>
+        <button type="button" onclick="login()" class="btn">Log in</button>
         <button type="button" class="closebtn" onclick="closepop()">X</button>
       </div> <br>
-     
-      <a href="/login/signup/signupScreen.html" style="display: inline-block;">
-        <button class="next"> create account</button> 
-      </a>
-    </form>
+    <button class="next" onclick="goToSignup()"> create account</button> 
+  </form>
+    
     <div class="hero-class">
       <div>
       <h1>Welcome back to Rome Library!</h1>
@@ -102,7 +100,9 @@ admin_main_body =
  <div style="height: 20px;"> </div>
   </main>
   `;
+
   user =JSON.parse(sessionStorage.getItem('user'));
+  console.log(user)
   if (user){
      
     if(user.isAdmin=="True"){

@@ -59,6 +59,27 @@ function logout(){
     window.location.href="http://127.0.0.1:8000/"
 }
 
+function delete_acc(){
+    user = JSON.parse(sessionStorage.getItem("user"))
+    $.ajax({
+        type: 'POST',
+        url: "/profile/delete-account",
+        data: {
+            user_id: user.id,
+            csrfmiddlewaretoken: getCookie('csrftoken'),
+        },
+        success: function(response) {
+            alert(response.data)
+            sessionStorage.removeItem("user")
+            window.location.href="http://127.0.0.1:8000/"
+        },
+        error: function(error) {
+            console.log("error ", error);
+        }
+    });
+}
+
+
 
 numMyBooks()
 fetchData()

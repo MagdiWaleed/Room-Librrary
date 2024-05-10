@@ -5,6 +5,7 @@ function navigateToPage(url){
 function goToSingleBook(id){
     user= sessionStorage.getItem("user")
     if(user){
+        sessionStorage.setItem("book",id)
         window.location.href= `http://127.0.0.1:8000/books/${id}`
     }  else{
         showpopup()
@@ -37,9 +38,9 @@ function getCookie(name) {
 }
 
 function login() {
-    var username = $('#user').val();
-    var password = $('#pass').val();
-    var isAdmin = $('#check').is(':checked');
+    var username = document.getElementById('user').value;
+    var password = document.getElementById('pass').value;
+    var isAdmin = document.getElementById('check').checked;
     var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
     $.ajax({
         type: 'POST',
@@ -57,6 +58,7 @@ function login() {
             }else{
                 console.log(response.data)
                 sessionStorage.setItem("user",JSON.stringify(response.data))
+                window.location.href="http://127.0.0.1:8000/";
             }
         },
         error: function(error) {
@@ -69,4 +71,8 @@ function closepop(){
     console.log('wrong');
     let pop_up = document.getElementById("popup");
     pop_up.classList.remove("open-popup");
+}
+
+function goToSignup(){
+    window.location.href="http://127.0.0.1:8000/profile/signup"
 }
