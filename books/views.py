@@ -2,6 +2,11 @@ from django.shortcuts import render
 from .models import Book
 from django.http import JsonResponse 
 from profileModel.models import ProfileModel 
+from django.utils.timezone import now
+from django.conf import settings
+from django.core.exceptions import ValidationError
+
+import os
 
 
 # Create your views here.
@@ -132,26 +137,58 @@ def getLatestBooks(request):
 def addEditBook(request):
     return render(request,'books/add_new_book.html')
 
+from django.utils.timezone import now
+import os
+
 def addNewBook(request):
-    context={}
-    try:
-        if request.method=="POST":
-            book_name = request.POST["book_name"]
-            author_name = request.POST["author_name"]
-            description = request.POST["description"]
-            about_author = request.POST["about_author"]
-            book_category = request.POST["book_category"]
-            book_type = request.POST["book_type"]
-            book= Book(title=book_name,
-                    description=description,author_name=author_name,
-                    about_author=about_author,book_type=book_type,
-                        category=book_category)
-            book.save()
-            context={"data":"hase been created"}
-    except Exception as e:
-        context={"data":"something went wrong"}
-    
-    return JsonResponse(context)
+    if request.method == 'POST':
+        try:
+            data_dict = request.POST.dict()
+            book_name = data_dict.get('book_name')
+            book_description = data_dict.get('book_description')
+            author_name = data_dict.get('author_name')
+            about_author = data_dict.get('about_author')
+            category = data_dict.get('category')
+            image = request.FILES.get('image')
+            book_type = data_dict.get('book_type')
+
+            print("data_dict: ", data_dict)
+            print("book_name: ", book_name)
+            print("book_description: ", book_description)
+            print("author_name: ", author_name)
+            print("about_author: ", about_author)
+            print("category: ", category)
+            print("image: ", image)
+
+            if not book_name or not book_description or not author_name or not about_author or not category:
+                raise ValidationError('Missing required fields.')
+
+            new_book = Book.objects.create(
+                title=book_name,
+                description=book_description,
+                author_name=author_name,
+                about_author=about_author,
+                category=category,
+                book_type=book_type,
+            )
+
+            if image:
+                # Save the image to the media folder with date components in the path
+                current_time = now()
+                image_folder = os.path.join(settings.MEDIA_ROOT, 'books', str(current_time.strftime('%Y'))[2:], str(current_time.strftime('%m')), str(current_time.strftime('%d')))
+                os.makedirs(image_folder, exist_ok=True)  # Create folder if it doesn't exist
+                image_path = os.path.join(image_folder, image.name)
+                with open(image_path, 'wb+') as destination:
+                    for chunk in image.chunks():
+                        destination.write(chunk)
+                # Update the new_book object with image path
+                new_book.img = os.path.join('books', str(current_time.strftime('%Y'))[2:], str(current_time.strftime('%m')), str(current_time.strftime('%d')), image.name)
+                new_book.save()
+
+            return JsonResponse({'status': 'success', 'message': 'Book added successfully'})
+        except (ValidationError, Exception) as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+
 
 def getSingleBookUserId(request,pk):
     
