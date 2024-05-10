@@ -1,9 +1,0 @@
-
-.add_one_card{
-    transition: all 300ms;
-}
-.borrowed_books:hover .add_one_card {
-    background-color: #251c0e;
-    font-size: 25px;
-}
-  
