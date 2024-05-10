@@ -75,6 +75,7 @@ def getSingleBook(request,pk):
     }
     return render(request,'books/single_book.html',{'data':data})
 
+
 def getAbout(request):
     return render(request,'pages/about.html')
 
@@ -130,6 +131,20 @@ def getLatestBooks(request):
 
 def addEditBook(request):
     return render(request,'books/add_new_book.html')
+
+
+def getBookForEdit(request,pk):
+    print("this is the primary key" ,pk)
+    obj = Book.objects.get(pk=pk)
+    data={
+        'id': str(obj.id),
+        'title': str(obj.title),
+        "description":str(obj.description),
+        'img': str(obj.img),
+        'author_name':str(obj.author_name),
+        'about_author':str(obj.about_author),
+    }
+    return render(request,'books/edit_single_book.html',{'data':data})
 
 def addNewBook(request):
     context={}
