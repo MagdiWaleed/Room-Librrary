@@ -54,7 +54,7 @@ function login() {
         success: function(response) {
             console.log("success ", response.data);
             if(response.data== "no member"){
-                alert("username or password is wrong")
+                alert("wrong entries")
             }else{
                 console.log(response.data)
                 sessionStorage.setItem("user",JSON.stringify(response.data))
