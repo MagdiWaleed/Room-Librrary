@@ -34,8 +34,8 @@
           </form> 
           
             <div style="height: 15px;"></div>
-            <button class="normal_button" id="user_mode_button" onclick="">Enter User Mode</button>
-           <div style="height: 15px;"></div>
+            <button class="normal_button" onclick="userMode()">Enter User Mode</button>
+            <div style="height: 15px;"></div>
             <div class="buttons">
             <button class="normal_button" onclick="save_change()">Save Change</button>
             <div style="width: 15px;"></div>
@@ -115,18 +115,12 @@
           </form> 
           
           <div style="height: 15px;"></div>
-          <button class="normal_button" id="end_user_mode_button" onclick="endUseerMode()">End User Mode</button>
-            
-           <div style="margin-top: 15px;" class="buttons">
-              <button type="submit" class="normal_button" onclick="save_change()">Save Changes</button>
-              <span style="width: 20px;"></span>
-              <button class="borders_button"  onclick="delete_acc()">Delete Account</button></a>
-            </div>
+          <button class="normal_button" id="end_user_mode_button" onclick="endUserMode()">End User Mode</button>
             <div style="height: 50px;"></div>
          
           </main>
         `;
-
+          
         user = JSON.parse(sessionStorage.getItem('user'));
         user_mode = sessionStorage.getItem('user_mode');
        
@@ -146,6 +140,4 @@
         
 
       </script>
-        
-   
 {% endblock content %}

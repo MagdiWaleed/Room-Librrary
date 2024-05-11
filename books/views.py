@@ -69,7 +69,6 @@ def getBooksData(request):
 
 def getSingleBook(request,pk):
     print("this is the primary key" ,pk)
-    request.session['singlebook'] = pk
     obj = Book.objects.get(pk=pk)
     data={
         'id': str(obj.id),
@@ -142,8 +141,7 @@ def addEditBook(request):
 from django.utils.timezone import now
 import os
 
-def getBookForEdit(request):
-    pk = request.session.get('singlebook')
+def getBookForEdit(request,pk):
     print("this is the primary key" ,pk)
     obj = Book.objects.get(pk=pk)
     data={

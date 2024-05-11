@@ -44,8 +44,11 @@ function numMyBooks(){
             csrfmiddlewaretoken: getCookie('csrftoken'),
         },
         success: function(response) {
-            document.getElementById("numMyBooks").innerHTML=response.data
-            
+           try{
+             document.getElementById("numMyBooks").innerHTML=response.data
+            }catch(e){
+                console.log(e)
+            }
         },
         error: function(error) {
             console.log("error ", error);
@@ -79,7 +82,26 @@ function delete_acc(){
     });
 }
 
+function userMode(){
+    user = JSON.parse(sessionStorage.getItem("user"))
+    admin = user 
+    admin.username = "admin"
+    admin.password = "admin"
+    admin.email = "admin@gmail.com"
+    admin.isAdmin="False"
+    sessionStorage.setItem("admin",JSON.stringify(user))
+    sessionStorage.setItem("user",JSON.stringify(admin))
+    sessionStorage.setItem("user_mode","enable")
+    window.location.href="http://127.0.0.1:8000/"
+}
 
+function endUserMode(){
+    adminData= sessionStorage.getItem("admin")
+    sessionStorage.setItem("user",adminData)
+    alert(adminData)
+    sessionStorage.removeItem("user_mode")
+    window.location.href="http://127.0.0.1:8000/"
+}
 
 numMyBooks()
 fetchData()
