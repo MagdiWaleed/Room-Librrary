@@ -33,9 +33,9 @@
         <br/>
       </div>   <input type="file"  id="image_input" accept="image/*"/>
         <div style="margin-top: auto;"></div>
-        <button class="normal_button delete_button" id="delete_button" onclick="deleteThisBook" >Delete</button>
+        <button class="normal_button delete_button" id="delete_button" onclick="deleteThisBook(data.id)" >Delete</button>
         <div style="height: 10px;"></div>
-        <button class="normal_button">Cancel</button>
+        <button class="normal_button" onclick= "navigateToPage('http://127.0.0.1:8000')">Cancel</button>
       </div>
     </div>
     </div>
@@ -44,7 +44,7 @@
    <div class="book_title"> 
   <h2 class="book_name" id="book_name">{{data.title}} </h2>
   <div style="height: 5px;"></div>
-  <h3 style="margin-left: 25px;">By: <span style="color: #7E7E7E; font-weight: normal; font-size: 14px;"> <h3 id="author_name" style="display: inline;">Author Name</h3></span></h3>
+  <h3 style="margin-left: 25px;">By: <span style="color: #7E7E7E; font-weight: normal; font-size: 14px;"> <h3 id="author_name" style="display: inline;">{{data.author_name}} </h3></span></h3>
 </div>
 <div style="height: 10px;"></div>
 <div class="book_dis">
@@ -53,11 +53,11 @@
     <h2 >Discription:</h2>
     <div style="height: 20px;"></div>
     <p class="description_p" id="description">
-
+      {{data.description}}
     </p>
     
     <h3 style="margin-top: 10px;">Category:</h3>
-    <p id="book_category"></p>
+    <p id="book_category">  {{data.category}}</p>
     </div>
   </div>
 </div>
@@ -69,6 +69,7 @@
       <h2>About author:</h2>
       <div style="height: 20px;"></div>
       <p id="about_author">
+        {{data.about_author}}
       </p>
     </div>
     

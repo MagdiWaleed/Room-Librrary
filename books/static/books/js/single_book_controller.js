@@ -27,7 +27,7 @@ function getCookie(name) {
         if(user.isAdmin=="True"){
             document.getElementById("borrowed_unborrowed").innerHTML=`
             <div style="display: flex; justify-content: right; ">
-            <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="">Edit This Book</button>
+            <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="editThisBook(${data.book_id})">Edit This Book</button>
             </div>` 
         }else{
             if(data.user_id==user.id){
@@ -110,3 +110,7 @@ function unborrowed_book(){
 
 
 fetch_data()
+
+function editThisBook(id) {
+    window.location.href = `http://127.0.0.1:8000/books/edit-book/${id}`;
+  }

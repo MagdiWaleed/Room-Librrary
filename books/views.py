@@ -148,11 +148,16 @@ def getBookForEdit(request,pk):
         'id': str(obj.id),
         'title': str(obj.title),
         "description":str(obj.description),
+        "category":str(obj.category),
         'img': str(obj.img),
         'author_name':str(obj.author_name),
         'about_author':str(obj.about_author),
     }
     return render(request,'books/edit_single_book.html',{'data':data})
+def deleteBook(request, pk):
+    obj = Book.objects.get(pk=pk)
+    obj.delete()
+    return render(request,'books/main.html')
 def addNewBook(request):
     if request.method == 'POST':
         try:

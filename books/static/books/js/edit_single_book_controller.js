@@ -1,6 +1,5 @@
 
-
-  var inputField = document.getElementById('input_book_name');
+var inputField = document.getElementById('input_book_name');
 var outputElement = document.getElementById('book_name');
 
 var inputField2 = document.getElementById('input_author_name');
@@ -71,21 +70,6 @@ function getCookie(name) {
 }
 
 
-
-
-
-// function editThisBook() {
-//   var currentUrl = window.location.href;
-//   var pattern = /http:\/\/127\.0\.0\.1:8000\/books\/(\d+)\/$/;
-//   var match = currentUrl.match(pattern);
-//   if (match) {
-//     var bookId = match[1];
-//     var editUrl = `http://127.0.0.1:8000/books/edit-book/${bookId}/`;
-//     window.location.href = editUrl;
-//   } else {
-//     console.error("Current URL does not match the expected pattern.");
-//   }
-// }
 function savechanges(){
   singleBookData.book_name = inputField.value;
   singleBookData.author_name = inputField2.value;
@@ -95,13 +79,7 @@ function savechanges(){
   sessionStorage.setItem("single_book", JSON.stringify(singleBookData));
 }
 
-function deleteThisBook() {
-  var csrfToken = getCookie('csrftoken'); 
-  var currentUrl = window.location.href;
-  var pattern = /http:\/\/127\.0\.0\.1:8000\/books\/edit-book\/(\d+)\/$/;
-  var match = currentUrl.match(pattern);
-  if (match) {
-    var bookId = match[1];
-  }
+function deleteThisBook(id) {
+  window.location.href = `http://127.0.0.1:8000/books/delete-book/${id}`;
  // "/books/delete-book/" + bookId // "/books/delete-book/" + singleBookData.book_id
 }
