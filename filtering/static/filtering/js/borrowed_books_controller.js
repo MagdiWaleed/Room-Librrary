@@ -6,9 +6,3 @@ function goToSingleUser(id){
     window.location.href=`http://127.0.0.1:8000/filtering/users/${id}`
 }
 
-
-    
-function goToSingleBook(id){
-        window.location.href= `http://127.0.0.1:8000/books/${id}`
-  }
-  

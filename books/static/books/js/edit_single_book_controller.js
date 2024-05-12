@@ -1,61 +1,4 @@
 
-function fetchData(){
-    
-    try{
-     parameters=new URLSearchParams(window.location.search);
-     query= parameters.get('query');
-    }
-    catch(error){
-      console.log(error);
-    }
-    try{
-      stringSingleBookData=sessionStorage.getItem("single_book");
-      singleBookData=JSON.parse(stringSingleBookData);
-    }catch(error){
-      console.log(error);
-      singleBookData= new SingleBookModel();
-    }
-   
-    
-    if (query=="singleBook"){
-      document.getElementById('book_name').innerHTML=singleBookData.book_name;
-      document.getElementById('author_name').innerHTML=singleBookData.author_name;
-      document.getElementById('description').innerHTML=singleBookData.book_description;
-      document.getElementById('about_author').innerHTML=singleBookData.about_author;
-      document.getElementById('book_category').innerHTML=singleBookData.category;
-      if(singleBookData.image=="#"){
-          
-          document.getElementById("book_image").src='/references/images/default-book-cover.jpg';
-          }
-          else{
-              document.getElementById("book_image").src=singleBookData.image;
-          }
-      
-      document.getElementById('input_book_name').value=singleBookData.book_name;
-      document.getElementById('input_author_name').value=singleBookData.author_name;
-      document.getElementById('input_description').value=singleBookData.book_description;
-      document.getElementById('input_about_author').value=singleBookData.about_author;
-      document.getElementById('input_book_category').value=singleBookData.category;
-      document.getElementById('delete_button').style.display="inline-block";
-      document.getElementById('done_button').innerText="Save Changes";
-      
-      
-      }
-      else{
-          document.getElementById('book_name').innerHTML="";
-          document.getElementById('author_name').innerHTML="";
-          document.getElementById('description').innerHTML="";
-          document.getElementById('about_author').innerHTML="";
-          document.getElementById('book_category').innerHTML="";
-          //////////////////////////
-          document.getElementById('input_book_name').value="";
-          document.getElementById('input_author_name').value="";
-          document.getElementById('input_description').value="";
-          document.getElementById('input_about_author').value="";
-          document.getElementById('input_book_category').value="";
-      }
-  }
-
 
   var inputField = document.getElementById('input_book_name');
 var outputElement = document.getElementById('book_name');
@@ -127,37 +70,38 @@ function getCookie(name) {
   return cookieValue;
 }
 
-function addNewBook() {
-  book_name = document.getElementById('book_name').innerHTML
-  author_name = document.getElementById('author_name').innerHTML
-  description = document.getElementById('description').innerHTML
-  about_author = document.getElementById('about_author').innerHTML
-  book_category = document.getElementById('book_category').innerHTML
-  var book_type = document.querySelector('input[name="book_type"]:checked').value;
-  var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
-  $.ajax({
-      type: 'POST',
-      url: "add-new-book",
-      data: {
-        book_name : book_name,
-        author_name : author_name,
-        description : description,
-        about_author : about_author,
-        book_category : book_category,
-        book_type : book_type,
-          csrfmiddlewaretoken: csrfToken,
-      },
-      success: function(response) {
-         if(response.data=="hase been created"){
-          alert(book_name+" has been created")
-         }
-      },
-      error: function(error) {
-          console.log("error ", error);
-      }
-  });
+
+
+
+
+// function editThisBook() {
+//   var currentUrl = window.location.href;
+//   var pattern = /http:\/\/127\.0\.0\.1:8000\/books\/(\d+)\/$/;
+//   var match = currentUrl.match(pattern);
+//   if (match) {
+//     var bookId = match[1];
+//     var editUrl = `http://127.0.0.1:8000/books/edit-book/${bookId}/`;
+//     window.location.href = editUrl;
+//   } else {
+//     console.error("Current URL does not match the expected pattern.");
+//   }
+// }
+function savechanges(){
+  singleBookData.book_name = inputField.value;
+  singleBookData.author_name = inputField2.value;
+  singleBookData.book_description = inputField3.value;
+  singleBookData.about_author = inputField4.value;
+  singleBookData.category = inputField5.value;
+  sessionStorage.setItem("single_book", JSON.stringify(singleBookData));
 }
 
-function editThisBook(id) {
-    window.location.href= 'http://127.0.0.1:8000/books/edit-book/${id}'
+function deleteThisBook() {
+  var csrfToken = getCookie('csrftoken'); 
+  var currentUrl = window.location.href;
+  var pattern = /http:\/\/127\.0\.0\.1:8000\/books\/edit-book\/(\d+)\/$/;
+  var match = currentUrl.match(pattern);
+  if (match) {
+    var bookId = match[1];
+  }
+ // "/books/delete-book/" + bookId // "/books/delete-book/" + singleBookData.book_id
 }
