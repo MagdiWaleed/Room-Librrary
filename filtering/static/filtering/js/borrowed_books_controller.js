@@ -14,7 +14,7 @@ function goToSingleBook(id){
   
   function search(category){
     searchText= category;
-    sessionStorage.setItem("search",searchText);
+    localStorage.setItem("search",searchText);
     
     if (searchText.length==0){
 

@@ -5,7 +5,7 @@ function fetchData(){
     passhold = document.getElementById('password');
     confpasshold = document.getElementById('confpassword');
     try{
-        user= sessionStorage.getItem("user")
+        user= localStorage.getItem("user")
         user=JSON.parse(user)
         username.placeholder = user.username
         mailhold.placeholder = user.email
@@ -35,12 +35,12 @@ function getCookie(name) {
 
 
 function numMyBooks(){
-    user = JSON.parse(sessionStorage.getItem("user"))
+    user = JSON.parse(localStorage.getItem("user"))
     $.ajax({
         type: 'POST',
         url: "/profile/books-number",
         data: {
-            id: user.id,
+            username: user.username,
             csrfmiddlewaretoken: getCookie('csrftoken'),
         },
         success: function(response) {
@@ -58,12 +58,12 @@ function numMyBooks(){
 
 function logout(){
     console.log("")
-    sessionStorage.removeItem('user')
+    localStorage.removeItem('user')
     window.location.href="http://127.0.0.1:8000/"
 }
 
 function delete_acc(){
-    user = JSON.parse(sessionStorage.getItem("user"))
+    user = JSON.parse(localStorage.getItem("user"))
     $.ajax({
         type: 'POST',
         url: "/profile/delete-account",
@@ -73,7 +73,7 @@ function delete_acc(){
         },
         success: function(response) {
             alert(response.data)
-            sessionStorage.removeItem("user")
+            localStorage.removeItem("user")
             window.location.href="http://127.0.0.1:8000/"
         },
         error: function(error) {
@@ -85,7 +85,7 @@ function delete_acc(){
 
 
 function userMode(){
-    user = JSON.parse(sessionStorage.getItem("user"))
+    user = JSON.parse(localStorage.getItem("user"))
     admin= {
     "username" : "admin",
     "password" : "admin",
@@ -93,21 +93,21 @@ function userMode(){
     "isAdmin":"False",
     "id":"_",
         }
-    sessionStorage.setItem("admin",JSON.stringify(user))
-    sessionStorage.setItem("user",JSON.stringify(admin))
-    sessionStorage.setItem("user_mode","enable")
+    localStorage.setItem("admin",JSON.stringify(user))
+    localStorage.setItem("user",JSON.stringify(admin))
+    localStorage.setItem("user_mode","enable")
     window.location.href="http://127.0.0.1:8000/"
 }
 
 function endUserMode(){
-    adminData= sessionStorage.getItem("admin")
-    sessionStorage.setItem("user",adminData)
-    sessionStorage.removeItem("user_mode")
+    adminData= localStorage.getItem("admin")
+    localStorage.setItem("user",adminData)
+    localStorage.removeItem("user_mode")
     window.location.href="http://127.0.0.1:8000/"
 }
 
 function saveChanges(){
-    user = JSON.parse(sessionStorage.getItem("user"))
+    user = JSON.parse(localStorage.getItem("user"))
     id =user.id
     username =  document.getElementById("name")
     password =  document.getElementById('password')
@@ -136,7 +136,7 @@ function saveChanges(){
                 else{
                     alert("success ", "changes have been saved");
                       user= response.data
-                sessionStorage.setItem("user",JSON.stringify(user))
+                localStorage.setItem("user",JSON.stringify(user))
                 window.location.href="http://127.0.0.1:8000/" 
                 }
              

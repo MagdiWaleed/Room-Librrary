@@ -23,7 +23,7 @@ function getCookie(name) {
 
 
 function numMyBooks(){
-    user = JSON.parse(sessionStorage.getItem("user"))
+    user = JSON.parse(localStorage.getItem("user"))
     $.ajax({
         type: 'POST',
         url: "/profile/books-number",
@@ -42,7 +42,7 @@ function numMyBooks(){
 }
 
 function getMyBooks(){
-    user = JSON.parse(sessionStorage.getItem("user"))
+    user = JSON.parse(localStorage.getItem("user"))
     $.ajax({
         type: 'POST',
         url: "/profile/my-books-data",

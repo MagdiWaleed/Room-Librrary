@@ -22,8 +22,8 @@ function getCookie(name) {
       url: "single-book-user-id",
       success:function(response){
         data= response.data
-        sessionStorage.setItem("book_id",data.book_id)
-        user=JSON.parse(sessionStorage.getItem("user"))
+        localStorage.setItem("book_id",data.book_id)
+        user=JSON.parse(localStorage.getItem("user"))
         if(user.isAdmin=="True"){
             document.getElementById("borrowed_unborrowed").innerHTML=`
             <div style="display: flex; justify-content: right; ">
@@ -53,8 +53,8 @@ function getCookie(name) {
 
 
 function borrowed_book(){
-    user= JSON.parse(sessionStorage.getItem("user"))
-    book_id= sessionStorage.getItem("book_id")
+    user= JSON.parse(localStorage.getItem("user"))
+    book_id= localStorage.getItem("book_id")
 
     var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
     $.ajax({
@@ -78,7 +78,7 @@ function borrowed_book(){
     });
 }
 function unborrowed_book(){
-    book_id= sessionStorage.getItem("book_id")
+    book_id= localStorage.getItem("book_id")
     var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
     $.ajax({
         type: 'POST',

@@ -1,7 +1,7 @@
 
 
   function showBorrowedBookDetails(id){
-    user =JSON.parse(sessionStorage.getItem("user"))
+    user =JSON.parse(localStorage.getItem("user"))
     if(user.isAdmin=="True"){
       window.location.href= `http://127.0.0.1:8000/books/${id}`
     }else{
@@ -106,7 +106,7 @@
   
   function search(){
     searchText= document.getElementById("search").value;
-    sessionStorage.setItem("search",searchText);
+    localStorage.setItem("search",searchText);
     
     if (searchText.length==0){
 

@@ -138,7 +138,7 @@ B O O K S</pre>
       </div>
     </header>`;
 
-    user =JSON.parse(sessionStorage.getItem('user'))
+    user =JSON.parse(localStorage.getItem('user'))
     console.log(user)
     if (user){
       if(user.isAdmin=="True"){

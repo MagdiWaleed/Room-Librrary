@@ -10,7 +10,7 @@ function goToSingleMember(row){
 
     function search(userType){
         textString=document.getElementById("search").value;
-        sessionStorage.setItem("search",textString);
+        localStorage.setItem("search",textString);
         console.log(userType)
         if (textString.length==0){
         }

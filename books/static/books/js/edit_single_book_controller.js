@@ -9,7 +9,7 @@ function fetchData(){
       console.log(error);
     }
     try{
-      stringSingleBookData=sessionStorage.getItem("single_book");
+      stringSingleBookData=localStorage.getItem("single_book");
       singleBookData=JSON.parse(stringSingleBookData);
     }catch(error){
       console.log(error);

@@ -50,7 +50,7 @@
         <main>  
           <div class="NumOfBorrowed">
             <p># Of Borrowed Books :</p>
-            <p id="numMyBooks"></p>
+            <p id="numMyBooks">...</p>
           </div>
           <div style="height: 20px;"></div>
           <form class="user-info-form">
@@ -90,7 +90,7 @@
         <main>  
           <div class="NumOfBorrowed">
             <p># Of Borrowed Books :</p>
-            <p>50</p>
+            <p>...</p>
           </div>
           <div style="height: 20px;"></div>
           <form class="user-info-form">
@@ -121,8 +121,8 @@
           </main>
         `;
           
-        user = JSON.parse(sessionStorage.getItem('user'));
-        user_mode = sessionStorage.getItem('user_mode');
+        user = JSON.parse(localStorage.getItem('user'));
+        user_mode = localStorage.getItem('user_mode');
        
            console.log(user.isAdmin)
           if(user.isAdmin=="True"){
