@@ -47,6 +47,7 @@ def getBorrowedBooks(request):
                 "username": str(user.username),
                 "id":str(book.id),
                 "user_id":str(user.id),
+                "category":str(book.category),
             }
             data.append(item)      
     

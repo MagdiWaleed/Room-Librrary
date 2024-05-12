@@ -46,8 +46,8 @@ def deleteAccount(request):
 def numBooks(request):
     context={}
     if request.method=="POST":
-        id = request.POST["id"]
-        user= ProfileModel.objects.get(pk=id)
+        username = request.POST["username"]
+        user= ProfileModel.objects.get(username=username)
         numBooks= Book.objects.filter(user=user)
         context={"data":len(numBooks)}
     return JsonResponse(context)
@@ -58,8 +58,8 @@ def myBookList(request):
 def getMyBooks(request):
     context={}
     if request.method== "POST":
-        id = request.POST["id"]
-        user=ProfileModel.objects.get(pk=id)
+        username = request.POST["username"]
+        user=ProfileModel.objects.get(username=username)
         books= Book.objects.filter(user=user)
         data=[]
         for book in books:
@@ -82,10 +82,10 @@ def getMyBooks(request):
 def borrowed_book(request):
     context={}
     if request.method == "POST":
-        user_id = request.POST["user_id"]
+        username = request.POST["username"]
         book_id = request.POST["book_id"]
         book = Book.objects.get(pk=book_id)
-        user = ProfileModel.objects.get(pk=user_id)
+        user = ProfileModel.objects.get(username=username)
         book.user = user
         book.save()
         context={"data":"success"}
@@ -146,4 +146,34 @@ def registerNewUser(request):
                 }
 
 
+    return JsonResponse(context)
+
+def updateUser(request):
+    context={}
+    if request.method=="POST":
+        id= request.POST["id"]
+        username= request.POST["username"]
+        password= request.POST["password"]
+        email= request.POST["email"]
+        print(username,password,email)
+        try:
+            user = ProfileModel.objects.get(pk=id)
+            user.username=username
+            user.password=password
+            user.email=email
+            user.save()
+            context={
+                "data":{
+                    "id":str(user.id),
+                    "username":str(user.username),
+                    "password":str(user.password),
+                    "email":str(user.email),
+                }
+            }
+        except IntegrityError as e:
+            if 'UNIQUE constraint' in str(e):
+               
+                context = {
+                    "data": "Username already exists."
+                }
     return JsonResponse(context)

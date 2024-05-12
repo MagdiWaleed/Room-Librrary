@@ -39,8 +39,8 @@
             <div onclick="goToSingleBook({{book.id}})">
                 {{book.title}}
             </div></td>
-             <td> <div >
-                category
+             <td> <div onclick="search('{{book.category}}')" >
+                {{book.category}}
              </div></td>
              <td><div onclick="goToSingleAuthor('{{book.author_name}}')"> {{book.author_name}} </div></td>
              <td><div onclick="goToSingleUser('{{book.user_id}}')">  {{book.username}}</div></td>

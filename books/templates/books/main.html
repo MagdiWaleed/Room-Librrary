@@ -55,11 +55,13 @@
     <div>
       <h1 style="height: 30px;">Latest Books</h1>
     </div>
+    {% include "parts/loading.html" %}
     <div class="bookshelves" id="latest">   
       </div>
       <br/>
     <h1 style="height: 40px;">Trending Books</h1>
-    
+    {% include "parts/loading.html" %}
+
       <div class="bookshelves" id="trending">   
        
                      
@@ -84,7 +86,8 @@ admin_main_body =
       <button class="normal_button edit_button" style="width:200px" onclick="navigateToPage('http://127.0.0.1:8000/books/latest')">Edit Latest</button>
     </div>
 
-    
+    {% include "parts/loading.html" %}
+
     <div class="bookshelves" id="latest">  
       
     </div>
@@ -93,6 +96,7 @@ admin_main_body =
       <div class="row"><h1 style="height: 40px;">Trending Books</h1> 
       <button class="normal_button edit_button" style="width:200px" onclick="navigateToPage('http://127.0.0.1:8000/books/trending')">Edit Trending</button>
     </div>
+    {% include "parts/loading.html" %}
 
     <div class="bookshelves" id="trending">   
     

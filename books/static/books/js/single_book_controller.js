@@ -30,7 +30,7 @@ function getCookie(name) {
             <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="">Edit This Book</button>
             </div>` 
         }else{
-            if(data.user_id==user.id){
+            if(data.username==user.username){
                 
                 document.getElementById("borrowed_unborrowed").innerHTML=`
                 <div style="display: flex; justify-content: right; ">
@@ -61,7 +61,7 @@ function borrowed_book(){
         type: 'POST',
         url: "/profile/borrowed-book",
         data: {
-          user_id : user.id,
+          username : user.username,
           book_id : book_id,
           csrfmiddlewaretoken: csrfToken,
         },

@@ -82,6 +82,8 @@ function delete_acc(){
     });
 }
 
+
+
 function userMode(){
     user = JSON.parse(sessionStorage.getItem("user"))
     admin= {
@@ -89,7 +91,7 @@ function userMode(){
     "password" : "admin",
     "email" : "admin@gmail.com",
     "isAdmin":"False",
-    "id":"#",
+    "id":"_",
         }
     sessionStorage.setItem("admin",JSON.stringify(user))
     sessionStorage.setItem("user",JSON.stringify(admin))
@@ -100,10 +102,54 @@ function userMode(){
 function endUserMode(){
     adminData= sessionStorage.getItem("admin")
     sessionStorage.setItem("user",adminData)
-    alert(adminData)
     sessionStorage.removeItem("user_mode")
     window.location.href="http://127.0.0.1:8000/"
 }
+
+function saveChanges(){
+    user = JSON.parse(sessionStorage.getItem("user"))
+    id =user.id
+    username =  document.getElementById("name")
+    password =  document.getElementById('password')
+    conf =  document.getElementById('confpassword')
+    email =  document.getElementById('email')
+    if((!email.value.includes('')) || (password.value != conf.value)){
+        window.alert('wrong entrey');
+    }
+    else{
+        var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
+        $.ajax({
+            type: 'POST',
+            url: "/profile/update-user/",
+            data: {
+                id: id,
+                username: username.value,
+                password: password.value,
+                email: email.value,
+                csrfmiddlewaretoken: csrfToken
+            },
+            success: function(response) {
+                
+                if (response.data== "Username already exists."){
+                    alert("Username already exists.")
+                }
+                else{
+                    alert("success ", "changes have been saved");
+                      user= response.data
+                sessionStorage.setItem("user",JSON.stringify(user))
+                window.location.href="http://127.0.0.1:8000/" 
+                }
+             
+            },
+            error: function(error) {
+                console.log("error ", error);
+            }
+        });
+    }
+    
+}
+
+
 
 numMyBooks()
 fetchData()

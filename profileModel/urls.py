@@ -11,6 +11,7 @@ from .views import (
     borrowed_book,
     unborrowed_book,
     signup,
+    updateUser,
     )
 
 urlpatterns = [
@@ -24,4 +25,6 @@ urlpatterns = [
     path("borrowed-book",borrowed_book,name="borrowed-book"),
     path("unborrowed-book",unborrowed_book,name="unborrowed-book"),
     path("signup/",signup,name="signup"),
+    path("update-user/",updateUser,name="update-user"),
+
 ]

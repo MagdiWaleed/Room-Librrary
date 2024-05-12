@@ -210,7 +210,7 @@ def getSingleBookUserId(request,pk):
     try:
         book =Book.objects.get(pk=pk)
         item={
-            "user_id":book.user.id,
+            "username":book.user.username,
             "book_id":book.id,
         }
         context={
@@ -218,7 +218,7 @@ def getSingleBookUserId(request,pk):
         }
     except Exception as e:
         context={"data":{
-            "user_id":"#",
+            "username":"#",
             "book_id": pk,
         }}
     print(context)

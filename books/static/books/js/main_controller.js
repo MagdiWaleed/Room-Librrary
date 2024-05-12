@@ -35,9 +35,10 @@
         $.ajax({
           type: 'GET',
           url: "books/get-books",
-          success:async function(response){
-              
-              data =await response.trending;
+          success: function(response){
+              document.getElementsByClassName("loading_container")[0].style.display="none"
+              document.getElementsByClassName("loading_container")[1].style.display="none"
+              data = response.trending;
               console.log(data)
               data.forEach(e => {
               console.log(e.img)
@@ -63,7 +64,7 @@
               `
               }
               });
-              data =await response.latest;
+              data = response.latest;
               console.log(data)
 
               data.forEach(e => {
