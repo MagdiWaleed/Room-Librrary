@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import ProfileModel
 from books.models import Book 
 from django.http import JsonResponse
+from django.db import IntegrityError
+
 # Create your views here.
 
 def myProfile(request):
@@ -118,21 +120,30 @@ def registerNewUser(request):
         else:
             isAdmin= True
             print(isAdmin)
-        newUser= ProfileModel(
-            username=username,
-            password=password,
-            email=email,
-            is_admin=isAdmin,    
-            )
-        
-        newUser.save()
-        context={
-            "data":{
-                "id":str(newUser.id),
-                "username":str(username),
-                "password":str(password),
-                "email":str(email),
-                "isAdmin":str(isAdmin),
+        try:
+            newUser= ProfileModel(
+                username=username,
+                password=password,
+                email=email,
+                is_admin=isAdmin,    
+                )
+            
+            newUser.save()
+            context={
+                "data":{
+                    "id":str(newUser.id),
+                    "username":str(username),
+                    "password":str(password),
+                    "email":str(email),
+                    "isAdmin":str(isAdmin),
+                }
             }
-        }   
+        except IntegrityError as e:
+            if 'UNIQUE constraint' in str(e):
+               
+                context = {
+                    "data": "Username already exists."
+                }
+
+
     return JsonResponse(context)

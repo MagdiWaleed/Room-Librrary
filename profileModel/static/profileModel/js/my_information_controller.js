@@ -84,11 +84,13 @@ function delete_acc(){
 
 function userMode(){
     user = JSON.parse(sessionStorage.getItem("user"))
-    admin = user 
-    admin.username = "admin"
-    admin.password = "admin"
-    admin.email = "admin@gmail.com"
-    admin.isAdmin="False"
+    admin= {
+    "username" : "admin",
+    "password" : "admin",
+    "email" : "admin@gmail.com",
+    "isAdmin":"False",
+    "id":"#",
+        }
     sessionStorage.setItem("admin",JSON.stringify(user))
     sessionStorage.setItem("user",JSON.stringify(admin))
     sessionStorage.setItem("user_mode","enable")
