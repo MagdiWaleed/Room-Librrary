@@ -165,6 +165,7 @@ def deleteBook(request):
     
         except (ValidationError, Exception) as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
+
 def changeBookData(request):
     if request.method == 'POST':
         try:
@@ -175,7 +176,6 @@ def changeBookData(request):
             about_author = data_dict.get('about_author')
             category = data_dict.get('book_category')
             image = request.FILES.get('image')
-            
 
             print("data_dict: ", data_dict)
             print("book_name: ", book_name)
@@ -195,10 +195,15 @@ def changeBookData(request):
             obj.author_name = author_name
             obj.about_author = about_author
             obj.category = category
-            obj.save()
+
+            # Delete old image if exists
+            if obj.img:
+                old_image_path = os.path.join(settings.MEDIA_ROOT, obj.img)
+                if os.path.exists(old_image_path):
+                    os.remove(old_image_path)
 
             if image:
-                # Save the image to the media folder with date components in the path
+                # Save the new image to the media folder with date components in the path
                 current_time = now()
                 image_folder = os.path.join(settings.MEDIA_ROOT, 'books', str(current_time.strftime('%Y'))[2:], str(current_time.strftime('%m')), str(current_time.strftime('%d')))
                 os.makedirs(image_folder, exist_ok=True)  # Create folder if it doesn't exist
@@ -206,13 +211,14 @@ def changeBookData(request):
                 with open(image_path, 'wb+') as destination:
                     for chunk in image.chunks():
                         destination.write(chunk)
-                # Update the new_book object with image path
+                # Update the book object with image path
                 obj.img = os.path.join('books', str(current_time.strftime('%Y'))[2:], str(current_time.strftime('%m')), str(current_time.strftime('%d')), image.name)
-                obj.save()
 
-            return JsonResponse({'status': 'success', 'message': 'Book added successfully'})
+            obj.save()
+
+            return JsonResponse({'status': 'uccess', 'essage': 'Book added successfully'})
         except (ValidationError, Exception) as e:
-            return JsonResponse({'status': 'error', 'message': str(e)})
+            return JsonResponse({'status': 'error', 'essage': str(e)})
 def addNewBook(request):
     if request.method == 'POST':
         try:

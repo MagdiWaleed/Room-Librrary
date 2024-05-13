@@ -79,6 +79,14 @@ function savechanges(){
   var csrftoken = getCookie('csrftoken');
   var book_id = JSON.parse(sessionStorage.getItem("book"))
   var url = "http://127.0.0.1:8000/books/edited-book/"
+  
+  var fileInput = document.getElementById('image_input');
+  if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+    console.error("No file selected or file input not found");
+    return;
+  }
+  var selectedFile = fileInput.files[0];
+
   $.ajax({
     type: "POST",
     url: url,
@@ -89,6 +97,7 @@ function savechanges(){
       book_description : inputField3.value,
       about_author : inputField4.value,
       book_category : inputField5.value,
+      image :selectedFile,
       csrfmiddlewaretoken: csrftoken,
     },
     success: function(response) {
