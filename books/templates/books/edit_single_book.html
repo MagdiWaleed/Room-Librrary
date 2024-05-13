@@ -8,7 +8,15 @@
 
 
 {% block content %}
-<main><div style="height: 25px;"></div>
+<main>
+  <script> 
+    user = JSON.parse(localStorage.getItem('user'));
+    if(user.isAdmin=="False"){
+      window.location.href = "http://127.0.0.1:8000/not-authorized/";
+    }
+  </script>
+  
+  <div style="height: 25px;"></div>
     <h1>Enter The New Book Details:</h1>
     <div style="height: 25px;"></div>
   <div id="add_new_book_form">

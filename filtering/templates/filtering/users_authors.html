@@ -7,6 +7,13 @@
 
 {% block content %}
 <main>
+  <script> 
+    user = JSON.parse(localStorage.getItem('user'));
+    if(user.isAdmin=="False"){
+      window.location.href = "http://127.0.0.1:8000/not-authorized/";
+    }
+  </script>
+
     <div style="height: 25px;"></div>
       <h1 id="owner_text">
                  <script>

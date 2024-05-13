@@ -135,7 +135,10 @@ function saveChanges(){
                 }
                 else{
                     alert("success ", "changes have been saved");
-                      user= response.data
+                    data = response.data  
+                    user.username= data.username
+                    user.password = data.password
+                    user.email = data.email
                 localStorage.setItem("user",JSON.stringify(user))
                 window.location.href="http://127.0.0.1:8000/" 
                 }

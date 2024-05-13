@@ -161,3 +161,7 @@ function addNewBook() {
 function editThisBook(id) {
     window.location.href= 'http://127.0.0.1:8000/books/edit-book/${id}'
 }
+ 
+function printHi(){
+  console.log(hi)
+}

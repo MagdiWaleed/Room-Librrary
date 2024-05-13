@@ -77,6 +77,7 @@ def getSingleBook(request,pk):
         'img': str(obj.img),
         'author_name':str(obj.author_name),
         'about_author':str(obj.about_author),
+        'category':str(obj.category),
         'user':str(obj.user),
     }
     return render(request,'books/single_book.html',{'data':data})
@@ -135,8 +136,11 @@ def getLatestBooks(request):
     return render(request,'books/books_screen.html',context)
 
 
+
 def addEditBook(request):
     return render(request,'books/add_new_book.html')
+
+
 
 from django.utils.timezone import now
 import os
@@ -223,3 +227,7 @@ def getSingleBookUserId(request,pk):
         }}
     print(context)
     return JsonResponse(context)
+
+
+def goToNotAuthorized(request):
+    return render(request,'pages/not_authorized.html')

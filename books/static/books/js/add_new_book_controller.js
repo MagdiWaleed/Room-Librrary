@@ -154,7 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
               }
           }
       };
-
       xhr.open("POST", form.action);
       xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
       xhr.send(formData);
