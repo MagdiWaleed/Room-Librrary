@@ -1,76 +1,23 @@
 
-function fetchData(){
-    
-    try{
-     parameters=new URLSearchParams(window.location.search);
-     query= parameters.get('query');
-    }
-    catch(error){
-      console.log(error);
-    }
-    try{
-      stringSingleBookData=localStorage.getItem("single_book");
-      singleBookData=JSON.parse(stringSingleBookData);
-    }catch(error){
-      console.log(error);
-      singleBookData= new SingleBookModel();
-    }
-   
-    
-    if (query=="singleBook"){
-      document.getElementById('book_name').innerHTML=singleBookData.book_name;
-      document.getElementById('author_name').innerHTML=singleBookData.author_name;
-      document.getElementById('description').innerHTML=singleBookData.book_description;
-      document.getElementById('about_author').innerHTML=singleBookData.about_author;
-      document.getElementById('book_category').innerHTML=singleBookData.category;
-      if(singleBookData.image=="#"){
-          
-          document.getElementById("book_image").src='/references/images/default-book-cover.jpg';
-          }
-          else{
-              document.getElementById("book_image").src=singleBookData.image;
-          }
-      
-      document.getElementById('input_book_name').value=singleBookData.book_name;
-      document.getElementById('input_author_name').value=singleBookData.author_name;
-      document.getElementById('input_description').value=singleBookData.book_description;
-      document.getElementById('input_about_author').value=singleBookData.about_author;
-      document.getElementById('input_book_category').value=singleBookData.category;
-      document.getElementById('delete_button').style.display="inline-block";
-      document.getElementById('done_button').innerText="Save Changes";
-      
-      
-      }
-      else{
-          document.getElementById('book_name').innerHTML="";
-          document.getElementById('author_name').innerHTML="";
-          document.getElementById('description').innerHTML="";
-          document.getElementById('about_author').innerHTML="";
-          document.getElementById('book_category').innerHTML="";
-          //////////////////////////
-          document.getElementById('input_book_name').value="";
-          document.getElementById('input_author_name').value="";
-          document.getElementById('input_description').value="";
-          document.getElementById('input_about_author').value="";
-          document.getElementById('input_book_category').value="";
-      }
-  }
-
-
-  var inputField = document.getElementById('input_book_name');
+var inputField = document.getElementById('input_book_name');
 var outputElement = document.getElementById('book_name');
+inputField.value = outputElement.innerHTML;
 
 var inputField2 = document.getElementById('input_author_name');
 var outputElement2 = document.getElementById('author_name');
+inputField2.value = outputElement2.innerHTML;
 
 var inputField3 = document.getElementById('input_description');
 var outputElement3 = document.getElementById('description');
+inputField3.value = outputElement3.innerHTML;
 
 var inputField4 = document.getElementById('input_about_author');
 var outputElement4 = document.getElementById('about_author');
+inputField4.value = outputElement4.innerHTML;
 
 var inputField5 = document.getElementById('input_book_category');
 var outputElement5 = document.getElementById('book_category');
+inputField5.value = outputElement5.innerHTML;
 
 
 
@@ -127,41 +74,59 @@ function getCookie(name) {
   return cookieValue;
 }
 
-function addNewBook() {
-  book_name = document.getElementById('book_name').innerHTML
-  author_name = document.getElementById('author_name').innerHTML
-  description = document.getElementById('description').innerHTML
-  about_author = document.getElementById('about_author').innerHTML
-  book_category = document.getElementById('book_category').innerHTML
-  var book_type = document.querySelector('input[name="book_type"]:checked').value;
-  var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
+
+function savechanges(){
+  var csrftoken = getCookie('csrftoken');
+  var book_id = JSON.parse(sessionStorage.getItem("book"))
+  var url = "http://127.0.0.1:8000/books/edited-book/"
+  
+  var fileInput = document.getElementById('image_input');
+  if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+    console.error("No file selected or file input not found");
+    return;
+  }
+  var selectedFile = fileInput.files[0];
+
   $.ajax({
-      type: 'POST',
-      url: "add-new-book",
-      data: {
-        book_name : book_name,
-        author_name : author_name,
-        description : description,
-        about_author : about_author,
-        book_category : book_category,
-        book_type : book_type,
-          csrfmiddlewaretoken: csrfToken,
-      },
-      success: function(response) {
-         if(response.data=="hase been created"){
-          alert(book_name+" has been created")
-         }
-      },
-      error: function(error) {
-          console.log("error ", error);
-      }
+    type: "POST",
+    url: url,
+    data: {
+      book_id : book_id,
+      book_name : inputField.value,
+      author_name : inputField2.value,
+      book_description : inputField3.value,
+      about_author : inputField4.value,
+      book_category : inputField5.value,
+      image :selectedFile,
+      csrfmiddlewaretoken: csrftoken,
+    },
+    success: function(response) {
+      alert(response.status)
+    
+    },
+    error: function(error) {
+        console.log("error ", error);
+    }
   });
 }
 
-function editThisBook(id) {
-    window.location.href= 'http://127.0.0.1:8000/books/edit-book/${id}'
-}
- 
-function printHi(){
-  console.log(hi)
+function deleteThisBook() {
+  var csrftoken = getCookie('csrftoken');
+  var book_id = JSON.parse(sessionStorage.getItem("book"))
+  var url = "http://127.0.0.1:8000/books/delete-book/"
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: {
+      book_id : book_id,
+      csrfmiddlewaretoken: csrftoken,
+    },
+    success: function(response) {
+      alert(response.status)
+      window.location.href = "http://127.0.0.1:8000"
+    },
+    error: function(error) {
+        console.log("error ", error);
+    }
+  });
 }
