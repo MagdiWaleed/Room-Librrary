@@ -46,9 +46,9 @@ function getCookie(name) {
     },
       error:function(error){
           console.log("error", error);
+
       }
   })
-
 }
 
 

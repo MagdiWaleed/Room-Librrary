@@ -77,42 +77,40 @@ function getCookie(name) {
 
 function savechanges(){
   var csrftoken = getCookie('csrftoken');
-  var book_id = JSON.parse(sessionStorage.getItem("book"))
-  var url = "http://127.0.0.1:8000/books/edited-book/"
-  
-  var fileInput = document.getElementById('image_input');
-  if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-    console.error("No file selected or file input not found");
-    return;
-  }
-  var selectedFile = fileInput.files[0];
+  var book_id = JSON.parse(localStorage.getItem("book"))
+  var url = "http://127.0.0.1:8000/books/edited-book/" 
+  var fileInput = document.getElementById('image_input').files[0];
+ var formData = new FormData()
+  formData.append("book_name",inputField.value)
+  formData.append("author_name",inputField2.value)
+  formData.append("book_description",inputField3.value)
+  formData.append("about_author",inputField4.value)
+  formData.append("book_category",inputField5.value)
+  formData.append("about_author",inputField4.value)
+  formData.append("book_id",book_id)
+  formData.append("image",fileInput)
 
-  $.ajax({
-    type: "POST",
-    url: url,
-    data: {
-      book_id : book_id,
-      book_name : inputField.value,
-      author_name : inputField2.value,
-      book_description : inputField3.value,
-      about_author : inputField4.value,
-      book_category : inputField5.value,
-      image :selectedFile,
-      csrfmiddlewaretoken: csrftoken,
-    },
-    success: function(response) {
-      alert(response.status)
-    
-    },
-    error: function(error) {
-        console.log("error ", error);
-    }
-  });
+
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+              alert(xhr.responseText);
+              
+          } else {
+              alert('Error: ' + xhr.statusText);
+              // location.reload();
+          }
+      }
+  };
+  xhr.open("POST", url);
+  xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+  xhr.send(formData);
 }
 
 function deleteThisBook() {
   var csrftoken = getCookie('csrftoken');
-  var book_id = JSON.parse(sessionStorage.getItem("book"))
+  var book_id = JSON.parse(localStorage.getItem("book"))
   var url = "http://127.0.0.1:8000/books/delete-book/"
   $.ajax({
     type: "POST",

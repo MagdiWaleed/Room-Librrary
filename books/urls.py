@@ -8,7 +8,7 @@ from .views import (
     getAllBooks,
     addEditBook,
     getBookForEdit,
-        deleteBook,
+    deleteBook,
     changeBookData,
     addNewBook,
     getSingleBookUserId,
