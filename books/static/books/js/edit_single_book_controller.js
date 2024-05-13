@@ -1,18 +1,23 @@
 
 var inputField = document.getElementById('input_book_name');
 var outputElement = document.getElementById('book_name');
+inputField.value = outputElement.innerHTML;
 
 var inputField2 = document.getElementById('input_author_name');
 var outputElement2 = document.getElementById('author_name');
+inputField2.value = outputElement2.innerHTML;
 
 var inputField3 = document.getElementById('input_description');
 var outputElement3 = document.getElementById('description');
+inputField3.value = outputElement3.innerHTML;
 
 var inputField4 = document.getElementById('input_about_author');
 var outputElement4 = document.getElementById('about_author');
+inputField4.value = outputElement4.innerHTML;
 
 var inputField5 = document.getElementById('input_book_category');
 var outputElement5 = document.getElementById('book_category');
+inputField5.value = outputElement5.innerHTML;
 
 
 
@@ -71,15 +76,48 @@ function getCookie(name) {
 
 
 function savechanges(){
-  singleBookData.book_name = inputField.value;
-  singleBookData.author_name = inputField2.value;
-  singleBookData.book_description = inputField3.value;
-  singleBookData.about_author = inputField4.value;
-  singleBookData.category = inputField5.value;
-  sessionStorage.setItem("single_book", JSON.stringify(singleBookData));
+  var csrftoken = getCookie('csrftoken');
+  var book_id = JSON.parse(sessionStorage.getItem("book"))
+  var url = "http://127.0.0.1:8000/books/edited-book/"
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: {
+      book_id : book_id,
+      book_name : inputField.value,
+      author_name : inputField2.value,
+      book_description : inputField3.value,
+      about_author : inputField4.value,
+      book_category : inputField5.value,
+      csrfmiddlewaretoken: csrftoken,
+    },
+    success: function(response) {
+      alert(response.status)
+    
+    },
+    error: function(error) {
+        console.log("error ", error);
+    }
+  });
 }
 
-function deleteThisBook(id) {
-  window.location.href = `http://127.0.0.1:8000/books/delete-book/${id}`;
- // "/books/delete-book/" + bookId // "/books/delete-book/" + singleBookData.book_id
+function deleteThisBook() {
+  var csrftoken = getCookie('csrftoken');
+  var book_id = JSON.parse(sessionStorage.getItem("book"))
+  var url = "http://127.0.0.1:8000/books/delete-book/"
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: {
+      book_id : book_id,
+      csrfmiddlewaretoken: csrftoken,
+    },
+    success: function(response) {
+      alert(response.status)
+      window.location.href = "http://127.0.0.1:8000"
+    },
+    error: function(error) {
+        console.log("error ", error);
+    }
+  });
 }

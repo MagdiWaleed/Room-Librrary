@@ -154,10 +154,65 @@ def getBookForEdit(request,pk):
         'about_author':str(obj.about_author),
     }
     return render(request,'books/edit_single_book.html',{'data':data})
-def deleteBook(request, pk):
-    obj = Book.objects.get(pk=pk)
-    obj.delete()
-    return render(request,'books/main.html')
+def deleteBook(request):
+    if request.method == "POST":
+        book_id = request.POST["book_id"]
+        print("book_id: ", book_id)
+        obj = Book.objects.get(pk=book_id)
+        try:
+            obj.delete()
+            return JsonResponse({'status': 'success', 'message': 'Book is deleted successfully'})
+    
+        except (ValidationError, Exception) as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+def changeBookData(request):
+    if request.method == 'POST':
+        try:
+            data_dict = request.POST.dict()
+            book_name = data_dict.get('book_name')
+            book_description = data_dict.get('book_description')
+            author_name = data_dict.get('author_name')
+            about_author = data_dict.get('about_author')
+            category = data_dict.get('book_category')
+            image = request.FILES.get('image')
+            
+
+            print("data_dict: ", data_dict)
+            print("book_name: ", book_name)
+            print("book_description: ", book_description)
+            print("author_name: ", author_name)
+            print("about_author: ", about_author)
+            print("category: ", category)
+            print("image: ", image)
+
+            if not book_name or not book_description or not author_name or not about_author or not category:
+                raise ValidationError('Missing required fields.')
+            book_id = request.POST["book_id"]
+            print("book_id: ", book_id)
+            obj = Book.objects.get(pk=book_id)
+            obj.title = book_name
+            obj.description = book_description
+            obj.author_name = author_name
+            obj.about_author = about_author
+            obj.category = category
+            obj.save()
+
+            if image:
+                # Save the image to the media folder with date components in the path
+                current_time = now()
+                image_folder = os.path.join(settings.MEDIA_ROOT, 'books', str(current_time.strftime('%Y'))[2:], str(current_time.strftime('%m')), str(current_time.strftime('%d')))
+                os.makedirs(image_folder, exist_ok=True)  # Create folder if it doesn't exist
+                image_path = os.path.join(image_folder, image.name)
+                with open(image_path, 'wb+') as destination:
+                    for chunk in image.chunks():
+                        destination.write(chunk)
+                # Update the new_book object with image path
+                obj.img = os.path.join('books', str(current_time.strftime('%Y'))[2:], str(current_time.strftime('%m')), str(current_time.strftime('%d')), image.name)
+                obj.save()
+
+            return JsonResponse({'status': 'success', 'message': 'Book added successfully'})
+        except (ValidationError, Exception) as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
 def addNewBook(request):
     if request.method == 'POST':
         try:
