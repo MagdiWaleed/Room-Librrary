@@ -38,11 +38,11 @@
           success: function(response){
               document.getElementsByClassName("loading_container")[0].style.display="none"
               document.getElementsByClassName("loading_container")[1].style.display="none"
+              document.getElementsByClassName("loading_container")[2].style.display="none"
               data = response.trending;
               console.log(data)
               data.forEach(e => {
-              console.log(e.img)
-              console.log(e.isborrowed)
+              
               if (e.isborrowed=="no"){  
               document.getElementById("trending").innerHTML+=`
                   <div class="book_details" onclick="goToSingleBook(${e.id})">
@@ -68,7 +68,7 @@
               console.log(data)
 
               data.forEach(e => {
-              console.log(e.img)
+              
               if (e.isborrowed=="no"){  
                 document.getElementById("latest").innerHTML+=`
                     <div class="book_details" onclick="goToSingleBook(${e.id})">
@@ -79,6 +79,32 @@
                   }
                 else{
                   document.getElementById("latest").innerHTML+=`
+                  <div class="borrowed_books" onclick="showBorrowedBookDetails(${e.id})">
+                  <div style="position: relative;">
+                  <img src="/media/${e.img}" alt="IMAGE-NOT-FOUND" class="book_image">
+                 <h4>${e.title}</h4>
+                 <p>By: ${e.author_name}</p>
+                </div >
+                  <h2 class="BORROWED">BORROWED</h2>
+                </div>`
+                }
+              });
+
+              data = response.other;
+              console.log(data)
+
+              data.forEach(e => {
+              
+              if (e.isborrowed=="no"){  
+                document.getElementById("other").innerHTML+=`
+                    <div class="book_details" onclick="goToSingleBook(${e.id})">
+                        <img src="/media/${e.img}" alt="IMAGE-NOT-FOUND" class="book_image" >
+                        <h4>${e.title}</h4>
+                        <p>By: ${e.author_name}</p>
+                    </div>`
+                  }
+                else{
+                  document.getElementById("other").innerHTML+=`
                   <div class="borrowed_books" onclick="showBorrowedBookDetails(${e.id})">
                   <div style="position: relative;">
                   <img src="/media/${e.img}" alt="IMAGE-NOT-FOUND" class="book_image">

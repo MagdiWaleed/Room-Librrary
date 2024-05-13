@@ -40,13 +40,16 @@ def getBooksData(request):
     books= Book.objects.all()
     trending_data=[]
     latest_data=[]
+    other_data=[]
+    i=0
+    j=0
     for book in books:
         isborrowed =""
         if book.user== None:
             isborrowed='no'
         else:
             isborrowed='yes'
-        print("is borrowed for a book: ",isborrowed)
+       
         item={
                 "title": str(book.title),
                 "description":str(book.description),
@@ -56,15 +59,22 @@ def getBooksData(request):
                 'id':str(book.id),
                 'isborrowed':str(isborrowed)
             }
-        if book.book_type== "trending":    
-           trending_data.append(item)
+        if i<4: 
+           i+=1 
+           latest_data.append(item)
+        elif book.is_trending and j<8  :
+            j+=1  
+            trending_data.append(item)
         else:
-            latest_data.append(item)
-
+            other_data.append(item)
     context={
         "trending":trending_data,
-        "latest":latest_data,             
+        "latest":latest_data,  
+        "other": other_data,          
              }
+    print("trending: ",len(trending_data))
+    print("latest: ",len(latest_data))
+    print("other: ",len(other_data))
     return JsonResponse(context)
 
 def getSingleBook(request,pk):
@@ -103,37 +113,6 @@ def getAllBooks(request):
     context={"data":data,"filter":"all books"}
     return render(request,'books/books_screen.html',context)
 
-def getTrendingBooks(request):
-    books= Book.objects.filter(book_type="trending")
-    data=[]
-    for book in books:
-        item={
-            "title": str(book.title),
-            "description":str(book.description),
-            "img":str(book.img),
-            'author_name':str(book.author_name),
-            'about_author':str(book.about_author),
-            'id':str(book.id),
-        }
-        data.append(item)
-    context={"data":data,"filter":"Trending books"}
-    return render(request,'books/books_screen.html',context)
-
-def getLatestBooks(request):
-    books= Book.objects.filter(book_type="latest")
-    data=[]
-    for book in books:
-        item={
-            "title": str(book.title),
-            "description":str(book.description),
-            "img":str(book.img),
-            'author_name':str(book.author_name),
-            'about_author':str(book.about_author),
-            'id':str(book.id),
-        }
-        data.append(item)
-    context={"data":data,"filter":"latest books"}
-    return render(request,'books/books_screen.html',context)
 
 
 
@@ -167,7 +146,8 @@ def addNewBook(request):
             about_author = data_dict.get('about_author')
             category = data_dict.get('category')
             image = request.FILES.get('image')
-            book_type = data_dict.get('book_type')
+            trending_check = data_dict.get('trending_check')
+            
 
             print("data_dict: ", data_dict)
             print("book_name: ", book_name)
@@ -175,6 +155,7 @@ def addNewBook(request):
             print("author_name: ", author_name)
             print("about_author: ", about_author)
             print("category: ", category)
+            print("is_trending: ", trending_check)
             print("image: ", image)
 
             if not book_name or not book_description or not author_name or not about_author or not category:
@@ -186,7 +167,7 @@ def addNewBook(request):
                 author_name=author_name,
                 about_author=about_author,
                 category=category,
-                book_type=book_type,
+                is_trending=bool(trending_check),
             )
 
             if image:

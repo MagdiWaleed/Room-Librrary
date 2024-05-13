@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
       formData.append('about_author', document.getElementById('input_about_author').value);
       formData.append('category', document.getElementById('input_book_category').value);
       formData.append('image', document.getElementById('image').files[0]);
-      formData.append('book_type', document.getElementById('trending_radio').checked ? 'trending' : 'latest');
+      formData.append('trending_check', document.getElementById('trending_check').checked? "True":"False");
 
      
       var xhr = new XMLHttpRequest();

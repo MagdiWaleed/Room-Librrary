@@ -35,7 +35,7 @@
 }
 div.row{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-right: 30px;
 }
 
