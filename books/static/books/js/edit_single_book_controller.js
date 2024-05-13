@@ -96,6 +96,8 @@ function savechanges(){
       if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status === 200) {
               alert(xhr.responseText);
+              window.location.href="http://127.0.0.1:8000/"
+              
               
           } else {
               alert('Error: ' + xhr.statusText);
