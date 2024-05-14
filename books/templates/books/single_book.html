@@ -24,8 +24,10 @@
     </p>
     <h3 style="margin-top: 10px;">Category:</h3>
     <p id="book_category">{{data.category}}</p>
-    <h3 style="margin-top: 10px;">Borrowed By: </h3>
-    <p id="borrowed_by"></p>
+     {% if data.user != "" %}
+     <h3 style="margin-top: 10px;">Borrowed By: </h3>
+    <p id="borrowed_by">{{data.user}}</p>
+     {% endif %}
     </div>
   </div>
 </div>

@@ -80,6 +80,9 @@ def getBooksData(request):
 def getSingleBook(request,pk):
     print("this is the primary key" ,pk)
     obj = Book.objects.get(pk=pk)
+    user=""
+    if obj.user != None:
+        user= obj.user.username
     data={
         'id': str(obj.id),
         'title': str(obj.title),
@@ -88,7 +91,7 @@ def getSingleBook(request,pk):
         'author_name':str(obj.author_name),
         'about_author':str(obj.about_author),
         'category':str(obj.category),
-        'user':str(obj.user),
+        'user':str(user),
     }
     return render(request,'books/single_book.html',{'data':data})
 
@@ -116,7 +119,7 @@ def getAllBooks(request):
 
 
 
-def addEditBook(request):
+def addBook(request):
     return render(request,'books/add_new_book.html')
 
 
@@ -211,7 +214,7 @@ def addNewBook(request):
             category = data_dict.get('category')
             image = request.FILES.get('image')
             trending_check = data_dict.get('trending_check')
-            
+            trending_check = bool(trending_check)
 
             print("data_dict: ", data_dict)
             print("book_name: ", book_name)
@@ -219,7 +222,7 @@ def addNewBook(request):
             print("author_name: ", author_name)
             print("about_author: ", about_author)
             print("category: ", category)
-            print("is_trending: ", trending_check)
+            print("is_trending: ", type(trending_check))
             print("image: ", image)
 
             if not book_name or not book_description or not author_name or not about_author or not category:
@@ -231,7 +234,7 @@ def addNewBook(request):
                 author_name=author_name,
                 about_author=about_author,
                 category=category,
-                is_trending=bool(trending_check),
+                is_trending=trending_check,
             )
 
             if image:
