@@ -143,8 +143,7 @@ def getBookForEdit(request,pk):
 def deleteBook(request):
     if request.method == 'POST':
        
-        book_id =request.POST['book_id']
-
+        book_id =int(request.POST['book_id'])
 
         book = Book.objects.get(pk=book_id)
 
@@ -273,7 +272,7 @@ def getSingleBookUserId(request,pk):
         book =Book.objects.get(pk=pk)
         item={
             "username":book.user.username,
-            "book_id":book.id,
+            "book_id":pk,
         }
         context={
             "data":item

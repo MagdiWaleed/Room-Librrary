@@ -16,13 +16,13 @@ function getCookie(name) {
   
 
   function fetch_data(){
-    bookCardsList=[]
     $.ajax({
       type: 'GET',
       url: "single-book-user-id",
       success:function(response){
         data= response.data
-        localStorage.setItem("book_id",data.book_id)
+        localStorage.setItem("book_id",data.book_id),
+        alert(localStorage.getItem("book_id"))
         user=JSON.parse(localStorage.getItem("user"))
         if(user.isAdmin=="True"){
             document.getElementById("borrowed_unborrowed").innerHTML=`

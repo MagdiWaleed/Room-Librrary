@@ -109,10 +109,10 @@ function savechanges(){
   xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
   xhr.send(formData);
 }
-
 function deleteThisBook() {
   var csrftoken = getCookie('csrftoken');
-  var book_id = JSON.parse(localStorage.getItem("book"))
+  var book_id = localStorage.getItem("book_id");
+  
   var url = "http://127.0.0.1:8000/books/delete-book/"
   $.ajax({
     type: "POST",
