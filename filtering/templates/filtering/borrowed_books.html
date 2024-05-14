@@ -34,7 +34,6 @@
               <th><div>Category</div></th>
               <th><div>Book author</div></th>
               <th><div>Borrowed by</div></th>
-              <th><div>Borrowed date</div></th>
           </tr>
            {% for book in data %}
            {% if book.isEven == "True" %}
@@ -50,7 +49,7 @@
              </div></td>
              <td><div onclick="goToSingleAuthor('{{book.author_name}}')"> {{book.author_name}} </div></td>
              <td><div onclick="goToSingleUser('{{book.user_id}}')">  {{book.username}}</div></td>
-             <td><div> "2005/9/8" </div></td></tr>
+          
            {% endfor %}
       </table>
     </div>

@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from profileModel.models import ProfileModel 
 from django.utils.timezone import now
 from django.conf import settings
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError,ObjectDoesNotExist
 
 import os
 
@@ -141,16 +141,26 @@ def getBookForEdit(request,pk):
     }
     return render(request,'books/edit_single_book.html',{'data':data})
 def deleteBook(request):
-    if request.method == "POST":
-        book_id = request.POST["book_id"]
-        print("book_id: ", book_id)
-        obj = Book.objects.get(pk=book_id)
+    if request.method == 'POST':
+       
+        book_id =request.POST['book_id']
+
+
+        book = Book.objects.get(pk=book_id)
+
+        if book.img != "default-book-cover.jpg":
+            image_path = os.path.join(str(settings.MEDIA_ROOT), str(book.img))
+            if os.path.exists(image_path):
+                os.remove(image_path)
         try:
-            obj.delete()
-            return JsonResponse({'status': 'success', 'message': 'Book is deleted successfully'})
-    
+            Book.objects.filter(pk=book_id).delete()
+
+            return JsonResponse({'status': 'success', 'message': 'Book deleted successfully'})
+        except ObjectDoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Book not found'})
         except (ValidationError, Exception) as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
+
 
 def changeBookData(request):
     if request.method == 'POST':

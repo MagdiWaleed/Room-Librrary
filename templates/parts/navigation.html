@@ -82,7 +82,7 @@ margin-right: 50px;
  admin_navigation= 
  `<div id="backGround_image" >
   <div id="backGround" class="borders">
-    <img id="project_logo"  src="{% static "/img/Logo.png" %}" alt="" onclick="navigateToPage('/admin/about/about.html')">
+    <img id="project_logo"  src="{% static "/img/Logo.png" %}" alt="" onclick="navigateToPage('{% url 'about' %}')">
     <h1>
       R O M E
     </h1>
