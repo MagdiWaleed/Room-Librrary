@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +29,7 @@ SECRET_KEY = 'django-insecure-tex^&!rfwcj5$(rm22329i83*k0&ou&cr1)l%rc=@ohsqb+aqk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app', 'almahil.com.app', '*.app', '.almahil.app','library.almahil.com', '127.0.0.1', 'localhost', '.now.sh', 'render.com', '*']
 
 
 # Application definition
@@ -60,7 +62,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / "templates",
-                 BASE_DIR / "books" / "templates"
+                 BASE_DIR / "books" / "templates",
+                 BASE_DIR / "filtering" / "templates",
+                 BASE_DIR / "profileModel" / "templates"
+
                  
                  ],
         'APP_DIRS': True,
@@ -75,6 +80,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'roomWebsite.wsgi.application'
 
 
@@ -83,10 +89,11 @@ WSGI_APPLICATION = 'roomWebsite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
     }
 }
+
+DATABASES["default"] = dj_database_url.parse("postgres://books_db_s3h9_user:xgWgSsP11mr9YeFDUgrrwCkJjNHSjpJp@dpg-cp36r2vsc6pc73fk5rm0-a.oregon-postgres.render.com/books_db_s3h9")
 
 
 # Password validation
@@ -127,8 +134,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,"static"),
     os.path.join(BASE_DIR,'books/static'),
+    os.path.join(BASE_DIR,'filtering/static'),
+    os.path.join(BASE_DIR,'profileModel/static'),
     
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'productionfiles' , 'static')
 
 
 MEDIA_URL='/media/'

@@ -198,14 +198,13 @@ def changeBookData(request):
                         os.remove(old_image_path)
                 
                 if image:
-                    current_time = now()
-                    image_folder = os.path.join(settings.MEDIA_ROOT, 'books', str(current_time.strftime('%Y'))[2:], str(current_time.strftime('%m')), str(current_time.strftime('%d')))
+                    image_folder = os.path.join(settings.MEDIA_ROOT, 'books')
                     os.makedirs(image_folder, exist_ok=True)  # Create folder if it doesn't exist
                     image_path = os.path.join(image_folder, image.name)
                     with open(image_path, 'wb+') as destination:
                         for chunk in image.chunks():
                             destination.write(chunk)
-                    obj.img = os.path.join('books', str(current_time.strftime('%Y'))[2:], str(current_time.strftime('%m')), str(current_time.strftime('%d')), image.name)
+                    obj.img = os.path.join('books', image.name)
 
             obj.save()
 
@@ -248,15 +247,14 @@ def addNewBook(request):
 
             if image:
                 # Save the image to the media folder with date components in the path
-                current_time = now()
-                image_folder = os.path.join(settings.MEDIA_ROOT, 'books', str(current_time.strftime('%Y'))[2:], str(current_time.strftime('%m')), str(current_time.strftime('%d')))
+                image_folder = os.path.join(settings.MEDIA_ROOT, 'books')
                 os.makedirs(image_folder, exist_ok=True)  # Create folder if it doesn't exist
                 image_path = os.path.join(image_folder, image.name)
                 with open(image_path, 'wb+') as destination:
                     for chunk in image.chunks():
                         destination.write(chunk)
                 # Update the new_book object with image path
-                new_book.img = os.path.join('books', str(current_time.strftime('%Y'))[2:], str(current_time.strftime('%m')), str(current_time.strftime('%d')), image.name)
+                new_book.img = os.path.join('books',image.name)
                 new_book.save()
 
             return JsonResponse({'status': 'success', 'message': 'Book added successfully'})

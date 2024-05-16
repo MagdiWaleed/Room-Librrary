@@ -1,0 +1,10 @@
+.background_card {
+    background-color: #D3C3A9;
+    border-radius: 8px;
+    padding: 30px 50px;
+    border: 1px black solid;
+    box-shadow: 0 0 10px rgba(0, 0,0,0.4);
+    font-size: 19px;
+    line-height: 35px;
+    text-align: left;
+}

@@ -15,6 +15,7 @@ from .views import (
     )
 
 urlpatterns = [
+    path("",myProfile, name="log-in"),
     path("login/",login, name="log-in"),
     path("my_information/",myProfile, name="my-information"),
     path('register-new-user/', registerNewUser, name='register-new-user'),

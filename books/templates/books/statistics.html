@@ -10,33 +10,33 @@
   <script> 
     user = JSON.parse(localStorage.getItem('user'));
     if(user.isAdmin=="False"){
-      window.location.href = "http://127.0.0.1:8000/not-authorized/";
+      window.location.href = "../not-authorized/";
     }
   </script>
          
     <div class="search_card">
       <p># Of Books: {{num_books}}</p>
-       <button class="normal_button" onclick="navigateToPage('http://127.0.0.1:8000/books/')" >Show Details</button>
+       <button class="normal_button" onclick="navigateToPage('../books/')" >Show Details</button>
      </div>
      
 
     <div class="search_card">
       <p># Of Users: {{num_users}}</p>
-       <button class="normal_button" onclick="navigateToPage('http://127.0.0.1:8000/filtering/users/')" >Show Details</button>
+       <button class="normal_button" onclick="navigateToPage('../filtering/users/')" >Show Details</button>
      </div>
      
      
      
      <div class="search_card">
       <p># Of Authors: {{num_authors}}</p>
-       <button class="normal_button" onclick="navigateToPage('http://127.0.0.1:8000/filtering/authors/')" >Show Details</button>
+       <button class="normal_button" onclick="navigateToPage('../filtering/authors/')" >Show Details</button>
      </div>
      
      
      
      <div class="search_card">
       <p># Of Borrowed Book: {{num_borrowed}}</p>
-       <button class="normal_button" onclick="navigateToPage('http://127.0.0.1:8000/filtering/borrowed-books')" >Show Details</button> {% comment "" %}TODO change the url{% endcomment %}
+       <button class="normal_button" onclick="navigateToPage('../filtering/borrowed-books')" >Show Details</button> {% comment "" %}TODO change the url{% endcomment %}
      </div>
      
      <div style="height: 30px;"></div>

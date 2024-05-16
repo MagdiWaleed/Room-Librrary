@@ -3,15 +3,16 @@
 
 
 {% block links %}
-<script src={% static "profileModel/js/signup_controller.js" %} defer></script>
-<link rel="stylesheet" href="{% static "profileModel/css/signup_style.css" %}">
+<script src="{% static 'profileModel/js/signup_controller.js' %}"" defer></script>
+<link rel="stylesheet" href="{% static 'profileModel/css/signup_style.css' %}">
 {% endblock links %}
 
 
 {% block content %}
 <main >
     <div >
-      <img src= "{% static "/img/Logo.png" %}" class="conteinr">
+      <img src= "{% static '/img/Logo.png' %}" class="conteinr">
+      
         <div class="formcont">
           <div class="inputtext">
             <input type ="text" class="info" id = "user"placeholder="username" required>
