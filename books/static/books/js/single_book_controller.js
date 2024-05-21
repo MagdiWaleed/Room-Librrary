@@ -22,7 +22,6 @@ function getCookie(name) {
       success:function(response){
         data= response.data
         localStorage.setItem("book_id",data.book_id),
-        alert(localStorage.getItem("book_id"))
         user=JSON.parse(localStorage.getItem("user"))
         if(user.isAdmin=="True"){
             document.getElementById("borrowed_unborrowed").innerHTML=`

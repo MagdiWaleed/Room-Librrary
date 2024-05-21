@@ -172,6 +172,8 @@ def changeBookData(request):
             category = data_dict.get('book_category')
             book_id = data_dict.get('book_id')
             image = request.FILES.get('image')
+            trending_check = data_dict.get('trending_check')
+            trending_check = bool(trending_check)
 
             print("data_dict: ", data_dict)
             print("book_name: ", book_name)
@@ -190,6 +192,7 @@ def changeBookData(request):
             obj.author_name = author_name
             obj.about_author = about_author
             obj.category = category
+            obj.is_trending = trending_check
             print(obj.img)
             if image != None:
                 if obj.img != "default-book-cover.jpg":

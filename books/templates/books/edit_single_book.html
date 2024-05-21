@@ -23,17 +23,24 @@
 
     <div class="row">
     <div class="column">
-      <div class="text_textfield" >  <label for="" > Book name:</label>  <input type="text" id="input_book_name" placeholder="name" required><br></div>
-    <div style="height: 5px;"></div>
-    <div class="text_textfield">  <label for="" >Book author:</label> <input type="text" id="input_author_name" placeholder="author" required><br></div>
-    <div style="height: 5px;"></div>
-    <div class="text_textfield">  <label for="" >book catergory:</label> <input type="text" id="input_book_category" placeholder="Category" required><br></div>
-    <div style="height: 5px;"></div>
-    <div class="text_textfield">   <label for="" style="margin-bottom:auto;" >Description:</label><textarea name="Description" id="input_description" required cols="30" rows="10" ></textarea><br></div>
-    <div style="height: 10px;"></div> 
-    <div class="text_textfield">   <label for="" style="margin-bottom:auto;" >About Author:</label><textarea name="Description" id="input_about_author" required cols="30" rows="10" ></textarea><br></div>
-    <div style="height: 10px;"></div> 
-    <button class="normal_button" onclick= "savechanges()">Save Changes</button>
+        <div class="text_textfield" >  <label for="" > Book name:</label>  <input type="text" id="input_book_name" placeholder="name" required><br></div>
+      <div style="height: 5px;"></div>
+      <div class="text_textfield">  <label for="" >Book author:</label> <input type="text" id="input_author_name" placeholder="author" required><br></div>
+      <div style="height: 5px;"></div>
+      <div class="text_textfield">  <label for="" >book catergory:</label> <input type="text" id="input_book_category" placeholder="Category" required><br></div>
+      <div style="height: 5px;"></div>
+      <div class="text_textfield">   <label for="" style="margin-bottom:auto;" >Description:</label><textarea name="Description" id="input_description" required cols="30" rows="10" ></textarea><br></div>
+      <div style="height: 10px;"></div> 
+      <div class="text_textfield">   <label for="" style="margin-bottom:auto;" >About Author:</label><textarea name="Description" id="input_about_author" required cols="30" rows="10" ></textarea><br></div>
+      
+      <div class="row" style="margin:50px"> 
+        <label style="margin: 0 50px">
+            <input type="checkbox" id="trending_check" name="trending_check" value="trending">
+            Trending Book
+        </label>
+    </div>
+      
+      <button class="normal_button" onclick= "savechanges()">Save Changes</button>
     </div>
     <div style="width: 5px;"></div>
     <div class="column" style="max-width: 110px; margin-right: 5%;">

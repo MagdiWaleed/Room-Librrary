@@ -15,7 +15,7 @@
 
 <div style="height: 10px;"></div>
 <div class="book_dis">
-<img src="/media/{{data.img}}" alt="" id="book_image" class="book_img">
+<img src="/media/{{data.img}}" alt="{{data.title}}" id="book_image" class="book_img">
   <div style="margin-top: 30px;">
     <h2 >Discription:</h2>
     <div style="height: 20px;" ></div>
@@ -45,7 +45,11 @@
 </div>
 
 
-    <div id="borrowed_unborrowed"></div>
+    <div id="borrowed_unborrowed">
+      <div style="display: flex; justify-content: right; ">
+        <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="unborrowed_book()">...</button>
+        </div>
+    </div>
  
       
 
