@@ -20,6 +20,15 @@ var outputElement5 = document.getElementById('book_category');
 inputField5.value = outputElement5.innerHTML;
 
 
+if(document.getElementById('trending_check').value=="True")
+{
+document.getElementById('trending_check').checked=true
+
+}else{
+  document.getElementById('trending_check').checked=false
+}
+
+
 
 inputField.addEventListener('input', function() {
     outputElement.innerText = inputField.value;
@@ -89,6 +98,8 @@ function savechanges(){
   formData.append("about_author",inputField4.value)
   formData.append("book_id",book_id)
   formData.append("image",fileInput)
+  formData.append('trending_check', document.getElementById('trending_check').checked? "True":"False");
+
 
 
   var xhr = new XMLHttpRequest();

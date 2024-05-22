@@ -45,7 +45,9 @@ function numMyBooks(){
         },
         success: function(response) {
            try{
+            
              document.getElementById("numMyBooks").innerHTML=response.data
+            
             }catch(e){
                 console.log(e)
             }
