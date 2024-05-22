@@ -3,7 +3,7 @@
   function showBorrowedBookDetails(id,){
     user =JSON.parse(localStorage.getItem("user"))
     if(user.isAdmin=="True"){
-      window.location.href= `http://127.0.0.1:8000/books/${id}`
+      window.location.href= `/books/${id}`
     }else{
       alert("this book is borrowed by someone")
     }
@@ -143,7 +143,7 @@
     }
     else{
       
-      window.location.href=`http://127.0.0.1:8000/filtering/searching/${searchText}`;
+      window.location.href=`/filtering/searching/${searchText}`;
     }
   }
   

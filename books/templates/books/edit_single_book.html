@@ -14,7 +14,7 @@
   <script> 
     user = JSON.parse(localStorage.getItem('user'));
     if(user.isAdmin=="False"){
-      window.location.href = "http://127.0.0.1:8000/not-authorized/";
+      window.location.href = "/not-authorized/";
     }
   </script>
   
@@ -52,7 +52,7 @@
         <div style="margin-top: auto;"></div>
         <button class="normal_button delete_button" id="delete_button" onclick="deleteThisBook()" >Delete</button>
         <div style="height: 10px;"></div>
-        <button class="normal_button" onclick= "navigateToPage('http://127.0.0.1:8000')">Cancel</button>
+        <button class="normal_button" onclick= "navigateToPage('/')">Cancel</button>
       </div>
     </div>
     </div>

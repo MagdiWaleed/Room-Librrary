@@ -66,7 +66,7 @@ function borrowed_book(){
         },
         success: function(response) {
           alert("you have borrowed this book","have fun")
-          window.location.href = "http://127.0.0.1:8000/"
+          window.location.href = "/"
         },
         error: function(error) {
             console.log("error ", error);
@@ -85,7 +85,7 @@ function unborrowed_book(){
         },
         success: function(response) {
           alert("you have unborrowed this book")
-          window.location.href = "http://127.0.0.1:8000/"
+          window.location.href = "/"
 
         },
         error: function(error) {
@@ -106,5 +106,5 @@ function unborrowed_book(){
 fetch_data()
 
 function editThisBook(id) {
-    window.location.href = `http://127.0.0.1:8000/books/edit-book/${id}`;
+    window.location.href = `/books/edit-book/${id}`;
   }

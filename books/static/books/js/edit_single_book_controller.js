@@ -87,7 +87,7 @@ function getCookie(name) {
 function savechanges(){
   var csrftoken = getCookie('csrftoken');
   var book_id = JSON.parse(localStorage.getItem("book"))
-  var url = "http://127.0.0.1:8000/books/edited-book/" 
+  var url = "/books/edited-book/" 
   var fileInput = document.getElementById('image_input').files[0];
  var formData = new FormData()
   formData.append("book_name",inputField.value)
@@ -107,7 +107,7 @@ function savechanges(){
       if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status === 200) {
               alert(xhr.responseText);
-              window.location.href="http://127.0.0.1:8000/"
+              window.location.href="../"
               
               
           } else {
@@ -124,7 +124,7 @@ function deleteThisBook() {
   var csrftoken = getCookie('csrftoken');
   var book_id = localStorage.getItem("book_id");
   
-  var url = "http://127.0.0.1:8000/books/delete-book/"
+  var url = "/books/delete-book/"
   $.ajax({
     type: "POST",
     url: url,
@@ -134,7 +134,7 @@ function deleteThisBook() {
     },
     success: function(response) {
       alert(response.status)
-      window.location.href = "http://127.0.0.1:8000"
+      window.location.href = ""
     },
     error: function(error) {
         console.log("error ", error);

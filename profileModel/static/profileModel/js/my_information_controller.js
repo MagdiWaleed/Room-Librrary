@@ -61,7 +61,7 @@ function numMyBooks(){
 function logout(){
     console.log("")
     localStorage.removeItem('user')
-    window.location.href="http://127.0.0.1:8000/"
+    window.location.href="/"
 }
 
 function delete_acc(){
@@ -76,7 +76,7 @@ function delete_acc(){
         success: function(response) {
             alert(response.data)
             localStorage.removeItem("user")
-            window.location.href="http://127.0.0.1:8000/"
+            window.location.href="/"
         },
         error: function(error) {
             console.log("error ", error);
@@ -98,14 +98,14 @@ function userMode(){
     localStorage.setItem("admin",JSON.stringify(user))
     localStorage.setItem("user",JSON.stringify(admin))
     localStorage.setItem("user_mode","enable")
-    window.location.href="http://127.0.0.1:8000/"
+    window.location.href="/"
 }
 
 function endUserMode(){
     adminData= localStorage.getItem("admin")
     localStorage.setItem("user",adminData)
     localStorage.removeItem("user_mode")
-    window.location.href="http://127.0.0.1:8000/"
+    window.location.href="/"
 }
 
 function saveChanges(){
@@ -142,7 +142,7 @@ function saveChanges(){
                     user.password = data.password
                     user.email = data.email
                 localStorage.setItem("user",JSON.stringify(user))
-                window.location.href="http://127.0.0.1:8000/" 
+                window.location.href="/" 
                 }
              
             },

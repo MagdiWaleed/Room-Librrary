@@ -13,7 +13,7 @@
         <script> 
           user = JSON.parse(localStorage.getItem('user'));
           if(user.isAdmin=="False"){
-            window.location.href = "http://127.0.0.1:8000/not-authorized/";
+            window.location.href = "/not-authorized/";
           }
         </script>
     <div style="height: 30px;"></div>
@@ -29,7 +29,7 @@
               </div>
         {% if data == 'no books found' %}
         <script>
-          window.location.href="http://127.0.0.1:8000/books/add-edit-book/"
+          window.location.href="/books/add-edit-book/"
         </script>
         {% else %}
         {% for book in data  %}

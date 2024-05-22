@@ -8,7 +8,7 @@ function goToSingleBook(id){
     user= localStorage.getItem("user")
     if(user){
         localStorage.setItem("book",id)
-        window.location.href= `http://127.0.0.1:8000/books/${id}`
+        window.location.href= `/books/${id}`
     }  else{
         showpopup()
     }
@@ -17,7 +17,7 @@ function goToSingleBook(id){
 function showpopup(){
    user = JSON.parse(localStorage.getItem('user'))
    if(user){
-    window.location.href="http://127.0.0.1:8000/profile/my_information/"
+    window.location.href="/profile/my_information/"
    }else{
     let pop_up = document.getElementById("popup");
     pop_up.classList.add("open-popup");
@@ -60,7 +60,7 @@ function login() {
             }else{
                 console.log(response.data)
                 localStorage.setItem("user",JSON.stringify(response.data))
-                window.location.href="http://127.0.0.1:8000/";
+                window.location.href="/";
             }
         },
         error: function(error) {
@@ -76,6 +76,6 @@ function closepop(){
 }
 
 function goToSignup(){
-    window.location.href="http://127.0.0.1:8000/profile/signup"
+    window.location.href="/profile/signup"
 }
 

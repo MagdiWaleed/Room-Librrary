@@ -1,6 +1,6 @@
 
 function addNewBook(){
-        window.location.href= 'http://127.0.0.1:8000/books/add-edit-book/'
+        window.location.href= '/books/add-edit-book/'
    }
 
 

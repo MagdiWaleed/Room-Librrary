@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (xhr.readyState === XMLHttpRequest.DONE) {
               if (xhr.status === 200) {
                   alert(xhr.responseText);
-                  window.location.href="http://127.0.0.1:8000/"
+                  window.location.href="/"
               } else {
                   alert('Error: ' + xhr.statusText);
                 //   location.reload();

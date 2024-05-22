@@ -121,7 +121,7 @@ def registerNewUser(request):
             isAdmin= True
             print(isAdmin)
         try:
-            newUser= ProfileModel(
+            newUser= ProfileModel.objects.create(
                 username=username,
                 password=password,
                 email=email,

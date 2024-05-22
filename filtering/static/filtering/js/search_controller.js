@@ -24,7 +24,7 @@ bookShelves= document.getElementById("bookshelves")
 */
 // function getTheBooks (){
 //     searchText = document.getElementById("search").value;
-//     window.location.href=`http://127.0.0.1:8000/filtering/searching/${searchText}`;
+//     window.location.href=`/filtering/searching/${searchText}`;
 //     bookCardsList=[]
 //     $.ajax({
 //       type: 'GET',
@@ -72,7 +72,7 @@ localStorage.setItem("search",textString);
 if (textString.length==0){
 }
 else{
-  window.location.href=`http://127.0.0.1:8000/filtering/searching/${textString}`;
+  window.location.href=`/filtering/searching/${textString}`;
 }
 }
 

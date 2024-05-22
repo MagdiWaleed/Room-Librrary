@@ -47,7 +47,7 @@ function signpress(){
                 else{
                       user= response.data
                 localStorage.setItem("user",JSON.stringify(user))
-                window.location.href="http://127.0.0.1:8000/" 
+                window.location.href="/" 
                 }
              
             },
