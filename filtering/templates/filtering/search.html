@@ -45,6 +45,7 @@
             <h4>{{book.title}}</h4>
             <p>By: {{book.author_name}}</p>
         </div>
+      
         {% else %}
         <div class="borrowed_books" onclick="showBorrowedBookDetails({{book.id}})">
           <div style="position: relative;">

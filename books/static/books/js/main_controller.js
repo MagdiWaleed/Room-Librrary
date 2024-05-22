@@ -38,8 +38,13 @@
           success: function(response){
               document.getElementsByClassName("loading_container")[0].style.display="none"
               document.getElementsByClassName("loading_container")[1].style.display="none"
-               username = JSON.parse(localStorage.getItem("user")).username;
-                data = response.trending;
+              try{ 
+              username = JSON.parse(localStorage.getItem("user")).username;
+              }catch(e){
+                username = "#"
+              }
+              
+              data = response.trending;
                 console.log(data)
                 data.forEach(e => {
                 
