@@ -7,6 +7,13 @@
 
 {% block content %}
 <main>
+  <script> 
+    user = JSON.parse(localStorage.getItem('user'));
+    if(user.isAdmin=="False"){
+      window.location.href = "http://127.0.0.1:8000/not-authorized/";
+    }
+  </script>
+
     <div style="height: 25px;"></div>
       <h1 id="owner_text">
                  <script>
@@ -18,7 +25,7 @@
         <div id="search_card">
           <input type="text" id="search" name="search" placeholder="Search books, genres, artists...">
           <div style="height: 10px;"></div>
-          <button class="normal_button" onclick="search({{userType}})">search</button>
+          <button class="normal_button" onclick="search('{{userType}}')">search</button>
         </div>
       <div style="height: 20px;"></div>
       <div id="table_background">
@@ -27,6 +34,7 @@
               <th><div>User name</div></th>
               <th><div>#books</div></th>
           </tr>
+          {% if data != "no data" %}
           {% for row in data %}
             {% if row.isEven == "True" %}
             <tr class="even" onclick="goToSingleMember({{row}})"><td><div>{{row.membername}}</div></td>
@@ -36,6 +44,10 @@
               <td><div>{{row.numBooks}}</div></td></tr>
               {% endif %}
               {% endfor %}
+            {% else %}
+          <tr class ="odd">  <td > there are no {{userType}} with this name </td> <td>#</td> </tr>
+          
+          {% endif %}
       </table>
     </div>
     <div style="height: 20px;"></div>

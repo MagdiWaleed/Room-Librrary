@@ -8,7 +8,15 @@
 
 
 {% block content %}
-<main><div style="height: 25px;"></div>
+<main>
+  <script> 
+    user = JSON.parse(localStorage.getItem('user'));
+    if(user.isAdmin=="False"){
+      window.location.href = "http://127.0.0.1:8000/not-authorized/";
+    }
+  </script>
+  
+  <div style="height: 25px;"></div>
     <h1>Enter The New Book Details:</h1>
     <div style="height: 25px;"></div>
     <form id="add_new_book_form" method="post"  action = "{% url 'add-new-book' %}" enctype="multipart/form-data">
@@ -27,13 +35,8 @@
 
             <div class="row" style="margin:50px"> 
               <label style="margin: 0 50px">
-                  <input type="radio" id="trending_radio" name="book_type" value="trending">
+                  <input type="checkbox" id="trending_check" name="trending_check" value="trending">
                   Trending Book
-              </label>
-                        
-              <label>
-                  <input type="radio" id="latest_radio" name="book_type" value="latest">
-                  Latest Book
               </label>
           </div>
 
@@ -50,6 +53,7 @@
             <button class="normal_button">Cancel</button>
           </div>
         </div>
+
     </form>
 
    <div class="book_title"> 

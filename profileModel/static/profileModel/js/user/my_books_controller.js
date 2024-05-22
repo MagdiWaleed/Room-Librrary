@@ -23,12 +23,12 @@ function getCookie(name) {
 
 
 function numMyBooks(){
-    user = JSON.parse(sessionStorage.getItem("user"))
+    user = JSON.parse(localStorage.getItem("user"))
     $.ajax({
         type: 'POST',
         url: "/profile/books-number",
         data: {
-            id: user.id,
+            username: user.username,
             csrfmiddlewaretoken: getCookie('csrftoken'),
         },
         success: function(response) {
@@ -42,15 +42,17 @@ function numMyBooks(){
 }
 
 function getMyBooks(){
-    user = JSON.parse(sessionStorage.getItem("user"))
+    user = JSON.parse(localStorage.getItem("user"))
     $.ajax({
         type: 'POST',
         url: "/profile/my-books-data",
         data: {
-            id: user.id,
+            username: user.username,
             csrfmiddlewaretoken: getCookie('csrftoken'),
         },
         success: function(response) {
+            document.getElementsByClassName("loading_container")[0].style.display="none"
+
             data = response.data
             console.log(response.data)
             data.forEach(e => {

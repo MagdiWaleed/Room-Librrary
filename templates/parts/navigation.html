@@ -33,7 +33,7 @@
   margin-right: 20px;
 
 }
-#backGround >h1{
+#backGround h1{
 display:inline-block;
 font-size: 65px;
 margin-right: 50px;
@@ -71,16 +71,7 @@ margin-right: 50px;
 .borders{
   border: 0.4px black solid;
 }
-#selected_page_button{
-  width: 100%;
-  border: 0;
-  font-weight: normal;
-  font-size: 16px;
-  background-color: rgba(0, 0, 0, .1);
-  color: white;
-  border-bottom: 2px white solid;
-  transition: all 100ms;
-}
+
 
 
 
@@ -91,7 +82,7 @@ margin-right: 50px;
  admin_navigation= 
  `<div id="backGround_image" >
   <div id="backGround" class="borders">
-    <img id="project_logo"  src="{% static "/img/Logo.png" %}" alt="" onclick="navigateToPage('/admin/about/about.html')">
+    <img id="project_logo"  src="{% static "/img/Logo.png" %}" alt="" onclick="navigateToPage('{% url 'about' %}')">
     <h1>
       R O M E
     </h1>
@@ -99,7 +90,7 @@ margin-right: 50px;
   </div>
   <div id="black_line"></div>
   <div id="navigation_bar" class="borders">
-    <button id="selected_page_button" style="border-radius: 0 0 0 50px;" onclick="navigateToPage('{% url 'books-list' %}')" >H O M E</button>
+    <button class ="not_selected_page_button" style="border-radius: 0 0 0 50px;" onclick="navigateToPage('{% url 'books-list' %}')" >H O M E</button>
     <button style="border-radius: 0 0 0 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'borrowed-books' %}')">
       <pre>B O R R O W E D  
 B O O K S</pre>
@@ -122,7 +113,7 @@ B O O K S</pre>
           </div>
           <div id="black_line"></div>
           <div id="navigation_bar" class="borders">
-            <button style="border-radius: 0 0 0 50px;" id="selected_page_button" onclick="navigateToPage('{% url 'books-list' %}')">H O M E</button>
+            <button style="border-radius: 0 0 0 50px;" class ="not_selected_page_button" onclick="navigateToPage('{% url 'books-list' %}')">H O M E</button>
             <button style="border-radius: 0 0 0 0;" id="my_book" class="not_selected_page_button" onclick="navigateToPage('{% url 'my-books-list' %}')">M Y  B O O K S</button>
             <button style="border-radius: 0 0 50px 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'about' %}')">A B O U T</button>  
           </div>  
@@ -141,13 +132,13 @@ B O O K S</pre>
           </div>
           <div id="black_line"></div>
           <div id="navigation_bar" class="borders">
-            <button style="border-radius: 0 0 0 50px;" id="selected_page_button" onclick="navigateToPage('{% url 'books-list' %}')">H O M E</button>
+            <button style="border-radius: 0 0 0 50px;" class ="not_selected_page_button" onclick="navigateToPage('{% url 'books-list' %}')">H O M E</button>
             <button style="border-radius: 0 0 50px 0;" class="not_selected_page_button" onclick="navigateToPage('{% url 'about' %}')">A B O U T</button>  
           </div>  
       </div>
     </header>`;
 
-    user =JSON.parse(sessionStorage.getItem('user'))
+    user =JSON.parse(localStorage.getItem('user'))
     console.log(user)
     if (user){
       if(user.isAdmin=="True"){

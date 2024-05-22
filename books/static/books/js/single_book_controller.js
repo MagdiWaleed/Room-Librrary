@@ -16,21 +16,20 @@ function getCookie(name) {
   
 
   function fetch_data(){
-    bookCardsList=[]
     $.ajax({
       type: 'GET',
       url: "single-book-user-id",
       success:function(response){
         data= response.data
-        sessionStorage.setItem("book_id",data.book_id)
-        user=JSON.parse(sessionStorage.getItem("user"))
+        localStorage.setItem("book_id",data.book_id),
+        user=JSON.parse(localStorage.getItem("user"))
         if(user.isAdmin=="True"){
             document.getElementById("borrowed_unborrowed").innerHTML=`
             <div style="display: flex; justify-content: right; ">
-            <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="">Edit This Book</button>
+            <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="editThisBook(${data.book_id})">Edit This Book</button>
             </div>` 
         }else{
-            if(data.user_id==user.id){
+            if(data.username==user.username){
                 
                 document.getElementById("borrowed_unborrowed").innerHTML=`
                 <div style="display: flex; justify-content: right; ">
@@ -46,31 +45,28 @@ function getCookie(name) {
     },
       error:function(error){
           console.log("error", error);
+
       }
   })
-
 }
 
 
 function borrowed_book(){
-    user= JSON.parse(sessionStorage.getItem("user"))
-    book_id= sessionStorage.getItem("book_id")
+    user= JSON.parse(localStorage.getItem("user"))
+    book_id= localStorage.getItem("book_id")
 
     var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
     $.ajax({
         type: 'POST',
         url: "/profile/borrowed-book",
         data: {
-          user_id : user.id,
+          username : user.username,
           book_id : book_id,
           csrfmiddlewaretoken: csrfToken,
         },
         success: function(response) {
           alert("you have borrowed this book","have fun")
-          document.getElementById("borrowed_unborrowed").innerHTML=`
-          <div style="display: flex; justify-content: right; ">
-          <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="unborrowed_book()">Unborrowed This Book</button>
-          </div>` ;
+          window.location.href = "http://127.0.0.1:8000/"
         },
         error: function(error) {
             console.log("error ", error);
@@ -78,7 +74,7 @@ function borrowed_book(){
     });
 }
 function unborrowed_book(){
-    book_id= sessionStorage.getItem("book_id")
+    book_id= localStorage.getItem("book_id")
     var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
     $.ajax({
         type: 'POST',
@@ -88,11 +84,9 @@ function unborrowed_book(){
           csrfmiddlewaretoken: csrfToken,
         },
         success: function(response) {
-          console.log(response.data)
-          document.getElementById("borrowed_unborrowed").innerHTML=`
-          <div style="display: flex; justify-content: right; ">
-          <button class="normal_button edit_button" style="width: 200px; margin-top: 20px;" onclick="borrowed_book()">Borrowed This Book</button>
-          </div>`;
+          alert("you have unborrowed this book")
+          window.location.href = "http://127.0.0.1:8000/"
+
         },
         error: function(error) {
             console.log("error ", error);
@@ -110,3 +104,7 @@ function unborrowed_book(){
 
 
 fetch_data()
+
+function editThisBook(id) {
+    window.location.href = `http://127.0.0.1:8000/books/edit-book/${id}`;
+  }

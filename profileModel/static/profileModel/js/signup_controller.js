@@ -40,9 +40,16 @@ function signpress(){
             },
             success: function(response) {
                 console.log("success ", response.data);
-                user= response.data
-                sessionStorage.setItem("user",JSON.stringify(user))
-                window.location.href="http://127.0.0.1:8000/"
+                
+                if (response.data== "Username already exists."){
+                    alert("Username already exists.")
+                }
+                else{
+                      user= response.data
+                localStorage.setItem("user",JSON.stringify(user))
+                window.location.href="http://127.0.0.1:8000/" 
+                }
+             
             },
             error: function(error) {
                 console.log("error ", error);

@@ -3,7 +3,7 @@
 
 {% block links %}
 <link rel="stylesheet" href="{% static "books/css/main_style.css" %}">
-<link rel="stylesheet" href="{% static "books/css/user/main.css" %}">
+
 <script src="{% static "books/js/main_controller.js" %}" defer></script>
 {% endblock links %}
 
@@ -28,7 +28,7 @@
         <button type="button" onclick="login()" class="btn">Log in</button>
         <button type="button" class="closebtn" onclick="closepop()">X</button>
       </div> <br>
-    <button class="next" onclick="goToSignup()"> create account</button> 
+    <button class="next" type="button" onclick="goToSignup()"> create account</button> 
   </form>
     
     <div class="hero-class">
@@ -37,7 +37,7 @@
     </div>
 
     <div class="search_background">
-      <h3>Welcome to rome library , your journey to wisdom starts here  Enter a title, author, or genre and find the greatest picks of all time!.</h3>
+      <h3>Welcome to rome library , your journey to wisdom starts here  Enter a title, other, or genre and find the greatest picks of all time!.</h3>
       <div style="height: 20px;"></div>
      <div class="row">
       <h1 class="big_text">
@@ -51,22 +51,30 @@
      </div>
     </div>
   </div> 
-    <div style="height: 30px;"></div>
-    <div>
-      <h1 style="height: 30px;">Latest Books</h1>
-    </div>
-    <div class="bookshelves" id="latest">   
-      </div>
-      <br/>
-    <h1 style="height: 40px;">Trending Books</h1>
-    
-      <div class="bookshelves" id="trending">   
-       
-                     
-   </div>  
-   <div style="height: 30px;"></div> 
+  <div style="height: 20px;"></div>
+  <div class="row"><h1 style="height: 40px;">Trending Books</h1> 
+  </div>
+{% include "parts/loading.html" %}
 
-  </main>
+<div class="bookshelves" id="trending">   
+
+</div>  
+  <hr style="margin: 30px 0;">
+  <div>
+  <div> 
+    <div class="row"><h1 style="height: 40px;">Latest Books</h1> 
+   </div>
+
+  {% include "parts/loading.html" %}
+
+  <div class="bookshelves" id="latest">  
+    
+  </div>
+
+ 
+
+<div style="height: 20px;"> </div>
+</main>
   `;
 admin_main_body = 
   `
@@ -78,30 +86,35 @@ admin_main_body =
 
       <button class="normal_button" onclick="search()" >search</button>
     </div>
+    <button class="normal_button edit_button"  onclick="navigateToPage('http://127.0.0.1:8000/books/')">Add Book</button>
+   
     <div style="height: 20px;"></div>
+    <div class="row"><h1 style="height: 40px;">Trending Books</h1> 
+    </div>
+  {% include "parts/loading.html" %}
+  
+  <div class="bookshelves" id="trending">   
+  
+  </div>  
+    <hr style="margin: 30px 0;">
+    <div>
     <div> 
       <div class="row"><h1 style="height: 40px;">Latest Books</h1> 
-      <button class="normal_button edit_button" style="width:200px" onclick="navigateToPage('http://127.0.0.1:8000/books/latest')">Edit Latest</button>
-    </div>
-
-    
+     </div>
+  
+    {% include "parts/loading.html" %}
+  
     <div class="bookshelves" id="latest">  
       
     </div>
-<hr style="margin: 50px 0;">
-  <div>
-      <div class="row"><h1 style="height: 40px;">Trending Books</h1> 
-      <button class="normal_button edit_button" style="width:200px" onclick="navigateToPage('http://127.0.0.1:8000/books/trending')">Edit Trending</button>
-    </div>
-
-    <div class="bookshelves" id="trending">   
-    
- </div>  
- <div style="height: 20px;"> </div>
+  
+   
+  
+  <div style="height: 20px;"> </div>
   </main>
   `;
 
-  user =JSON.parse(sessionStorage.getItem('user'));
+  user =JSON.parse(localStorage.getItem('user'));
   console.log(user)
   if (user){
      

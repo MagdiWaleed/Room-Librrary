@@ -1,11 +1,13 @@
+
+
 function navigateToPage(url){
     window.location.href=url;
 }
   
 function goToSingleBook(id){
-    user= sessionStorage.getItem("user")
+    user= localStorage.getItem("user")
     if(user){
-        sessionStorage.setItem("book",id)
+        localStorage.setItem("book",id)
         window.location.href= `http://127.0.0.1:8000/books/${id}`
     }  else{
         showpopup()
@@ -13,7 +15,7 @@ function goToSingleBook(id){
    }
   
 function showpopup(){
-   user = JSON.parse(sessionStorage.getItem('user'))
+   user = JSON.parse(localStorage.getItem('user'))
    if(user){
     window.location.href="http://127.0.0.1:8000/profile/my_information/"
    }else{
@@ -54,10 +56,10 @@ function login() {
         success: function(response) {
             console.log("success ", response.data);
             if(response.data== "no member"){
-                alert("username or password is wrong")
+                alert("wrong entries")
             }else{
                 console.log(response.data)
-                sessionStorage.setItem("user",JSON.stringify(response.data))
+                localStorage.setItem("user",JSON.stringify(response.data))
                 window.location.href="http://127.0.0.1:8000/";
             }
         },
@@ -76,3 +78,4 @@ function closepop(){
 function goToSignup(){
     window.location.href="http://127.0.0.1:8000/profile/signup"
 }
+

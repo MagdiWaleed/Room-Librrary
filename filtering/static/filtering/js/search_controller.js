@@ -56,7 +56,7 @@ bookShelves= document.getElementById("bookshelves")
 
 function getTheTextForSearching(){
     try{
-       storedDataString =sessionStorage.getItem("search");
+       storedDataString =localStorage.getItem("search");
        console.log(storedDataString);
     }catch(error){
         console.log(error);
@@ -67,7 +67,7 @@ function getTheTextForSearching(){
 
 function search(){
 textString=document.getElementById("search").value;
-sessionStorage.setItem("search",textString);
+localStorage.setItem("search",textString);
 
 if (textString.length==0){
 }

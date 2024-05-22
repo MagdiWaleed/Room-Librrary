@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block links %}
+<style>
+    #not_authorized{
+        text-align: center;
+        padding: 90px 0;
+        background-color: #D3C3A9;
+        border-radius: 18px;
+        margin: 30px 0;
+        box-shadow: 1px 1px 2px rgb(102, 102, 102);
+    }
+</style>
+<script>
+    function f(){
+    window.location.href = 'http://127.0.0.1:8000/';}
+</script>
+{% endblock links %}
+
+
+{% block content %}
+<div class="borders" id="not_authorized">
+<h1 > Not Authorized  </h1>
+<button class="borders_button" style="width: 400px; margin-top: 20px;" onclick="f()">Go To Home Page</button>
+</div>
+{% endblock content %}

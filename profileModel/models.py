@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class ProfileModel(models.Model):
-    username= models.CharField(max_length=50)
+    username= models.CharField(max_length=50,unique=True)
     email= models.CharField(max_length=50)
     password= models.CharField(max_length=50)
     is_admin= models.BooleanField(default=False)

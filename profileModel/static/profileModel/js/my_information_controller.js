@@ -5,7 +5,7 @@ function fetchData(){
     passhold = document.getElementById('password');
     confpasshold = document.getElementById('confpassword');
     try{
-        user= sessionStorage.getItem("user")
+        user= localStorage.getItem("user")
         user=JSON.parse(user)
         username.placeholder = user.username
         mailhold.placeholder = user.email
@@ -35,17 +35,22 @@ function getCookie(name) {
 
 
 function numMyBooks(){
-    user = JSON.parse(sessionStorage.getItem("user"))
+    user = JSON.parse(localStorage.getItem("user"))
     $.ajax({
         type: 'POST',
         url: "/profile/books-number",
         data: {
-            id: user.id,
+            username: user.username,
             csrfmiddlewaretoken: getCookie('csrftoken'),
         },
         success: function(response) {
-            document.getElementById("numMyBooks").innerHTML=response.data
+           try{
             
+             document.getElementById("numMyBooks").innerHTML=response.data
+            
+            }catch(e){
+                console.log(e)
+            }
         },
         error: function(error) {
             console.log("error ", error);
@@ -55,12 +60,12 @@ function numMyBooks(){
 
 function logout(){
     console.log("")
-    sessionStorage.removeItem('user')
+    localStorage.removeItem('user')
     window.location.href="http://127.0.0.1:8000/"
 }
 
 function delete_acc(){
-    user = JSON.parse(sessionStorage.getItem("user"))
+    user = JSON.parse(localStorage.getItem("user"))
     $.ajax({
         type: 'POST',
         url: "/profile/delete-account",
@@ -70,13 +75,83 @@ function delete_acc(){
         },
         success: function(response) {
             alert(response.data)
-            sessionStorage.removeItem("user")
+            localStorage.removeItem("user")
             window.location.href="http://127.0.0.1:8000/"
         },
         error: function(error) {
             console.log("error ", error);
         }
     });
+}
+
+
+
+function userMode(){
+    user = JSON.parse(localStorage.getItem("user"))
+    admin= {
+    "username" : "admin",
+    "password" : "admin",
+    "email" : "admin@gmail.com",
+    "isAdmin":"False",
+    "id":"_",
+        }
+    localStorage.setItem("admin",JSON.stringify(user))
+    localStorage.setItem("user",JSON.stringify(admin))
+    localStorage.setItem("user_mode","enable")
+    window.location.href="http://127.0.0.1:8000/"
+}
+
+function endUserMode(){
+    adminData= localStorage.getItem("admin")
+    localStorage.setItem("user",adminData)
+    localStorage.removeItem("user_mode")
+    window.location.href="http://127.0.0.1:8000/"
+}
+
+function saveChanges(){
+    user = JSON.parse(localStorage.getItem("user"))
+    id =user.id
+    username =  document.getElementById("name")
+    password =  document.getElementById('password')
+    conf =  document.getElementById('confpassword')
+    email =  document.getElementById('email')
+    if((!email.value.includes('')) || (password.value != conf.value)){
+        window.alert('wrong entrey');
+    }
+    else{
+        var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
+        $.ajax({
+            type: 'POST',
+            url: "/profile/update-user/",
+            data: {
+                id: id,
+                username: username.value,
+                password: password.value,
+                email: email.value,
+                csrfmiddlewaretoken: csrfToken
+            },
+            success: function(response) {
+                
+                if (response.data== "Username already exists."){
+                    alert("Username already exists.")
+                }
+                else{
+                    alert("success ", "changes have been saved");
+                    data = response.data  
+                    user.username= data.username
+                    user.password = data.password
+                    user.email = data.email
+                localStorage.setItem("user",JSON.stringify(user))
+                window.location.href="http://127.0.0.1:8000/" 
+                }
+             
+            },
+            error: function(error) {
+                console.log("error ", error);
+            }
+        });
+    }
+    
 }
 
 

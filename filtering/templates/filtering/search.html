@@ -6,7 +6,8 @@
 {% endblock links %}
 
 {% block content %}
-<main>  
+<main> 
+   
   <form id="popup" class="login">
     <div id="signupForm" >
       <div class="inputtext">
@@ -35,7 +36,7 @@
         </div>
         <div style="height: 20px;"></div>
       
-     
+     {% if data != "no data" %}
       <div class="bookshelves">   
         {% for book in data %}
         {% if book.isborrowed == "no" %}
@@ -44,6 +45,7 @@
             <h4>{{book.title}}</h4>
             <p>By: {{book.author_name}}</p>
         </div>
+      
         {% else %}
         <div class="borrowed_books" onclick="showBorrowedBookDetails({{book.id}})">
           <div style="position: relative;">
@@ -56,6 +58,11 @@
         {% endif %}
 
         {% endfor %}
+    {% else %}
+    <div style="display:flex; justify-content: center">
+    <h1>No books found</h1>
+    </dive>
+    {% endif %}
         
     </div>
   <br>

@@ -7,7 +7,12 @@
 
 {% block content %}
 <main>
-
+  <script> 
+    user = JSON.parse(localStorage.getItem('user'));
+    if(user.isAdmin=="False"){
+      window.location.href = "http://127.0.0.1:8000/not-authorized/";
+    }
+  </script>
          
     <div class="search_card">
       <p># Of Books: {{num_books}}</p>
