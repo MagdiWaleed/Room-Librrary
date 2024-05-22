@@ -7,14 +7,15 @@ from profileModel.models import ProfileModel
 # Create your views here.
 def search(request, searchingText):
     books_by_title = Book.objects.filter(title__icontains=searchingText)
-    books_by_description = Book.objects.filter(description__icontains=searchingText)
+    books_by_description = Book.objects.filter(category__icontains=searchingText)
     books_by_author = Book.objects.filter(author_name__icontains=searchingText)
     
     books = list(books_by_title) + list(books_by_description) + list(books_by_author)
     
     books = list(set(books))
-    print("books: ",books)
+    
     data = []
+    context={}
     for book in books:
         isborrowed =""
         if book.user== None:
@@ -31,8 +32,10 @@ def search(request, searchingText):
             'about_author': str(book.about_author),
         }
         data.append(item)
-    print(len(data))
-    context = {"data": data}
+    if len(data)== 0:
+        context={"data" : "no data"}
+    else:
+        context = {"data": data}
     return render(request, 'filtering/search.html', context)
 
 def getBorrowedBooks(request):
