@@ -5,7 +5,7 @@ from profileModel.models import ProfileModel
 from django.utils.timezone import now
 from django.conf import settings
 from django.core.exceptions import ValidationError,ObjectDoesNotExist
-
+from filtering.views import removeSpaces
 import os
 
 
@@ -19,6 +19,7 @@ def getStatistics(request):
     users=ProfileModel.objects.all()
     for book in books:
         authors.append(book.author_name)
+    authors= [removeSpaces(t)for t in authors]
     authors=set(authors)
     counter=0
     for user in users:

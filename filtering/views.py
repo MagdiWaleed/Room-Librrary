@@ -62,6 +62,14 @@ def getBorrowedBooks(request):
     context= {"data":data}
     return render(request,'filtering/borrowed_books.html',context)
 
+def removeSpaces(string):
+    new_string=""
+    string = string.split()
+    for i in string:
+        new_string+=i+" "
+        print(f"{new_string}")
+    return new_string[:-1]
+
 def getMembersBooks(request,members):
     data=[]
     if members== "users":
@@ -76,10 +84,13 @@ def getMembersBooks(request,members):
             data.append(item)
     elif members=="authors":
         books_by_author = Book.objects.all()
-        authors= [t.author_name for t in books_by_author]
+        authors= [removeSpaces(t.author_name) for t in books_by_author]
         authors= list(set(authors))
+        print(f"{len(authors)}")
         for author in authors:
-            books=Book.objects.filter(author_name=author)
+           
+            books=Book.objects.filter(author_name__icontains=author)
+            print(f"{author} -----> {len(books)}")
             item={
                 "memberid":"#",
                 "membername":str(author),
@@ -101,7 +112,6 @@ def getMembersBooks(request,members):
             "data":data,
             "userType":"authors"
             }
-    print(context)
     return render(request,"filtering/users_authors.html",context)
 
 def getUserBooks(request,id):
@@ -126,7 +136,8 @@ def getUserBooks(request,id):
     return render(request,"filtering/single_user_author.html",context)
 
 def getAuthorBooks(request,author_name):
-    books= Book.objects.filter(author_name=author_name)
+    author_name= removeSpaces(author_name)
+    books= Book.objects.filter(author_name__icontains=author_name)
     data = []
     for book in books:
         item = {
