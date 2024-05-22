@@ -146,6 +146,7 @@ def getAuthorBooks(request,author_name):
 
 def searchingAboutUsers(request,searchingText):
     data=[]
+    context ={}
     users= ProfileModel.objects.filter(username__icontains=searchingText)
     for user in users:
         books=Book.objects.filter(user=user)
@@ -160,7 +161,10 @@ def searchingAboutUsers(request,searchingText):
             data[t]["isEven"]="True"
         else:
             data[t]["isEven"]="False"
-    context= {"data":data}
+    if len(data)==0:
+        context= {"data": "no data","userType":"users"}
+    else:
+        context= {"data":data }
     return render(request,"filtering/users_authors.html",context) 
 
 def searchingAboutAuthors(request,searchingText):
@@ -186,5 +190,8 @@ def searchingAboutAuthors(request,searchingText):
             data[t]["isEven"]="True"
         else:
             data[t]["isEven"]="False"
-    context= {"data":data}
+    if len(data)==0:
+        context= {"data": "no data" , "userType":"authors"}
+    else:
+        context= {"data":data }
     return render(request,"filtering/users_authors.html",context) 
