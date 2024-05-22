@@ -18,4 +18,10 @@ function goToSingleMember(row){
           window.location.href=`http://127.0.0.1:8000/filtering/${userType}/searching/${textString}/`;
         }
         }
+
+    function fetch(){
+        textString= localStorage.getItem('search');
+        document.getElementById("search").placeholder=textString;
+    }
     
+fetch();

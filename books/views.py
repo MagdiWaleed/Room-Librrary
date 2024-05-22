@@ -40,41 +40,54 @@ def getBooksData(request):
     books= Book.objects.all()
     trending_data=[]
     latest_data=[]
-    other_data=[]
-    i=0
-    j=0
+    # i=0
+    # j=0
+
     for book in books:
         isborrowed =""
         if book.user== None:
             isborrowed='no'
         else:
             isborrowed='yes'
-       
-        item={
-                "title": str(book.title),
-                "description":str(book.description),
-                "img":str(book.img),
-                'author_name':str(book.author_name),
-                'about_author':str(book.about_author),
-                'id':str(book.id),
-                'isborrowed':str(isborrowed)
-            }
-        if i<4: 
-           i+=1 
-           latest_data.append(item)
-        elif book.is_trending and j<8  :
-            j+=1  
-            trending_data.append(item)
+        if book.user != None:
+            item={
+                    "title": str(book.title),
+                    "description":str(book.description),
+                    "img":str(book.img),
+                    'author_name':str(book.author_name),
+                    'about_author':str(book.about_author),
+                    'id':str(book.id),
+                    'isborrowed':str(isborrowed),
+                    'username':str(book.user.username)
+                }
+            
         else:
-            other_data.append(item)
+              item={
+                    "title": str(book.title),
+                    "description":str(book.description),
+                    "img":str(book.img),
+                    'author_name':str(book.author_name),
+                    'about_author':str(book.about_author),
+                    'id':str(book.id),
+                    'isborrowed':str(isborrowed),
+                 }
+        # if i<4: 
+        #    i+=1 
+        #    latest_data.append(item)
+        # elif book.is_trending and j<8  :
+        #     j+=1  
+        #     trending_data.append(item)
+        # else:
+        #     other_data.append(item)
+        if book.is_trending:
+            trending_data.append(item)
+        else: 
+            latest_data.append(item)
     context={
         "trending":trending_data,
         "latest":latest_data,  
-        "other": other_data,          
-             }
-    print("trending: ",len(trending_data))
-    print("latest: ",len(latest_data))
-    print("other: ",len(other_data))
+            }
+   
     return JsonResponse(context)
 
 def getSingleBook(request,pk):
@@ -103,17 +116,23 @@ def getAbout(request):
 def getAllBooks(request):
     books= Book.objects.all()
     data=[]
-    for book in books:
-        item={
-            "title": str(book.title),
-            "description":str(book.description),
-            "img":str(book.img),
-            'author_name':str(book.author_name),
-            'about_author':str(book.about_author),
-            'id':str(book.id),
+    try:    
+        for book in books:
+            item={
+                "title": str(book.title),
+                "description":str(book.description),
+                "img":str(book.img),
+                'author_name':str(book.author_name),
+                'about_author':str(book.about_author),
+                'id':str(book.id),
+            }
+            data.append(item)
+        context={"data":data,"filter":"all books"}
+    except Exception as e:
+        print(e)
+        context={
+           "data":"no books found" 
         }
-        data.append(item)
-    context={"data":data,"filter":"all books"}
     return render(request,'books/books_screen.html',context)
 
 
@@ -130,6 +149,9 @@ import os
 def getBookForEdit(request,pk):
     print("this is the primary key" ,pk)
     obj = Book.objects.get(pk=pk)
+    is_trending= str('False')
+    if obj.is_trending:
+        is_trending = "True"
     data={
         'id': str(obj.id),
         'title': str(obj.title),
@@ -138,7 +160,9 @@ def getBookForEdit(request,pk):
         'img': str(obj.img),
         'author_name':str(obj.author_name),
         'about_author':str(obj.about_author),
+        'is_trending':str(is_trending),
     }
+    print(data)
     return render(request,'books/edit_single_book.html',{'data':data})
 def deleteBook(request):
     if request.method == 'POST':
@@ -173,7 +197,10 @@ def changeBookData(request):
             book_id = data_dict.get('book_id')
             image = request.FILES.get('image')
             trending_check = data_dict.get('trending_check')
-            trending_check = bool(trending_check)
+            if trending_check == "False":
+                trending_check = False
+            else:
+                trending_check = True
 
             print("data_dict: ", data_dict)
             print("book_name: ", book_name)
@@ -209,8 +236,11 @@ def changeBookData(request):
                         for chunk in image.chunks():
                             destination.write(chunk)
                     obj.img = os.path.join('books', str(current_time.strftime('%Y'))[2:], str(current_time.strftime('%m')), str(current_time.strftime('%d')), image.name)
+            if trending_check ==True:
+                obj.mark_as_trending()
 
             obj.save()
+            addTotrending()
 
             return JsonResponse({'status': 'uccess', 'essage': 'Book added successfully'})
         except (ValidationError, Exception) as e:
@@ -226,7 +256,10 @@ def addNewBook(request):
             category = data_dict.get('category')
             image = request.FILES.get('image')
             trending_check = data_dict.get('trending_check')
-            trending_check = bool(trending_check)
+            if trending_check == "False":
+                trending_check = False
+            else:
+                trending_check = True
 
             print("data_dict: ", data_dict)
             print("book_name: ", book_name)
@@ -236,6 +269,8 @@ def addNewBook(request):
             print("category: ", category)
             print("is_trending: ", type(trending_check))
             print("image: ", image)
+            
+           
 
             if not book_name or not book_description or not author_name or not about_author or not category:
                 raise ValidationError('Missing required fields.')
@@ -246,8 +281,8 @@ def addNewBook(request):
                 author_name=author_name,
                 about_author=about_author,
                 category=category,
-                is_trending=trending_check,
             )
+            
 
             if image:
                 # Save the image to the media folder with date components in the path
@@ -260,8 +295,13 @@ def addNewBook(request):
                         destination.write(chunk)
                 # Update the new_book object with image path
                 new_book.img = os.path.join('books', str(current_time.strftime('%Y'))[2:], str(current_time.strftime('%m')), str(current_time.strftime('%d')), image.name)
-                new_book.save()
-
+            if trending_check ==True:
+                new_book.mark_as_trending()
+                  
+            new_book.save()
+            addTotrending()
+            
+                
             return JsonResponse({'status': 'success', 'message': 'Book added successfully'})
         except (ValidationError, Exception) as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
@@ -291,3 +331,24 @@ def getSingleBookUserId(request,pk):
 
 def goToNotAuthorized(request):
     return render(request,'pages/not_authorized.html')
+
+
+
+######################################################################
+#######################################################################
+####################################################################
+
+def addTotrending():
+    books = Book.objects.filter(is_trending=True).order_by('trending_date')
+    for i in books:
+        print(f'{i.title} -----> {i.is_trending} -----> {i.trending_date}')
+    i= 4
+    books =books.reverse()
+    for i in range(len(books)):
+        if i >=4 :
+            print(books[i].title)
+            books[i].is_trending =False
+            books[i].trending_date =None
+            books[i].save()
+
+        i+=1
