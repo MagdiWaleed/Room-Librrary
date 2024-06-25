@@ -5,15 +5,26 @@ from profileModel.models import ProfileModel
 
 
 # Create your views here.
+def getEntities(text):
+    texts= text.split("%20")
+    data={"category":[],"title":[],"author":[]}
+    for i in texts:
+        books_by_title = Book.objects.filter(title__icontains=i)
+        books_by_category = Book.objects.filter(category__icontains=i)
+        books_by_author = Book.objects.filter(author_name__icontains=i)
+        data["title"].extend(list(books_by_title))
+        data["category"].extend(list(books_by_category))
+        data["author"].extend(list(books_by_author))
+    return data
+import numpy as np
 def search(request, searchingText):
-    books_by_title = Book.objects.filter(title__icontains=searchingText)
-    books_by_description = Book.objects.filter(category__icontains=searchingText)
-    books_by_author = Book.objects.filter(author_name__icontains=searchingText)
+    searching_data= getEntities(searchingText)
     
-    books = list(books_by_title) + list(books_by_description) + list(books_by_author)
+
+    books = list(searching_data["title"]) + list(searching_data["category"]) + list(searching_data["author"])
     
     books = list(set(books))
-    
+    # print(np.array([i.title for i in books]))
     data = []
     context={}
     for book in books:
@@ -146,11 +157,16 @@ def getAuthorBooks(request,author_name):
             "memberName": str(author_name),
                }
     return render(request,"filtering/single_user_author.html",context)
-
+def getUserAuthorName(text):
+    texts= text.split("%20")
+    helper=""
+    for i in texts:
+        helper+= i+" "
+    return helper.strip()
 def searchingAboutUsers(request,searchingText):
     data=[]
     context ={}
-    users= ProfileModel.objects.filter(username__icontains=searchingText)
+    users= ProfileModel.objects.filter(username__icontains=getUserAuthorName(searchingText))
     for user in users:
         books=Book.objects.filter(user=user)
         item={
@@ -174,7 +190,7 @@ def searchingAboutAuthors(request,searchingText):
     print("this is the lenght of ur list")
 
     data=[]
-    books= Book.objects.filter(author_name__icontains=searchingText)
+    books= Book.objects.filter(author_name__icontains=getUserAuthorName(searchingText))
     authors=[]
     for book in books:
         authors.append(book.author_name)
