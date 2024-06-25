@@ -7,10 +7,10 @@ function fetchData(){
     try{
         user= localStorage.getItem("user")
         user=JSON.parse(user)
-        username.placeholder = user.username
-        mailhold.placeholder = user.email
-        passhold.placeholder = user.password
-        confpasshold.placeholder = user.password
+        username.value = user.username
+        mailhold.value = user.email
+        passhold.value = user.password
+        confpasshold.value = user.password
     }catch(e){
         console.log(e)
     }

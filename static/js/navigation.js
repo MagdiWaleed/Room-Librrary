@@ -39,6 +39,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
+
 function login() {
     var username = document.getElementById('user').value;
     var password = document.getElementById('pass').value;
@@ -51,7 +52,9 @@ function login() {
             username: username,
             password: password,
             isAdmin: isAdmin,
-            csrfmiddlewaretoken: csrfToken
+        },
+        headers: {
+            'X-CSRFToken': csrfToken // Set CSRF token in the request headers
         },
         success: function(response) {
             console.log("success ", response.data);
