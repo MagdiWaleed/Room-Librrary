@@ -140,7 +140,7 @@ def getUserBooks(request,id):
     return render(request,"filtering/single_user_author.html",context)
 
 def getAuthorBooks(request,author_name):
-    books= Book.objects.filter(author_name=author_name)
+    books= Book.objects.filter(author_name__icontains=author_name.strip())
     data = []
     for book in books:
         item = {
