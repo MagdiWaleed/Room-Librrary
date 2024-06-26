@@ -44,6 +44,10 @@ function login() {
     var username = document.getElementById('user').value;
     var password = document.getElementById('pass').value;
     var isAdmin = document.getElementById('check').checked;
+    if((password.value.length <8)){
+        window.alert('Password should be more than 8');
+    }
+
     var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
     $.ajax({
         type: 'POST',

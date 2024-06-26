@@ -115,9 +115,18 @@ function saveChanges(){
     password =  document.getElementById('password')
     conf =  document.getElementById('confpassword')
     email =  document.getElementById('email')
-    if((!email.value.includes('')) || (password.value != conf.value)){
-        window.alert('wrong entrey');
-    }
+    if((username.value ==="" || !email.value.includes('@')) || (password.value != conf.value)|| (password.value.length <8)){
+        if (username.value === "")
+            window.alert('invalid userman');
+        else if((password.value != conf.value))
+            window.alert('Password dont equal Confim Password');
+        else if (password.value.length <8)
+            window.alert('Password most be more than 8');
+        else    
+            window.alert('invalid Email');
+
+    } 
+    
     else{
         var csrfToken = getCookie('csrftoken'); // Retrieve CSRF token from cookies
         $.ajax({
