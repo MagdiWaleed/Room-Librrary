@@ -18,7 +18,7 @@ def getEntities(text):
     return data
 import numpy as np
 def search(request, searchingText):
-    searching_data= getEntities(searchingText)
+    searching_data= getEntities(searchingText.strip())
     
 
     books = list(searching_data["title"]) + list(searching_data["category"]) + list(searching_data["author"])
